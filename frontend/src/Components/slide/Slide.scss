@@ -1,0 +1,22 @@
+@use "../../scss/" as *;
+.slide {
+  width: 100%;
+}
+
+.slide-item {
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    object-fit: cover;
+    width: 80%;
+    border-radius: $border-radius;
+    @include mobile {
+      width: 100%;
+    }
+  }
+}
+.swiper {
+  border-radius: $border-radius;
+}

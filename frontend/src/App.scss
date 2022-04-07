@@ -1,0 +1,90 @@
+@use "./scss/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  // height: 1000vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizespeed;
+  font-family: $font-family;
+  background-color: $main-bg;
+  position: relative;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+    border-radius: 100rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100rem;
+    background-color: $green-core;
+  }
+}
+li,
+a,
+button {
+  cursor: pointer;
+}
+html {
+  font-size: 100%;
+  @include tablet {
+    font-size: 80%;
+  }
+  @include mobile {
+    font-size: 60%;
+  }
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: unset;
+}
+ul {
+  list-style: none;
+}
+button {
+  cursor: pointer;
+}
+button,
+input {
+  outline: 0;
+}
+img {
+  max-width: 100%;
+}
+// .container {
+//   max-width: 1660px;
+// }
+.text-black {
+  color: black;
+}
+.text-white {
+  color: white;
+}
+.section {
+  margin: 0 auto;
+
+  position: relative;
+  background-color: white;
+
+  @include tablet {
+    .section {
+      margin: 0 auto;
+    }
+  }
+}
+.col-sm {
+  width: 20%;
+}
+.col-md {
+  width: 25%;
+}
+.col-lg {
+  width: 33.33%;
+}

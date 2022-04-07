@@ -1,0 +1,41 @@
+@use "../../scss/" as *;
+
+.title {
+  height: 40px;
+
+  margin: 40px 0;
+  text-align: center;
+  display: flex;
+  font-size: 1.8rem;
+  color: $green-core;
+  align-items: center;
+  justify-content: center;
+
+  h3 {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    color: $green-core;
+    margin: 8px 0px;
+  }
+  h3::before,
+  h3::after {
+    content: "";
+    flex-grow: 1;
+    background: $green-core;
+    height: 3px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0px 8px;
+  }
+  @include tablet {
+    height: 30px;
+    font-size: 1.3rem;
+    margin: 20px 0;
+  }
+  @include mobile {
+    height: 20px;
+    font-size: 1.2rem;
+    margin: 15px 0;
+  }
+}

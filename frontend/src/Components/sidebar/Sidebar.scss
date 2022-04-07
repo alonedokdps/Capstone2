@@ -1,0 +1,50 @@
+@use "../../scss/" as *;
+.sidebar {
+  height: calc(100vh - 6rem);
+  position: fixed;
+  padding: 20px;
+  box-sizing: border-box;
+  left: 0;
+  z-index: 99;
+
+  background-color: white;
+  transition: all 0.3s ease;
+
+  @include tablet {
+    div.sidebar {
+      font-size: 12px;
+    }
+  }
+  ul li {
+    padding: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  ul li a {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+
+    line-height: 20px;
+    gap: 10px;
+    transition: all 0.3s ease;
+    &.active {
+      color: $hover;
+    }
+    &:hover {
+      color: $hover;
+    }
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+@include mobile {
+  div.sidebar {
+    display: none;
+  }
+}

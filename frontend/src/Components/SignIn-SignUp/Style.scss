@@ -1,0 +1,65 @@
+@use "../../scss/" as *;
+form {
+  padding: 20px;
+  border-radius: $border-radius;
+
+  border: 1px solid $green-core;
+  transition: all 0.3s ease;
+  animation: zoom;
+  animation-duration: 0.5s;
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 215px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  @keyframes zoom {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  h3 {
+    padding: 20px 0;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .text-field {
+    position: relative;
+    margin-bottom: 20px;
+
+    label {
+      display: inline-block;
+      font-weight: 600;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      background-color: $green-core;
+      padding: 1px 5px;
+      font-size: 12px;
+      transform: translateY(-50%);
+      color: white;
+    }
+    input {
+      padding: 15px;
+      display: block;
+      width: 400px;
+      font-size: 14px;
+      border: 1px solid $green-core;
+      border-radius: 4px;
+      background-color: transparent;
+      color: black;
+    }
+  }
+}

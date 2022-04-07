@@ -1,0 +1,50 @@
+@use "../../scss/" as *;
+.card-m {
+  width: calc(25% - 40px);
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  img {
+    border-radius: 8px;
+  }
+  &-info {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    h4 {
+      font-size: 13px;
+    }
+    h4,
+    span {
+      margin-bottom: 10px;
+    }
+    span {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+  @include tablet {
+    width: calc(33.33% - 40px);
+    &-info {
+      margin-top: 5px;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      h4 {
+        font-size: 10px;
+      }
+      h4,
+      span {
+        margin-bottom: 5px;
+      }
+      span {
+        font-size: 10px;
+        font-weight: 400;
+      }
+    }
+  }
+  @include mobile {
+    width: 100%;
+  }
+}

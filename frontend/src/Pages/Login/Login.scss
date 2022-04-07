@@ -1,0 +1,15 @@
+@use "../../scss/" as *;
+.full-w-h-ab {
+  background-color: white;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  top: -6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}

@@ -1,0 +1,24 @@
+@use "../scss/" as *;
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: $header-height;
+  .content {
+    margin-left: 241px;
+    width: calc(100% - 241px);
+    padding: 0 20px;
+    overflow: hidden;
+  }
+
+  @include tablet {
+    .content {
+    }
+  }
+  @include mobile {
+    .content {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
