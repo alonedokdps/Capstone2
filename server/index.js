@@ -8,13 +8,14 @@ const helmet = require("helmet");
 const dotenv = require("dotenv");
 // ======================================= //
 
-const roleRoute = require("./routes/role");
 const departmentRoute = require("./routes/department");
+const courseRoute = require("./routes/course");
 const eventTypeRoute = require("./routes/eventType");
 const addressRoute = require("./routes/address");
-const userRoute = require("./routes/user");
 const accountRoute = require("./routes/account");
 const eventRoute = require("./routes/event");
+const eventDetailRoute = require("./routes/eventDetail");
+const participantRoute = require("./routes/participant");
 
 // ======================================= //
 
@@ -33,13 +34,14 @@ app.use(morgan("common"));
 // ======================================= //
 
 //ROUTES
-app.use("/api/role", roleRoute);
 app.use("/api/department", departmentRoute);
+app.use("/api/course", courseRoute);
 app.use("/api/eventType", eventTypeRoute);
 app.use("/api/address", addressRoute);
-app.use("/api/user", userRoute);
 app.use("/api/account", accountRoute);
 app.use("/api/event", eventRoute);
+app.use("/api/eventDetail", eventDetailRoute);
+app.use("/api/participant", participantRoute);
 
 
 // ======================================= //

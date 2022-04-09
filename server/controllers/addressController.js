@@ -1,4 +1,5 @@
-const { Address, Event } = require("../model/model");
+const Address = require("../model/address");
+const Event = require("../model/event");
 
 const addressController = {
   //ADD ADDRESS
