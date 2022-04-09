@@ -81,3 +81,50 @@
 .btn-login:hover span {
   transform: translateY(300%);
 }
+
+.btn-register,
+.btn-clear {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 4px;
+  background-color: $green-core;
+  cursor: pointer;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.btn-register span {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  transition: all 0.2s linear;
+  backface-visibility: hidden;
+}
+
+.btn-register:before {
+  content: "Sign up now";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: -100%;
+  transition: all 0.25s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-register:hover:before {
+  top: 0;
+}
+
+.btn-register:hover span {
+  transform: translateY(300%);
+}

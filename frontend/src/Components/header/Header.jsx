@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import "./Header.scss";
-import {BiMenuAltLeft} from "react-icons/bi";
+
 import {AiOutlineClose, AiOutlineUser, AiOutlineSearch} from "react-icons/ai";
-import {BiMenuAltRight} from "react-icons/bi";
+import logo from "../../images/imgicon/logo.svg";
 import {CgMenuLeftAlt} from "react-icons/cg";
 import {Link} from "react-router-dom";
 const Header = () => {
@@ -18,6 +18,10 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", activeHeader);
+    return () => {
+      window.removeEventListener("scroll", activeHeader);
+      // console.log("cleaned");
+    };
   }, []);
   return (
     <div className={active ? "header active" : "header"}>
@@ -44,8 +48,10 @@ const Header = () => {
       <div className="menu-mobile" onClick={() => setClick(!click)}>
         {click ? <AiOutlineClose /> : <CgMenuLeftAlt />}
       </div>
-      <div className="logo">
-        <Link to="/">DEVENT</Link>
+      <div className="logo-header">
+        <Link to="/">
+          DEVENT <img src={logo} style={{width: "30px"}} />
+        </Link>
       </div>
       <div className="search">
         <AiOutlineSearch className="icon-search" />
@@ -55,7 +61,7 @@ const Header = () => {
         <Link to="/">
           <button>Create Event</button>
         </Link>
-        <Link to="/sign-in" className="sign-in">
+        <Link to="/login" className="sign-in">
           Sign in | Sign up
         </Link>
       </div>

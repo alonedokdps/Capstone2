@@ -1,12 +1,14 @@
 @use "../../scss/" as *;
 form {
   padding: 20px;
+  position: relative;
   border-radius: $border-radius;
-
+  background-color: white;
   border: 1px solid $green-core;
   transition: all 0.3s ease;
   animation: zoom;
   animation-duration: 0.5s;
+  overflow: hidden;
   &:before {
     content: "";
     position: absolute;
@@ -29,15 +31,53 @@ form {
 
   h3 {
     padding: 20px 0;
+    position: relative;
     font-size: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    animation: transfer 0.5s;
+    opacity: 1;
+    @keyframes transfer {
+      from {
+        left: -100%;
+        opacity: 0;
+      }
+      to {
+        left: 0;
+      }
+    }
+  }
+  .text-field.button-register {
+    display: flex;
+    justify-content: space-between;
+  }
+  .text-field.showpass {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    input {
+      width: auto !important;
+    }
+    span {
+      font-size: 12px;
+    }
   }
   .text-field {
     position: relative;
     margin-bottom: 20px;
-
+    animation: transfer 0.5s;
+    .eye {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      bottom: 21%;
+      right: 10px;
+      @include mobile {
+        bottom: 29%;
+        right: 10px;
+      }
+    }
     label {
       display: inline-block;
       font-weight: 600;
@@ -60,6 +100,9 @@ form {
       border-radius: 4px;
       background-color: transparent;
       color: black;
+      @include mobile {
+        width: 300px;
+      }
     }
   }
 }

@@ -109,12 +109,17 @@
       border-color: rgb(175, 184, 201);
     }
   }
-  .logo {
+  .logo-header {
     font-size: 2.3rem;
     font-weight: 700;
 
     color: $green-core;
     transition: color 0.3s ease;
+    a {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
     &:hover {
       color: $green-core;
     }

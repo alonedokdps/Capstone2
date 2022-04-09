@@ -1,6 +1,13 @@
 import React from "react";
 import "./Button.scss";
-const STYLES = ["btb-outline", "btn-primary", "btn-follow", "btn-login"];
+const STYLES = [
+  "btb-outline",
+  "btn-primary",
+  "btn-follow",
+  "btn-login",
+  "btn-register",
+  "btn-clear",
+];
 const SIZES = ["btn-xs", "btn-s", "btn-m", "btn-l", "btn-xl"];
 
 const Button = ({
