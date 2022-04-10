@@ -1,4 +1,5 @@
-const { Account, User, Role } = require("../model/model");
+const Account = require("../model/account");
+const jwt = require("jsonwebtoken");
 
 const accountController = {
   //ADD A ACCOUNT
@@ -6,12 +7,30 @@ const accountController = {
     try {
       const newAccount = new Account(req.body);
       const savedAccount = await newAccount.save();
-      res.status(200).json(savedAccount);
+      jwt.sign({ _id: savedAccount._id }, "secretkey", (err, token) => {
+        res.cookie("token", token, { maxAge: 300000 });//maxAge in 5 minutes
+        res.status(200).json(savedAccount);
+      })
     } catch (err) {
       res.status(500).json(err);
     }
   },
-  //GET ALL ACCOUNTS
+
+  //ADD A ACCOUNT DEPARTMENT MANAGER
+  addAAccountDepartmentManager: async (req, res) => {
+    try {
+      const newAccount = new Account(req.body);
+      newAccount.role = "DepartmentManager";
+      const savedAccount = await newAccount.save();
+      jwt.sign({ _id: savedAccount._id }, "secretkey", (err, token) => {
+        res.cookie("token", token, { maxAge: 300000 });//maxAge in 5 minutes
+        res.status(200).json(savedAccount);
+      })
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  //GET ALL ACCOUNTS 
   getAllAccounts: async (req, res) => {
     try {
       const allAccounts = await Account.find();
@@ -22,14 +41,14 @@ const accountController = {
   },
 
   //GET A ACCOUNT
-    getAAccount: async (req, res) => {
-        try {
-            const account = await Account.findById(req.params.id).populate(['userId', 'roleId']);
-            res.status(200).json(account);
-        } catch (err) {
-            res.status(500).json(err);
-        }
-    },
+  getAAccount: async (req, res) => {
+    try {
+      const account = await Account.findById(req.params.id).populate(["departmentId", "courseId"]);
+      res.status(200).json(account);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 
   //UPDATE ACCOUNT
   updateAccount: async (req, res) => {
@@ -46,7 +65,7 @@ const accountController = {
   deleteAccount: async (req, res) => {
     try {
       await Account.findByIdAndDelete(req.params.id);
-      res.status(200).json("Deleted successfully");
+      res.status(200).json("Deleted successfully!");
     } catch (err) {
       res.status(500).json(err);
     }

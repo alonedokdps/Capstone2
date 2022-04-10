@@ -1,4 +1,5 @@
-const { Department, User } = require("../model/model");
+const Department = require("../model/department");
+const User = require("../model/account");
 
 const departmentController = {
   //ADD DEPARTMENT

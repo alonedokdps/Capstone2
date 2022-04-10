@@ -1,4 +1,4 @@
-const { EventType, Event } = require("../model/model");
+const EventType = require("../model/eventType");
 
 const eventTypeController = {
   //ADD EVENT TYPE
