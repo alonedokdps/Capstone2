@@ -4,7 +4,7 @@ const auth = require("../controllers/auth");
 const router = require("express").Router();
 
 //ADD A ACCOUNT
-router.post("/", accountController.addAAccount);
+router.post("/register", accountController.addAAccount);
 
 router.post("/login", auth.login);
 
