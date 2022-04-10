@@ -25,7 +25,8 @@ mongoose.connect((process.env.MONGODB_URL), () => {
     console.log("Connected to MongoDB");
 });
 
-app.use(bodyParser.json({limit:"50mb"}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 app.use(morgan("common"));
