@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const upload = require("./middlewares/Upload.js");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -21,15 +22,19 @@ const participantRoute = require("./routes/participant");
 
 dotenv.config();
 //CONNECT DATABASE
-mongoose.connect((process.env.MONGODB_URL), () => {
-    console.log("Connected to MongoDB");
+mongoose.connect(process.env.MONGODB_URL, () => {
+  console.log("Connected to MongoDB");
 });
-
-app.use(bodyParser.json({limit:"50mb"}));
+app.post("/upload", upload.single("avatar"), (req, res) => {
+  res.json({sucess: true, data: req.file.path});
+});
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 app.use(morgan("common"));
-
+app.use("/uploads", express.static("uploads"));
 
 // ======================================= //
 
@@ -42,7 +47,6 @@ app.use("/api/account", accountRoute);
 app.use("/api/event", eventRoute);
 app.use("/api/eventDetail", eventDetailRoute);
 app.use("/api/participant", participantRoute);
-
 
 // ======================================= //
 

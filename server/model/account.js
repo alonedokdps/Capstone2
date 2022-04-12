@@ -1,50 +1,57 @@
 const mongoose = require("mongoose");
 
-const accountSchema = new mongoose.Schema({
-    fullName : {
+const accountSchema = new mongoose.Schema(
+  {
+    fullName: {
       type: String,
-      required:true
+      required: false,
     },
-    dateOfBirth: {
+    birthday: {
       type: Date,
-      required:true
+      required: false,
     },
     email: {
       type: String,
-      unique: true,
-      required:true
+
+      required: false,
     },
-    phoneNumber: {
+    avatar: {type: String, required: false},
+    phone: {
       type: String,
-      required:true
+      required: false,
     },
     departmentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Department",
+      required: false,
     },
     courseId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Course",
+      required: false,
     },
-    class : {
+    class: {
       type: String,
+      required: false,
     },
-    userName: {
+    username: {
       type: String,
-      required:true
+      required: false,
     },
     password: {
       type: String,
-      required:true
+      required: false,
     },
     role: {
       type: String,
-      enum: ['Admin', 'User', 'DepartmentManager'],
-      default: 'User'
-    }
-});
-
+      enum: ["Admin", "User", "DepartmentManager"],
+      default: "User",
+      required: false,
+    },
+  },
+  {timestamps: true}
+);
 
 let Account = mongoose.model("Account", accountSchema);
 
-module.exports = { Account };
+module.exports = Account;

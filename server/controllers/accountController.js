@@ -4,15 +4,24 @@ const jwt = require("jsonwebtoken");
 const accountController = {
   //ADD A ACCOUNT
   addAAccount: async (req, res) => {
+    const user = await Account.findOne({username: req.body.username});
+
     try {
-      const newAccount = new Account(req.body);
-      const savedAccount = await newAccount.save();
-      jwt.sign({ _id: savedAccount._id }, "secretkey", (err, token) => {
-        res.cookie("token", token, { maxAge: 300000 });//maxAge in 5 minutes
-        res.status(200).json(savedAccount);
-      })
+      if (user) {
+        return res.json({success: false, message: "Username already exists"});
+      } else {
+        const newAccount = new Account(req.body);
+        const savedAccount = await newAccount.save();
+        jwt.sign({_id: savedAccount._id}, "secretkey", (err, token) => {
+          res.cookie("token", token, {maxAge: 300000}); //maxAge in 5 minutes
+        });
+
+        res
+          .status(200)
+          .json({success: true, message: "Created account successfully"});
+      }
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({success: false, message: "error in server"});
     }
   },
 
@@ -22,15 +31,15 @@ const accountController = {
       const newAccount = new Account(req.body);
       newAccount.role = "DepartmentManager";
       const savedAccount = await newAccount.save();
-      jwt.sign({ _id: savedAccount._id }, "secretkey", (err, token) => {
-        res.cookie("token", token, { maxAge: 300000 });//maxAge in 5 minutes
+      jwt.sign({_id: savedAccount._id}, "secretkey", (err, token) => {
+        res.cookie("token", token, {maxAge: 300000}); //maxAge in 5 minutes
         res.status(200).json(savedAccount);
-      })
+      });
     } catch (err) {
       res.status(500).json(err);
     }
   },
-  //GET ALL ACCOUNTS 
+  //GET ALL ACCOUNTS
   getAllAccounts: async (req, res) => {
     try {
       const allAccounts = await Account.find();
@@ -43,7 +52,10 @@ const accountController = {
   //GET A ACCOUNT
   getAAccount: async (req, res) => {
     try {
-      const account = await Account.findById(req.params.id).populate(["departmentId", "courseId"]);
+      const account = await Account.findById(req.params.id).populate([
+        "departmentId",
+        "courseId",
+      ]);
       res.status(200).json(account);
     } catch (err) {
       res.status(500).json(err);
@@ -54,7 +66,7 @@ const accountController = {
   updateAccount: async (req, res) => {
     try {
       const account = await Account.findById(req.params.id);
-      await account.updateOne({ $set: req.body });
+      await account.updateOne({$set: req.body});
       res.status(200).json("Updated successfully!");
     } catch (err) {
       res.status(500).json(err);

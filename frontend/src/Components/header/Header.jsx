@@ -1,11 +1,20 @@
 import React, {useEffect, useState} from "react";
 import "./Header.scss";
+import {useCookies} from "react-cookie";
 
-import {AiOutlineClose, AiOutlineUser, AiOutlineSearch} from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiFillBell,
+  AiOutlineUser,
+  AiOutlineSearch,
+} from "react-icons/ai";
 import logo from "../../images/imgicon/logo.svg";
 import {CgMenuLeftAlt} from "react-icons/cg";
 import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
 const Header = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  console.log(cookies);
   const [click, setClick] = useState(false);
   const [active, setActive] = useState(false);
   const activeHeader = () => {
@@ -58,12 +67,29 @@ const Header = () => {
         <input type="text" placeholder="Search" />
       </div>
       <div className="user-icon">
+        {cookies.token && (
+          <AiFillBell
+            style={{fontSize: "30px", margin: "0 20px", color: "#FFF300"}}
+          />
+        )}
         <Link to="/">
           <button>Create Event</button>
         </Link>
-        <Link to="/login" className="sign-in">
-          Sign in | Sign up
-        </Link>
+        {!cookies.token && (
+          <Link to="/login" className="sign-in">
+            Sign in | Sign up
+          </Link>
+        )}
+        {cookies.token && (
+          <AiOutlineUser
+            onClick={() => {
+              removeCookie("token", {path: "/"});
+
+              toast.info("Logout");
+            }}
+            style={{fontSize: "30px", margin: "0 20px", color: "#2dc275"}}
+          />
+        )}
       </div>
       <div className="user-icon-mobile">
         <AiOutlineUser />

@@ -11,4 +11,4 @@ const eventTypeSchema = new mongoose.Schema({
 
 let EventType = mongoose.model("EventType", eventTypeSchema);
 
-module.exports = { EventType };
+module.exports =  EventType ;

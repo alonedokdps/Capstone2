@@ -58,9 +58,13 @@ input {
 img {
   max-width: 100%;
 }
-// .container {
-//   max-width: 1660px;
-// }
+.container {
+  max-width: 1660px;
+
+  @include tablet {
+    max-width: 1280px;
+  }
+}
 .text-black {
   color: black;
 }

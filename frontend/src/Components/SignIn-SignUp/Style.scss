@@ -30,7 +30,12 @@ form {
   }
 
   h3 {
-    padding: 20px 0;
+    margin-bottom: 30px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 0 20px 0;
+    font-weight: 700;
+    border-left: 8px solid $green-core;
+    color: $green-core;
     position: relative;
     font-size: 30px;
     display: flex;
@@ -48,6 +53,10 @@ form {
       }
     }
   }
+  .box {
+    display: flex;
+    gap: 20px;
+  }
   .text-field.button-register {
     display: flex;
     justify-content: space-between;
@@ -63,19 +72,32 @@ form {
       font-size: 12px;
     }
   }
+  .text-field.register {
+    label.error {
+      border: 1px solid red;
+      background-color: red;
+    }
+    input.error {
+      border: 1px solid red;
+    }
+  }
   .text-field {
     position: relative;
     margin-bottom: 20px;
     animation: transfer 0.5s;
+    display: flex;
+    flex-direction: column;
+    .label-password {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
     .eye {
       cursor: pointer;
-      position: absolute;
-      right: 0;
-      bottom: 21%;
-      right: 10px;
+      display: flex;
+      align-items: center;
       @include mobile {
-        bottom: 29%;
-        right: 10px;
       }
     }
     label {
@@ -91,7 +113,8 @@ form {
       transform: translateY(-50%);
       color: white;
     }
-    input {
+    input,
+    select {
       padding: 15px;
       display: block;
       width: 400px;
