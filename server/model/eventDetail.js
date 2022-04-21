@@ -1,22 +1,27 @@
 const mongoose = require("mongoose");
 
 const eventDetailSchema = new mongoose.Schema({
-  name: {
+  nameD: {
     type: String,
     required: true,
   },
-  description: {
+  descriptionD: {
     type: String,
-    required: true,
+    required: false,
   },
   timeStart: {
     type: String,
-    required: true,
+    required: false,
   },
   timeEnd: {
     type: String,
-    required: true,
+    required: false,
   },
+  eventId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+    required:true
+  }
 });
 
 let EventDetail = mongoose.model("EventDetail", eventDetailSchema);

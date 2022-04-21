@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGODB_URL, () => {
   console.log("Connected to MongoDB");
 });
 app.post("/upload", upload.single("avatar"), (req, res) => {
-  res.json({sucess: true, data: req.file.path});
+  res.json({success: true, data: req.file.path});
 });
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));

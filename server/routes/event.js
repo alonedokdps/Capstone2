@@ -4,18 +4,33 @@ const auth = require("../controllers/auth");
 const router = require("express").Router();
 
 //ADD EVENT
-router.post("/", auth.isAuthenticated, auth.role(['Admin', 'DepartmentManager']), eventController.addEvent);
+router.post("/addEvent", eventController.addEvent);
 
 //GET ALL EVENTS
-router.get("/", auth.isAuthenticated, eventController.getAllEvents);
+router.post("/updateStatus/:id", eventController.updateStatusEvent);
 
-//GET AN EVENT
-router.get("/:id", eventController.getAnEvent);
+//GET ALL EVENT
+router.get("/getAllEvent", eventController.getAllEvents);
 
-//UPDATE AN EVENT
-router.put("/:id", auth.isAuthenticated, auth.role(['Admin', 'DepartmentManager']), eventController.updateEvent);
+//GET ALL EVENT BY ACCOUNT ID
+router.get("/getEventByAccountId/:id", eventController.getAllEventByAccountId);
+
+//GET ALL EVENT PENDING
+router.get("/getEventPending", eventController.getAllEventPending);
+
+//GET ALL EVENT ACCEPT
+router.get("/getEventAccept", eventController.getAllEventAccept);
+
+//GET ALL EVENT REJECT 
+router.get("/getEventReject", eventController.getAllEventReject);
+
+//GET AN EVENT 
+router.get("/getEvent/:id", eventController.getEventByEventId);
+
+//UPDATE EVENT
+router.put("/updateEvent/:id", eventController.updateEvent);
 
 //DELETE EVENT
-router.delete("/:id", auth.isAuthenticated, auth.role(['Admin', 'DepartmentManager']), eventController.deleteEvent);
+router.delete("/deleteEvent/:id", eventController.deleteEvent);// auth.isAuthenticated, auth.role(['Admin', 'DepartmentManager']),
 
 module.exports = router;

@@ -19,7 +19,7 @@ const eventSchema = new mongoose.Schema(
       required: true,
     },
     dateOfEvent: {
-      type: String,
+      type: Date,
       required: true,
     },
     timeStart: {
@@ -42,12 +42,22 @@ const eventSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "EventType",
     },
-    eventDetailId: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "EventDetail",
-      },
-    ],
+    accountId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Account",
+    },
+    note: {
+      type: String
+    },
+    status: {
+      type: String,
+      enum: [
+        'Pending', 
+        'Accept', 
+        'Reject'
+      ],
+      default: 'Pending'
+    }
   },
   {timestamps: true}
 );

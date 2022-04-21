@@ -1,15 +1,24 @@
+const Event = require("../model/event");
 const EventDetail = require("../model/eventDetail");
 
 const eventDetailController = {
   //ADD EVENT DETAIL
   addEventDetail: async (req, res) => {
-    try {
-        const newEventDetail = new EventDetail(req.body);
-        const savedEventDetail = await newEventDetail.save();
-        res.status(200).json(savedEventDetail);
-      } catch (err) {
-        res.status(500).json(err);
-      }
+    try{
+      // console.log(req.body);
+      const eventDetails = await Promise.all(req.body.map(async data =>{
+        const event = Event.findById(data.eventId);
+        if(event){
+          let eventDetail = new EventDetail(data);
+          await eventDetail.save();
+        }else {
+          res.send("something went wrong");
+        }
+      }));
+      res.status(200).send("add event detail success");
+    }catch (err){
+      res.status(500).send(err.message);
+    }
   },
 
   //GET ALL EVENT DETAILS
