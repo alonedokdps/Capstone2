@@ -20,8 +20,8 @@ const SignUp = ({change}) => {
       birthday: "",
       class: "",
       confirmpassword: "",
-      course: "",
-      department: "",
+      courseId: "",
+      departmentId: "",
       email: "",
 
       fullname: "",
@@ -51,8 +51,8 @@ const SignUp = ({change}) => {
       confirmpassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Confirm password is required"),
-      department: Yup.string().required("department is required"),
-      course: Yup.string().required("department is required"),
+      departmentId: Yup.string().required("department is required"),
+      courseId: Yup.string().required("department is required"),
     }),
     onSubmit: (values) => {
       ApiUser.Register(values)
@@ -180,31 +180,31 @@ const SignUp = ({change}) => {
       </div>
       <div className="box">
         <div class="text-field register">
-          <label htmlFor="department">Department</label>
+          <label htmlFor="departmentId">Department</label>
           <select
-            name="department"
-            value={formik.values.department}
+            name="departmentId"
+            value={formik.values.departmentId}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
             <GetOption getName="department" />
           </select>{" "}
-          {formik.touched.department && formik.errors.department ? (
-            <ErrorMsg> {formik.errors.department}</ErrorMsg>
+          {formik.touched.departmentId && formik.errors.departmentId ? (
+            <ErrorMsg> {formik.errors.departmentId}</ErrorMsg>
           ) : null}
         </div>
         <div class="text-field register">
-          <label htmlFor="course"> Course</label>
+          <label htmlFor="courseId"> Course</label>
           <select
-            name="course"
-            value={formik.values.course}
+            name="courseId"
+            value={formik.values.courseId}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
             <GetOption getName="course" />
           </select>{" "}
-          {formik.touched.course && formik.errors.course ? (
-            <ErrorMsg> {formik.errors.course}</ErrorMsg>
+          {formik.touched.courseId && formik.errors.courseId ? (
+            <ErrorMsg> {formik.errors.courseId}</ErrorMsg>
           ) : null}
         </div>
       </div>

@@ -4,7 +4,8 @@ form {
   position: relative;
   border-radius: $border-radius;
   background-color: white;
-  border: 1px solid $green-core;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   transition: all 0.3s ease;
   animation: zoom;
   animation-duration: 0.5s;
@@ -72,15 +73,7 @@ form {
       font-size: 12px;
     }
   }
-  .text-field.register {
-    label.error {
-      border: 1px solid red;
-      background-color: red;
-    }
-    input.error {
-      border: 1px solid red;
-    }
-  }
+
   .text-field {
     position: relative;
     margin-bottom: 20px;
@@ -109,7 +102,7 @@ form {
       left: 10px;
       background-color: $green-core;
       padding: 1px 5px;
-      font-size: 12px;
+      font-size: 10px;
       transform: translateY(-50%);
       color: white;
     }

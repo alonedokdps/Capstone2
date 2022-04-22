@@ -1,10 +1,15 @@
+@use "../../scss/" as *;
 .btn-return-home {
-  background-color: white;
+  background-color: $green-core;
   align-items: center;
   text-align: center;
   width: 40px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   height: 40px;
   display: flex;
   justify-content: center;
   border-radius: 7px;
+  &:hover {
+    background-color: $hover;
+  }
 }

@@ -1,7 +1,7 @@
 @use "../../scss/" as *;
 
 .full-w-h-ab {
-  background-color: $green-core;
+  background-color: $background-before;
 
   width: 100%;
   min-height: 100vh;
@@ -28,7 +28,6 @@
   }
 }
 .typewriter h1 {
-  background-color: white;
   color: $green-core;
   display: flex;
   align-items: center;
@@ -37,7 +36,7 @@
   position: relative;
   text-align: center;
   overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: 0.15em solid orange; /* The typwriter cursor */
+
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
   letter-spacing: 0.15em; /* Adjust as needed */
@@ -59,16 +58,5 @@
   }
   to {
     width: 100%;
-  }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: white;
   }
 }
