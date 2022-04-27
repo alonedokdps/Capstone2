@@ -8,6 +8,7 @@ import {EffectFade} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-fade";
+import getAllEventApi from "../../api/AllEvent.api";
 
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -15,9 +16,23 @@ import "swiper/css/scrollbar";
 import Cardmini from "../../Components/cardSmall/Cardmini";
 import AOS from "aos";
 import "aos/dist/aos.css";
-const Home = () => {
+const Home = ({eventType, data}) => {
   const [num, setNum] = useState(5);
-  console.log(window.screenX);
+  const [featuredEvent, setFeaturedEvent] = useState([]);
+  useEffect(() => {
+    getAllEventApi.getAllEvent().then((data) => console.log("data", data));
+  }, []);
+  useEffect(() => {
+    getAllEventApi
+      .getAllEvent()
+      .then((data) => {
+        if (data) {
+          setFeaturedEvent(data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const resize = () => {
     if (window.innerWidth < 1024) {
       setNum(4);
@@ -39,7 +54,7 @@ const Home = () => {
   });
   return (
     <div className="section home  ">
-      <Slide />
+      <Slide data={featuredEvent} />
       <Title title="New Event" />
       <div className="cardbox-row" data-aos="fade-up">
         <Swiper
@@ -59,42 +74,6 @@ const Home = () => {
             {" "}
             <Card />
           </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
-          <SwiperSlide>
-            {" "}
-            <Card />
-          </SwiperSlide>
         </Swiper>
       </div>
       <Title
@@ -102,22 +81,11 @@ const Home = () => {
 "
       />
       <div className="cardbox-row-grid" data-aos="fade-up">
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
-        <Cardmini />
+        {featuredEvent &&
+          featuredEvent.length > 0 &&
+          featuredEvent.map((item, index) => (
+            <Cardmini eventType={eventType} data={item} />
+          ))}
       </div>
     </div>
   );

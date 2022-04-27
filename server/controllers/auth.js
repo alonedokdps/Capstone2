@@ -53,7 +53,12 @@ async function login(req, res) {
     } else {
       jwt.sign({_id: account._id}, "secretkey", (err, token) => {
         res.cookie("token", token, {maxAge: 300000});
-        res.json({message: "Login Success", success: true, token});
+        res.json({
+          message: "Login Success",
+          success: true,
+          token,
+          role: account.role,
+        });
       });
     }
   } catch (err) {

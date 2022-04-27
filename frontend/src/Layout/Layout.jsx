@@ -4,10 +4,10 @@ import Header from "../Components/header/Header";
 import Sidebar from "../Components/sidebar/Sidebar";
 
 import "./layout.scss";
-const Layout = () => {
+const Layout = ({data}) => {
   return (
     <div className="layout">
-      <Header />
+      <Header data={data} />
       <div className="container">
         <Sidebar />
         <div className="content">

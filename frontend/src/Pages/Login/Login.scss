@@ -1,7 +1,7 @@
 @use "../../scss/" as *;
 
 .full-w-h-ab {
-  background-color: $background-before;
+  background-color: $green-core;
 
   width: 100%;
   min-height: 100vh;
@@ -28,7 +28,7 @@
   }
 }
 .typewriter h1 {
-  color: $green-core;
+  color: white;
   display: flex;
   align-items: center;
   font-size: 100px;

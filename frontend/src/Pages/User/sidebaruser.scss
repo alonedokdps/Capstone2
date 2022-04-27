@@ -1,0 +1,64 @@
+@use "../../scss/" as *;
+.sidebaruser {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  padding: 10px;
+  width: 320px;
+  background-color: $green-core !important;
+  &__btn {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    gap: 5px;
+    color: $green-core;
+    background-color: #fff;
+    width: max-content;
+    padding: 2px;
+    border-radius: 7px;
+  }
+  &__logo {
+    display: grid;
+    place-items: center;
+    height: 120px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: "Mochiy Pop P one", sans-serif;
+  }
+  &__menu {
+    position: relative;
+    &__item {
+      display: flex;
+      align-items: center;
+      place-content: flex-start;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: white;
+      transition: all 0.3s ease-in-out;
+      margin-bottom: 0.5rem;
+      &.active {
+        background-color: white;
+        color: $green-core;
+        border-radius: 8px;
+      }
+      &__icon {
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+      }
+    }
+    &__indicator {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: calc(100% - 40px);
+      border-radius: 10px;
+
+      z-index: -1;
+      transform: translateX(-50%);
+      transition: 0.3s ease-in-out;
+    }
+  }
+}

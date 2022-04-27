@@ -31,6 +31,8 @@ const SignIn = ({change}) => {
         if (res.success) {
           formik.resetForm();
           setCookie("token", res.token, {path: "/"});
+          localStorage.setItem("user", JSON.stringify(res));
+
           toast.success(res.message);
           navigate("/");
         } else {

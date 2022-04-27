@@ -1,0 +1,23 @@
+@use "../../scss/" as *;
+.dropdown-user {
+  position: absolute;
+  top: 70%;
+  right: 10px;
+  background-color: $green-core;
+  transition: all 0.3s ease;
+
+  &-item {
+    color: white;
+    font-size: 13px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    gap: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: $background-before;
+      color: $green-core;
+    }
+  }
+}

@@ -1,18 +1,28 @@
 import React from "react";
+import Moment from "react-moment";
+import {Link} from "react-router-dom";
 import "./style.scss";
-const Cardmini = () => {
+const Cardmini = ({data, eventType}) => {
+  console.log("card mini", eventType);
+  const getEventTypeFromId = (id) => {
+    const event = eventType.filter((item) => item._id === id);
+    return event;
+  };
+  const nameEventType = getEventTypeFromId(data.eventTypeId);
+  console.log(nameEventType);
   return (
     <div className="card-m">
-      <img
-        src="https://images.tkbcdn.com/1/780/300/Upload/eventcover/2022/03/08/4756E9.jpg"
-        alt=""
-      />
+      <img src={`http://localhost:8000/${data.img}`} alt="" />
       <div className="card-m-info">
         <h4>
-          HÒA NHẠC cùng CHÀNG TRAI VIẾT LÊN CÂY | Mini Concert PHAN MẠNH QUỲNH
+          <Link to={`/detail/${data._id}`}>{data.name}</Link>
         </h4>
-        <span>03/11/2022</span>
-        <span>Live Music</span>
+        <span>
+          <Moment format="DD/MM/YYYY">{data.dateOfEvent}</Moment>
+        </span>
+        <span>
+          {nameEventType.length > 0 && nameEventType.map((item) => item.name)}
+        </span>
       </div>
     </div>
   );
