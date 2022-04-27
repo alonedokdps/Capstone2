@@ -1,0 +1,22 @@
+.select-dropdown {
+  width: 300px;
+  position: relative;
+  font-size: 13px;
+  background-color: #eee;
+  padding: 13px 15px;
+  .selectbox-item {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+
+    background-color: white;
+    .select-x {
+      padding: 13px 15px;
+      font-size: 12px;
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+}

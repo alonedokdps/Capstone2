@@ -1,11 +1,29 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
 import "./Detail.scss";
 import {BsArrowLeft} from "react-icons/bs";
 import CardInfo from "../../Components/card-info/CardInfo";
 import About from "../../Components/About/About";
+import ApiEventDetail from "../../api/Event.Detail.api";
 
-const Detail = () => {
+const Detail = ({eventType}) => {
+  const {id} = useParams();
+  const [eventDetail, setEventDetail] = useState([]);
+  useEffect(() => {
+    ApiEventDetail.getEventDetal(id)
+      .then((data) => {
+        if (data) {
+          setEventDetail(data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+
+  const getEventTypeFromId = (id) => {
+    const event = eventType.filter((item) => item._id === id);
+    return event;
+  };
+  const nameEventType = getEventTypeFromId(eventDetail.eventTypeId);
   return (
     <div className="detail">
       <div className="back-btn">
@@ -16,14 +34,13 @@ const Detail = () => {
       <div
         className="overlay-detail"
         style={{
-          backgroundImage: `url(
-            "https://images.tkbcdn.com/1/1560/600/Upload/eventcover/2020/01/03/B43D3D.jpg"
+          backgroundImage: `url(http://localhost:8000/${eventDetail.img}
           )`,
         }}
       >
-        <CardInfo />
+        <CardInfo eventType={nameEventType} data={eventDetail} />
       </div>
-      <About />
+      <About data={eventDetail} />
     </div>
   );
 };

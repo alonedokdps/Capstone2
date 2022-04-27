@@ -11,12 +11,39 @@ import {
 import logo from "../../images/imgicon/logo.svg";
 import {CgMenuLeftAlt} from "react-icons/cg";
 import {Link} from "react-router-dom";
-import {toast} from "react-toastify";
-const Header = () => {
+import DropdownUser from "../Dropdown/DropdownUser";
+import useClickOutSide from "../../hooks/useClickOutSide";
+
+const Header = ({data}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  console.log(cookies);
   const [click, setClick] = useState(false);
   const [active, setActive] = useState(false);
+  const [fillterData, setFillterData] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [role, setRole] = useState("");
+  const {show, setShow, nodeRef} = useClickOutSide();
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.role) {
+      setRole(user.role);
+    } else {
+      setRole("");
+    }
+  }, []);
+
+  const handleOnchange = (e) => {
+    setKeyword(e.target.value);
+
+    const fillter = data.filter((value) => {
+      return value.name.toLowerCase().includes(keyword.toLowerCase());
+    });
+    console.log(fillter);
+    if (!keyword) {
+      setFillterData([]);
+    } else {
+      setFillterData(fillter);
+    }
+  };
   const activeHeader = () => {
     if (window.scrollY > 80) {
       setActive(true);
@@ -24,7 +51,10 @@ const Header = () => {
       setActive(false);
     }
   };
-
+  const ResetFilter = () => {
+    setFillterData([]);
+    setKeyword("");
+  };
   useEffect(() => {
     window.addEventListener("scroll", activeHeader);
     return () => {
@@ -64,7 +94,25 @@ const Header = () => {
       </div>
       <div className="search">
         <AiOutlineSearch className="icon-search" />
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          value={keyword}
+          placeholder="Search"
+          onChange={handleOnchange}
+        />
+        <div className="result-search">
+          {keyword &&
+            fillterData &&
+            fillterData.length > 0 &&
+            fillterData.map((item) => (
+              <Link to={`/detail/${item._id}`} onClick={ResetFilter}>
+                <div className="result-item">
+                  <img src={`http://localhost:8000/${item.img}`} />
+                  <h4>{item.name}</h4>
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
       <div className="user-icon">
         {cookies.token && (
@@ -72,23 +120,32 @@ const Header = () => {
             style={{fontSize: "30px", margin: "0 20px", color: "#FFF300"}}
           />
         )}
-        <Link to="/">
-          <button>Create Event</button>
-        </Link>
+        {role && role === "Admin" && (
+          <Link to="/add-event">
+            <button>Create Event</button>
+          </Link>
+        )}
         {!cookies.token && (
           <Link to="/login" className="sign-in">
             Sign in | Sign up
           </Link>
         )}
         {cookies.token && (
-          <AiOutlineUser
-            onClick={() => {
-              removeCookie("token", {path: "/"});
-
-              toast.info("Logout");
-            }}
-            style={{fontSize: "30px", margin: "0 20px", color: "#2dc275"}}
-          />
+          <div
+            className="user-button"
+            ref={nodeRef}
+            onClick={() => setShow(!show)}
+          >
+            <AiOutlineUser
+              style={{
+                fontSize: "30px",
+                margin: "0 20px",
+                color: "#2dc275",
+                cursor: "pointer",
+              }}
+            />
+            {show && <DropdownUser setRole={setRole} />}
+          </div>
         )}
       </div>
       <div className="user-icon-mobile">

@@ -4,39 +4,39 @@ const eventSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     img: {
       type: String,
-      required: true,
+      required: false,
     },
     organizedBy: {
       type: String,
-      required: true,
+      required: false,
     },
     dateOfEvent: {
       type: Date,
-      required: true,
+      required: false,
     },
     timeStart: {
       type: String,
-      required: true,
+      required: false,
     },
     timeEnd: {
       type: String,
-      required: true,
+      required: false,
     },
     budgetOfEvent: {
       type: Number,
       required: false,
     },
-    addressId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Address",
+    address: {
+      type: String,
+      required: false,
     },
     eventTypeId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -47,17 +47,13 @@ const eventSchema = new mongoose.Schema(
       ref: "Account",
     },
     note: {
-      type: String
+      type: String,
     },
     status: {
       type: String,
-      enum: [
-        'Pending', 
-        'Accept', 
-        'Reject'
-      ],
-      default: 'Pending'
-    }
+      enum: ["Pending", "Accept", "Reject"],
+      default: "Pending",
+    },
   },
   {timestamps: true}
 );

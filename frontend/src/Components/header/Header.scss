@@ -82,6 +82,34 @@
   }
   .search {
     position: relative;
+    .result-search {
+      position: absolute;
+      top: 100%;
+      background: white;
+      width: 200%;
+      max-width: 200%;
+
+      .result-item {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        &:hover {
+          background-color: #eee;
+          h4 {
+            color: $green-core;
+          }
+        }
+
+        h4 {
+          font-size: 12px;
+          font-weight: 500;
+        }
+        img {
+          max-width: 20%;
+        }
+      }
+    }
     .icon-search {
       position: absolute;
       width: 20px;
@@ -130,6 +158,9 @@
     gap: 20px;
     align-items: center;
     justify-content: flex-end;
+    .user-button {
+      display: relative;
+    }
 
     button {
       background: transparent;

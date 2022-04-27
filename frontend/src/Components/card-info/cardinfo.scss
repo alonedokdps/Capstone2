@@ -51,12 +51,17 @@
     h3 {
       font-size: 30px;
       margin-bottom: 20px;
+      width: 100%;
+      overflow: hidden;
     }
+
     span {
       font-size: 13px;
       font-weight: 300;
-      margin-bottom: 20px;
-      display: block;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
     p {
       font-size: 13px;
@@ -73,7 +78,9 @@
         font-size: 13px;
         font-weight: 300;
         margin-bottom: 10px;
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 5px;
       }
       p {
         font-size: 13px;
