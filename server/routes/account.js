@@ -10,7 +10,7 @@ router.post("/login", auth.login);
 
 //ADD A ACCOUNT DEPARTMENT MANAGER
 router.post(
-  "/",
+  "/addAAccountDepartmentManager/",
   auth.isAuthenticated,
   auth.role(["Admin"]),
   accountController.addAAccountDepartmentManager
@@ -18,9 +18,9 @@ router.post(
 
 //GET ALL ACCOUNTS
 router.get(
-  "/",
-  auth.isAuthenticated,
-  auth.role(["Admin"]),
+  "/getAllAccount/",
+  // auth.isAuthenticated,
+  // auth.role(["Admin"]),
   accountController.getAllAccounts
 );
 

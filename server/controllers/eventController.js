@@ -1,5 +1,6 @@
 const Event = require("../model/event");
 const EventDetail = require("../model/eventDetail");
+const eventDetailController = require("./eventDetailController");
 
  
 const eventController = {
@@ -8,10 +9,19 @@ const eventController = {
     const event = new Event(req.body);
     return await event.save()
     .then(event =>{
-      res.status(200).send("create event success");
-    }).catch(err=>{
+      if(event) {
+        const eventDetails = Promise.all(req.body.details.map(async data =>{
+            let eventDetail = new EventDetail(data);
+            eventDetail.eventId = event._id;
+            await eventDetail.save();
+        }));
+        res.status(200).send("create event success");
+      }
+      }
+    ).catch(err=>{
       res.status(500).send(err.message);
     });
+
   },
 
   //DUYET EVENT //Truyen vao Status {"status": "Accept"}/ {"status": "Reject"}
@@ -141,19 +151,50 @@ const eventController = {
     try {
       const event = await Event.findById(req.params.id);
       await event.updateOne({ $set: req.body });
+
+      await EventDetail.find({eventId: req.params.id})
+      .then(details => {
+        // res.send(details);
+        details.map(detail => {
+          // let isUpdate = eventDetailController.updateEventDetail(detail._id);
+          // if (!isUpdate) {
+          //   res.status(500).send('Update Detail Error!');
+          // }
+          
+        // res.send(detail._id);
+        const eventDetail = EventDetail.findById(detail._id);
+        eventDetail.updateOne({ $set: req.body });
+        })
+      }).catch(err=>{
+        res.status(500).send(err.message);
+      });
+
       res.status(200).json("Updated successfully!");
     } catch (err) {
       res.status(500).json(err);
     }
   },
 
+
   //DELETE EVENT
   deleteEvent: async (req, res) => {
     try {
+       await EventDetail.find({eventId: req.params.id})
+      .then(details => {
+        // res.send(details);
+        details.map(detail => {
+          let isDelete = eventDetailController.deleteEventDetail(detail._id);
+          if (!isDelete) {
+            res.status(500).send('Delete Detail Error!');
+          }
+        })
+      }).catch(err=>{
+        res.status(500).send(err.message);
+      });
       await Event.findByIdAndDelete(req.params.id);
       res.status(200).json("Deleted successfully!");
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 };

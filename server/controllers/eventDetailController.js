@@ -42,24 +42,15 @@ const eventDetailController = {
   },
 
   //UPDATE EVENT DETAIL
-  updateEventDetail: async (req, res) => {
-    try {
-      const eventDetail = await EventDetail.findById(req.params.id);
-      await eventDetail.updateOne({ $set: req.body });
-      res.status(200).json("Updated successfully!");
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  updateEventDetail: async (detail) => {
+      const eventDetail = await EventDetail.findById(detail._id);
+      await eventDetail.updateOne({ $set: detail.body });
   },
 
   //DELETE EVENT DETAIL
-  deleteEventDetail: async (req, res) => {
-    try {
-        await EventDetail.findByIdAndDelete(req.params.id);
-        res.status(200).json("Deleted successfully");
-      } catch (err) {
-        res.status(500).json(err);
-      }
+  deleteEventDetail: async (eventDetailId) => {
+    let isDelete = await EventDetail.findByIdAndDelete(eventDetailId);
+    return isDelete?true:false;
   },
 };
 
