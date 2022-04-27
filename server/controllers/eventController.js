@@ -6,15 +6,17 @@ const eventController = {
   //ADD EVENT
   addEvent: async (req, res) => {
     const event = new Event(req.body);
-<<<<<<< HEAD
+
     return await event.save()
     .then(event =>{
       if(event) {
-        const eventDetails = Promise.all(req.body.details.map(async data =>{
-            let eventDetail = new EventDetail(data);
-            eventDetail.eventId = event._id;
-            await eventDetail.save();
-        }));
+        if(req.body.details) {
+          const eventDetails = Promise.all(req.body.details.map(async data =>{
+              let eventDetail = new EventDetail(data);
+              eventDetail.eventId = event._id;
+              await eventDetail.save();
+          }));
+        }
         res.status(200).send("create event success");
       }
       }
@@ -22,7 +24,6 @@ const eventController = {
       res.status(500).send(err.message);
     });
 
-=======
     if (req.file) {
       event.img = req.file.path;
     }
@@ -38,7 +39,6 @@ const eventController = {
       .catch((err) => {
         res.status(500).send(err.message);
       });
->>>>>>> 5af1ea62369d88da6f656e4dbb4bec8945a8ed9f
   },
 
   //DUYET EVENT //Truyen vao Status {"status": "Accept"}/ {"status": "Reject"}
@@ -194,19 +194,13 @@ const eventController = {
   updateEvent: async (req, res) => {
     try {
       const event = await Event.findById(req.params.id);
-<<<<<<< HEAD
       await event.updateOne({ $set: req.body });
 
       await EventDetail.find({eventId: req.params.id})
       .then(details => {
         // res.send(details);
         details.map(detail => {
-          // let isUpdate = eventDetailController.updateEventDetail(detail._id);
-          // if (!isUpdate) {
-          //   res.status(500).send('Update Detail Error!');
-          // }
           
-        // res.send(detail._id);
         const eventDetail = EventDetail.findById(detail._id);
         eventDetail.updateOne({ $set: req.body });
         })
@@ -214,9 +208,7 @@ const eventController = {
         res.status(500).send(err.message);
       });
 
-=======
       await event.updateOne({$set: req.body});
->>>>>>> 5af1ea62369d88da6f656e4dbb4bec8945a8ed9f
       res.status(200).json("Updated successfully!");
     } catch (err) {
       res.status(500).json(err);
