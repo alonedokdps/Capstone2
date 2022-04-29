@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {useController, useForm, useWatch} from "react-hook-form";
+import {useController, useFieldArray, useForm, useWatch} from "react-hook-form";
 import MyInput from "../../Components/Input/MyInput";
 import DropSelect from "../../Components/selectboxcustom/DropSelect";
 import MyTextArea from "../../Components/textarea/MyTextArea";
 import ApiEventType from "../../api/EventType.api.js";
 import ApiEvent from "../../api/AddEvent.api";
 import {toast} from "react-toastify";
+import {AiOutlinePlus} from "react-icons/ai";
+import {BsTrash} from "react-icons/bs";
+
 import "./style.scss";
 import HomeButton from "../../Components/rediectHome/HomeButton";
+import {useNavigate} from "react-router-dom";
 const AddEvent = () => {
   const [EventType, setEventType] = useState([]);
-
+  const Navigate = useNavigate();
   const [img, setImg] = useState();
 
   const {
@@ -24,15 +28,18 @@ const AddEvent = () => {
     formState: {errors, dirtyFields, isValid, isSubmitting},
     // resolver: yupResolver(schema),
   } = useForm({mode: "onChange"});
+  const imgValue = useWatch({control, name: "img"});
 
+  const {fields, append, remove} = useFieldArray({control, name: "details"});
   const onSubmit = (data) => {
+    console.log(data);
     const {
       address,
       budgetOfEvent,
       dateOfEvent,
       description,
       eventTypeId,
-
+      details,
       name,
       note,
       organizedBy,
@@ -51,12 +58,15 @@ const AddEvent = () => {
     formdata.append("organizedBy", organizedBy);
     formdata.append("timeEnd", timeEnd);
     formdata.append("timeStart", timeStart);
+    formdata.append("details", JSON.stringify(details));
 
+    formdata.append("accountId", JSON.parse(localStorage.getItem("user")).id);
     ApiEvent.addEvent(formdata)
       .then((res) => {
         if (res.status) {
+          Navigate(`/detail/${res.data._id}`, {replace: true});
           toast.success(res.message);
-          console.log(data);
+          console.log(res.data._id);
         }
       })
       .catch((err) => toast.error(err));
@@ -173,6 +183,53 @@ const AddEvent = () => {
                 type="time"
               ></MyInput>
             </div>
+          </div>
+          <div className="box-add-detail">
+            <>
+              {fields &&
+                fields.map(({id}, index) => {
+                  return (
+                    <>
+                      <h4>
+                        detail {index + 1}{" "}
+                        <BsTrash onClick={() => remove(index)} />
+                      </h4>
+                      <div className="box-add-detail-field">
+                        <input
+                          type="text"
+                          {...register(`details[${index}].nameD`)}
+                          name={`details[${index}].nameD`}
+                          placeholder="Name"
+                        />
+                        <textarea
+                          type="text"
+                          {...register(`details[${index}].descriptionD`)}
+                          name={`details[${index}].descriptionD`}
+                          placeholder="Description"
+                        />
+                        <input
+                          type="time"
+                          placeholder="Time start"
+                          {...register(`details[${index}].timeStart`)}
+                          name={`details[${index}].timeStart`}
+                        />
+                        <input
+                          type="time"
+                          placeholder="Time end"
+                          {...register(`details[${index}].timeEnd`)}
+                          name={`details[${index}].timeEnd`}
+                        />
+                      </div>
+                    </>
+                  );
+                })}
+            </>
+          </div>
+          <div className="box-add-detail-btn">
+            <button type="button" onClick={() => append({})}>
+              <AiOutlinePlus />
+              Add detail
+            </button>
           </div>
           <div className="box-textarea">
             <label htmlFor="description">Description</label>

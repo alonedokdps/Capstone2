@@ -20,8 +20,8 @@ const eventDetailSchema = new mongoose.Schema({
   eventId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Event",
-    required:true
-  }
+    required: true,
+  },
 });
 
 let EventDetail = mongoose.model("EventDetail", eventDetailSchema);

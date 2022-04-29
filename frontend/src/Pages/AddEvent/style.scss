@@ -23,6 +23,48 @@
         outline: none;
       }
     }
+    .box-add-detail-btn {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: flex-end;
+      button {
+        display: flex;
+        align-items: center;
+        background-color: #eee;
+        color: #999;
+        padding: 5px 10px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+      }
+    }
+    .box-add-detail {
+      transition: all 0.3s ease-out;
+      h4 {
+        color: #999;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+      }
+      &-field {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        input,
+        textarea {
+          width: 300px;
+          outline: none;
+          border: none;
+          padding: 13px 15px;
+          background-color: #eee;
+          margin-bottom: 10px;
+          transition: all 0.3s ease-out;
+        }
+      }
+    }
     .box-input {
       display: flex;
       margin-bottom: 10px;
