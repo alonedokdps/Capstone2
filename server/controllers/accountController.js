@@ -21,7 +21,7 @@ const accountController = {
           .json({success: true, message: "Created account successfully"});
       }
     } catch (err) {
-      res.status(500).json({success: false, message: "error in server"});
+      res.status(500).json({success: false, message: "Error in server"});
     }
   },
 
@@ -49,13 +49,10 @@ const accountController = {
     }
   },
 
-  //GET A ACCOUNT
-  getAAccount: async (req, res) => {
+  //GET A ACCOUNT BY ID
+  getAccountByID: async (req, res) => {
     try {
-      const account = await Account.findById(req.params.id).populate([
-        "departmentId",
-        "courseId",
-      ]);
+      const account = await Account.findById(req.params.id);
       res.status(200).json(account);
     } catch (err) {
       res.status(500).json(err);

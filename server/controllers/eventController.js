@@ -33,22 +33,6 @@ const eventController = {
       .catch((err) => {
         res.status(500).send(err.message);
       });
-
-    // if (req.file) {
-    //   event.img = req.file.path;
-    // }
-    // return await event
-    //   .save()
-    //   .then((event) => {
-    //     res.json({
-    //       status: true,
-    //       message: "created event successfully",
-    //       data: event,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     res.status(500).send(err.message);
-    //   });
   },
 
   //DUYET EVENT //Truyen vao Status {"status": "Accept"}/ {"status": "Reject"}
@@ -247,6 +231,29 @@ const eventController = {
       res.status(500).json(err.message);
     }
   },
+
+  //SEARCH EVENT BY EVENT NAME
+  Search: async (req, res) => {
+    try{    
+      var eventSearched = [];
+      const eventExists = await Event.find();
+      for(let i = 0 ; i < eventExists.length ; i++)
+      {       
+          var eventName = eventExists[i].name;
+          if (eventName.includes(req.body.name))
+          {       
+               eventSearched.push(eventExists[i]);
+          }
+      }
+      res.json({
+          eventSearched: eventSearched,
+      });
+    }
+    catch(err)
+    {
+        res.json({message: err});
+    }
+  }
 };
 
 module.exports = eventController;

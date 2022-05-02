@@ -2,19 +2,16 @@ const participantController = require("../controllers/participantController");
 
 const router = require("express").Router();
 
-//ADD A PARTICIPANT
-router.post("/", participantController.addAParticipant);
+//REGISTER EVENT ADD A PARTICIPANT
+router.post("/RegisterEvent/", participantController.RegisterEvent);
 
-//GET ALL PARTICIPANTS
-router.get("/", participantController.getAllParticipants);
+//ATTEND EVENT
+router.patch("/AttendEvent/", participantController.AttendEvent);
 
-//GET A PARTICIPANT
-router.get("/:id", participantController.getAParticipant);
+//GET ALL PARTICIPANTS IN EVENT
+router.get("/GetAllParticipants/", participantController.getAllParticipants);
 
-//UPDATE A PARTICIPANT
-router.put("/:id", participantController.updateParticipant);
-
-//DELETE A PARTICIPANT
-router.delete("/:id", participantController.deleteParticipant);
+//DELETE ALL PARTICIPANTS IN EVENT
+router.delete("/RemoveAllParticipant", participantController.RemoveAllParticipant);
 
 module.exports = router;

@@ -1,56 +1,105 @@
 const Participant = require("../model/participant");
 
 const participantController = {
-  //ADD A ACCOUNT
-  addAParticipant: async (req, res) => {
-    try {
-      const newParticipant = new Participant(req.body);
-      const savedParticipant = await newParticipant.save();
-      res.status(200).json(savedParticipant);
-    } catch (err) {
-      res.status(500).json(err);
+  //REGISTER EVENT
+  RegisterEvent: async (req, res) => {
+    const participantExists = await Participant.find(
+        {
+            $and: [
+                {eventId: req.body.eventId},
+                {accountId: req.body.accountId}
+            ] 
+        }
+    );
+    if(participantExists != "")
+    {
+        res.json({
+            message: "You already register this event!"
+        })
+    }
+    else 
+    {
+        const newParticipant = new Participant({
+            Participant_id: "TOKEN_ID_"+req.body.Username + "_Participant",
+            accountId: req.body.accountId,
+            eventId: req.body.eventId,
+        });
+        try{
+            const savedParticipant = await newParticipant.save();
+            res.json({
+                Data_QR: {
+                    _id: savedParticipant._id,
+                    eventId: savedParticipant.eventId
+                }
+            });
+        }
+        catch(err)
+        {
+            res.json({message: err});
+        }
     }
   },
-  //GET ALL ACCOUNTS
+
+  //ATTEND EVENT
+  AttendEvent: async (req, res) => {
+    const participantExists = await Participant.find();
+
+    for(let i = 0 ; i < participantExists.length ; i++)
+    {   
+        console.log(participantExists[i]);
+        if(participantExists[i].eventId == req.body.eventId && participantExists[i]._id == req.body._id)
+        {      
+            if(participantExists[i].isAttended == false)
+            {
+                const updatedParticipant = await Participant.updateOne(
+                    { _id: participantExists[i]._id },
+                    { $set: { 
+                        isAttended: true
+                        } 
+                    }
+                );
+    
+                res.json({
+                    message: "Change attended Successful",
+                    // data: updatedParticipant
+                });
+            }
+            else {
+                res.json({
+                    message: "You already attended this event",
+                });
+            }
+        }
+    }
+  },
+
+  //GET ALL PARTICIPANT IN EVENT
   getAllParticipants: async (req, res) => {
-    try {
-      const allParticipants = await Participant.find();
-      res.status(200).json(allParticipants);
-    } catch (err) {
-      res.status(500).json(err);
+    try{
+      const participants = await Participant.find(
+          {eventId: req.body.eventId}
+      );
+      res.json(participants); 
+    }
+    catch(err)
+    {
+        res.json({message : err});
     }
   },
 
-  //GET A ACCOUNT
-  getAParticipant: async (req, res) => {
-    try {
-      const participant = await Participant.findById(req.params.id).populate(["accountId", "eventId"]);
-      res.status(200).json(participant);
-    } catch (err) {
-      res.status(500).json(err);
+  // REMOVE ALL PARTICIPANT IN EVENT
+  RemoveAllParticipant: async (req, res) => {
+    try{    
+      const removedParticipants = await Participant.remove(
+          {eventId: req.body.eventId}
+      )
+      res.json(removedParticipants);
+    }catch(err)
+    {
+        res.json({message: err});
     }
   },
 
-  //UPDATE ACCOUNT
-  updateParticipant: async (req, res) => {
-    try {
-      const participant = await Participant.findById(req.params.id);
-      await participant.updateOne({ $set: req.body });
-      res.status(200).json("Updated successfully!");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
-
-  //DELETE ACCOUNT
-  deleteParticipant: async (req, res) => {
-    try {
-      await Participant.findByIdAndDelete(req.params.id);
-      res.status(200).json("Deleted successfully!");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
 };
 
 module.exports = participantController;

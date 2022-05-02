@@ -33,4 +33,7 @@ router.put("/updateEvent/:id", eventController.updateEvent);
 //DELETE EVENT
 router.delete("/deleteEvent/:id", eventController.deleteEvent); // auth.isAuthenticated, auth.role(['Admin', 'DepartmentManager']),
 
+////SEARCH EVENT EVENT ID AND EVENT NAME
+router.get("/Search/", eventController.Search);
+
 module.exports = router;

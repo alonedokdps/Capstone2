@@ -24,12 +24,12 @@ router.get(
   accountController.getAllAccounts
 );
 
-//GET A ACCOUNT
+//GET A ACCOUNT BY ID
 router.get(
-  "/:id",
-  auth.isAuthenticated,
-  auth.role(["Admin"]),
-  accountController.getAAccount
+  "/getAccount/:id",
+  // auth.isAuthenticated,
+  // auth.role(["Admin"]),
+  accountController.getAccountByID
 );
 
 //UPDATE A ACCOUNT
