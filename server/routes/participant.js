@@ -9,9 +9,15 @@ router.post("/RegisterEvent/", participantController.RegisterEvent);
 router.patch("/AttendEvent/", participantController.AttendEvent);
 
 //GET ALL PARTICIPANTS IN EVENT
-router.get("/GetAllParticipants/", participantController.getAllParticipants);
+router.get(
+  "/GetAllParticipants/:eventId",
+  participantController.getAllParticipants
+);
 
 //DELETE ALL PARTICIPANTS IN EVENT
-router.delete("/RemoveAllParticipant", participantController.RemoveAllParticipant);
+router.delete(
+  "/RemoveAllParticipant",
+  participantController.RemoveAllParticipant
+);
 
 module.exports = router;

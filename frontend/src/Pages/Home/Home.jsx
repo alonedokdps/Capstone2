@@ -19,9 +19,9 @@ import "aos/dist/aos.css";
 const Home = ({eventType, data}) => {
   const [num, setNum] = useState(5);
   const [featuredEvent, setFeaturedEvent] = useState([]);
-  useEffect(() => {
-    getAllEventApi.getAllEvent().then((data) => console.log("data", data));
-  }, []);
+  // useEffect(() => {
+  //   getAllEventApi.getAllEvent().then((data) => console.log("data", data));
+  // }, []);
   useEffect(() => {
     getAllEventApi
       .getAllEvent()

@@ -15,17 +15,29 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  font-size: 17px;
+  font-size: 15px;
   border-radius: 20px;
   border: none;
   outline: 0;
   color: $txt-white;
-  background-color: $green-core;
-  transition: all 0.3s ease;
+  background-color: $hover;
+  transition: none;
   box-sizing: border-box;
-  &:hover {
-    background-color: $hover;
-  }
+}
+.btn-follow-register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 15px;
+  border-radius: 20px;
+  border: none;
+  cursor: none;
+  outline: 0;
+  color: #aaa;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: none;
+  box-sizing: border-box;
 }
 .btn-xl {
   padding: 10px 20px;

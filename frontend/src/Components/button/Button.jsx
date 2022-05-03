@@ -4,6 +4,7 @@ const STYLES = [
   "btb-outline",
   "btn-primary",
   "btn-follow",
+  "btn-follow-register",
   "btn-login",
   "btn-register",
   "btn-clear",

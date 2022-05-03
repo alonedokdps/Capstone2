@@ -9,7 +9,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 const Slide = ({data}) => {
-  console.log(data);
   return (
     <div className="slide">
       <Swiper
