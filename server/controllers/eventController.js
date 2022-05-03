@@ -253,7 +253,81 @@ const eventController = {
     {
         res.json({message: err});
     }
+  },
+
+  SortByDate: async (req, res) => {
+    try{ 
+      const today = new Date(Date.now() - 86400000);
+      console.log(today);
+      const event = await Event.find({dateOfEvent: {$gte: today}})
+
+      if(event.length>0){
+        const top10Event = await event.sort((a, b)=> a.dateOfEvent - b.dateOfEvent);
+        // if(top10Event.length>10) top10Event.length = 10
+        res.json({
+          top10Event
+        });
+      }
+      else{
+        res.json({message: 'Have not Event'});
+      }
+    }
+    catch(err)
+    {
+        res.json({message: err});
+    }
+  },
+
+  getDate: async (req, res) => {
+    const start = new Date();
+    start.setHours(0,0,0,0);
+
+    const end = new Date();
+    end.setHours(23,59,59,999);
+    const event = await Event.find({dateOfEvent: {$gte: start, $lt:end}})
+      if(event.length>0){
+        res.json({
+          event
+        });
+      }
+      else{
+        res.json({message: 'Have not Event'});
+      }
+  },
+
+  getMonth: async (req, res) => {
+    const date = new Date();
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    const event = await Event.find({dateOfEvent: {$gte: firstDay, $lt:lastDay}})
+      if(event.length>0){
+        res.json({
+          event
+        });
+      }
+      else{
+        res.json({message: 'Have not Event'});
+      }
+  },
+
+  getWeek: async (req, res) => {
+    const date = new Date();
+    const week = Array(7).fill(new Date(date)).map((el, idx) =>
+    new Date(el.setDate(el.getDate() - el.getDay() + idx)))
+
+    const event = await Event.find({dateOfEvent: {$gte: week.shift(), $lt:week.pop()}})
+      if(event.length>0){
+        res.json({
+          event
+        });
+      }
+      else{
+        res.json({message: 'Have not Event'});
+      }
   }
 };
+
+
+
 
 module.exports = eventController;
