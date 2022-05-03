@@ -47,7 +47,17 @@
     padding: 10px;
     width: 70%;
     color: white;
+    .form-group {
+      display: flex;
+      align-items: center;
 
+      .form-register-event {
+        max-width: max-content;
+        background-color: transparent;
+        box-shadow: none !important;
+        padding: 0;
+      }
+    }
     h3 {
       font-size: 30px;
       margin-bottom: 20px;

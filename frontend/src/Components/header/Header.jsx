@@ -2,18 +2,15 @@ import React, {useEffect, useState} from "react";
 import "./Header.scss";
 import {useCookies} from "react-cookie";
 
-import {
-  AiOutlineClose,
-  AiFillBell,
-  AiOutlineUser,
-  AiOutlineSearch,
-} from "react-icons/ai";
+import {AiOutlineClose, AiOutlineUser, AiOutlineSearch} from "react-icons/ai";
+import {BiCalendarEvent} from "react-icons/bi";
+
 import logo from "../../images/imgicon/logo.svg";
 import {CgMenuLeftAlt} from "react-icons/cg";
 import {Link} from "react-router-dom";
 import DropdownUser from "../Dropdown/DropdownUser";
 import useClickOutSide from "../../hooks/useClickOutSide";
-
+import ApiSearch from "../../api/SearchEvent.api.js";
 const Header = ({data}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [click, setClick] = useState(false);
@@ -30,20 +27,16 @@ const Header = ({data}) => {
       setRole("");
     }
   }, []);
-
-  const handleOnchange = (e) => {
+  const handleChangeSearch = (e) => {
     setKeyword(e.target.value);
-
-    const fillter = data.filter((value) => {
-      return value.name.toLowerCase().includes(keyword.toLowerCase());
-    });
-    console.log(fillter);
-    if (!keyword) {
-      setFillterData([]);
-    } else {
-      setFillterData(fillter);
-    }
   };
+  useEffect(() => {
+    ApiSearch.SearchApi(keyword)
+      .then((res) => {
+        setFillterData(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, [keyword]);
   const activeHeader = () => {
     if (window.scrollY > 80) {
       setActive(true);
@@ -98,11 +91,10 @@ const Header = ({data}) => {
           type="text"
           value={keyword}
           placeholder="Search"
-          onChange={handleOnchange}
+          onChange={handleChangeSearch}
         />
         <div className="result-search">
-          {keyword &&
-            fillterData &&
+          {fillterData &&
             fillterData.length > 0 &&
             fillterData.map((item) => (
               <Link to={`/detail/${item._id}`} onClick={ResetFilter}>
@@ -116,8 +108,8 @@ const Header = ({data}) => {
       </div>
       <div className="user-icon">
         {cookies.token && (
-          <AiFillBell
-            style={{fontSize: "30px", margin: "0 20px", color: "#FFF300"}}
+          <BiCalendarEvent
+            style={{fontSize: "30px", margin: "0 20px", color: "#2dc275"}}
           />
         )}
         {role && role === "Admin" && (

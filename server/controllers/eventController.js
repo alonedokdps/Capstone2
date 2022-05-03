@@ -234,26 +234,18 @@ const eventController = {
 
   //SEARCH EVENT BY EVENT NAME
   Search: async (req, res) => {
-    try{    
-      var eventSearched = [];
-      const eventExists = await Event.find();
-      for(let i = 0 ; i < eventExists.length ; i++)
-      {       
-          var eventName = eventExists[i].name;
-          if (eventName.includes(req.body.name))
-          {       
-               eventSearched.push(eventExists[i]);
-          }
+    try {
+      const q = req.query.name;
+      if (!q) return res.status(200).json([]);
+      const result = await Event.find({name: {$regex: q, $options: "i"}});
+      if (result) {
+        res.status(200).json({success: true, data: result});
       }
-      res.json({
-          eventSearched: eventSearched,
-      });
-    }
-    catch(err)
-    {
-        res.json({message: err});
+    } catch (err) {
+      res.json({success: false, message: "error"});
     }
   },
+<<<<<<< HEAD
 
   SortByDate: async (req, res) => {
     try{ 
@@ -325,6 +317,8 @@ const eventController = {
         res.json({message: 'Have not Event'});
       }
   }
+=======
+>>>>>>> fbba0ab6407567a9f97c64b013934e03d827e73b
 };
 
 

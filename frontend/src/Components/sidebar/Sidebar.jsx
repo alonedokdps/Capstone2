@@ -68,7 +68,7 @@ const Sidebar = () => {
       img: more,
     },
   ];
-  console.log(headerRef);
+
   return (
     <div className="sidebar">
       <ul>
