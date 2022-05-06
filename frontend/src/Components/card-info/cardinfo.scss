@@ -50,12 +50,26 @@
     .form-group {
       display: flex;
       align-items: center;
+      gap: 20px;
 
       .form-register-event {
         max-width: max-content;
         background-color: transparent;
         box-shadow: none !important;
         padding: 0;
+      }
+      .qr-code {
+        display: flex;
+        text-decoration: underline;
+        align-items: center;
+        cursor: pointer;
+        font-size: 12px;
+        gap: 10px;
+        transition: all 0.3s ease;
+        font-weight: 800;
+        &:hover {
+          color: $hover;
+        }
       }
     }
     h3 {

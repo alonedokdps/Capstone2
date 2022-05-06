@@ -1,73 +1,16 @@
 import React, {useRef} from "react";
 import {Link, useLocation} from "react-router-dom";
 import "./Sidebar.scss";
-import {
-  art,
-  community,
-  course,
-  home,
-  more,
-  movies,
-  attraction,
-  music,
-  nightlife,
-  sport,
-} from "../../images/imgicon/Index.js";
+import {AiOutlineHome} from "react-icons/ai";
+import {RiMovie2Line} from "react-icons/ri";
+import {GiGuitar, GiThreeLeaves} from "react-icons/gi";
+import {BsFillJournalBookmarkFill} from "react-icons/bs";
+import {FaDiscourse} from "react-icons/fa";
+import {MdAttractions, MdOutlineSportsHandball} from "react-icons/md";
+import {FiMoreHorizontal} from "react-icons/fi";
+
 const Sidebar = () => {
-  const headerRef = useRef(null);
   const {pathname} = useLocation();
-  const headerNav = [
-    {
-      name: "Home",
-      path: "/",
-      img: home,
-    },
-    {
-      name: "Movies",
-      path: "/movies",
-      img: movies,
-    },
-    {
-      name: "Music",
-      path: "/music",
-      img: music,
-    },
-    {
-      name: "Art",
-      path: "/art",
-      img: art,
-    },
-    {
-      name: "Nightlife",
-      path: "/nightlife",
-      img: nightlife,
-    },
-    {
-      name: "Community",
-      path: "/community",
-      img: community,
-    },
-    {
-      name: "Course",
-      path: "/course",
-      img: course,
-    },
-    {
-      name: "Attraction",
-      path: "/attraction",
-      img: attraction,
-    },
-    {
-      name: "Sport",
-      path: "/",
-      img: sport,
-    },
-    {
-      name: "More",
-      path: "/more",
-      img: more,
-    },
-  ];
 
   return (
     <div className="sidebar">
@@ -85,56 +28,43 @@ const Sidebar = () => {
         <li>
           <Link className={pathname === "/" && "active"} to="/">
             {" "}
-            <img src={home} alt="" />
+            <AiOutlineHome />
             Home
           </Link>
         </li>
         <li>
           <Link className={pathname === "/movies" && "active"} to="/movies">
-            {" "}
-            <img src={movies} alt="" />
+            <RiMovie2Line />
             Movies
           </Link>
         </li>
         <li>
           <Link className={pathname === "/music" && "active"} to="/music">
             {" "}
-            <img src={music} alt="" />
+            <GiGuitar />
             Live Music
           </Link>
         </li>
         <li>
           <Link className={pathname === "/art" && "active"} to="/art">
-            {" "}
-            <img src={art} alt="" />
+            <GiThreeLeaves />
             Theater - Art culture
           </Link>
         </li>
-        <li>
-          <Link
-            className={pathname === "/nightlife" && "active"}
-            to="/nightlife"
-          >
-            {" "}
-            <img src={nightlife} alt="" />
-            Nightlife
-          </Link>
-        </li>
+
         <li>
           <Link
             className={pathname === "/community" && "active"}
             to="/community"
           >
-            {" "}
-            <img src={community} alt="" />
+            <FaDiscourse />
             Community
           </Link>
         </li>
 
         <li>
           <Link className={pathname === "/course" && "active"} to="/course">
-            {" "}
-            <img src={course} alt="" />
+            <BsFillJournalBookmarkFill />
             Course
           </Link>
         </li>
@@ -144,21 +74,20 @@ const Sidebar = () => {
             to="/attraction"
           >
             {" "}
-            <img src={attraction} alt="" />
+            <MdAttractions />
             Attractions
           </Link>
         </li>
         <li>
           <Link className={pathname === "/sport" && "active"} to="/sport">
             {" "}
-            <img src={sport} alt="" />
+            <MdOutlineSportsHandball />
             Sport
           </Link>
         </li>
         <li>
           <Link className={pathname === "/more" && "active"} to="/more">
-            {" "}
-            <img src={more} alt="" />
+            <FiMoreHorizontal />
             More
           </Link>
         </li>

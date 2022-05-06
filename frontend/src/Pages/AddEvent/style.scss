@@ -1,6 +1,6 @@
 @use "../../scss/" as *;
 .section-add-event {
-  background-color: $green-core;
+  background-image: $gradient;
   max-width: 100%;
   min-height: 100%;
 
@@ -13,6 +13,7 @@
       width: 100%;
       label {
         font-size: 13px;
+        font-weight: bold;
       }
       textarea {
         width: 100%;
@@ -28,14 +29,20 @@
       text-align: center;
       display: flex;
       justify-content: flex-end;
+
       button {
         display: flex;
+        background: $gradient;
+        -webkit-background-clip: text;
+        font-weight: bold;
+        -webkit-text-fill-color: transparent;
         align-items: center;
-        background-color: #eee;
-        color: #999;
+        border: none;
+        color: $blue;
+
         padding: 5px 10px;
         border-radius: 8px;
-        border: none;
+
         outline: none;
       }
     }
@@ -60,6 +67,7 @@
           border: none;
           padding: 13px 15px;
           background-color: #eee;
+          border-radius: 10px;
           margin-bottom: 10px;
           transition: all 0.3s ease-out;
         }
@@ -77,12 +85,13 @@
         padding: 12px 20px;
         border: none;
         outline: none;
-        background-color: $green-core;
+        background-color: $blue;
         border-radius: 8px;
       }
       .box-x-input {
         label {
           font-size: 13px;
+          font-weight: bold;
         }
         display: flex;
         flex-direction: column;

@@ -10,20 +10,20 @@ const Cardmini = ({data, eventType}) => {
   const nameEventType = getEventTypeFromId(data.eventTypeId);
 
   return (
-    <div className="card-m">
-      <img src={`http://localhost:8000/${data.img}`} alt="" />
-      <div className="card-m-info">
-        <h4>
-          <Link to={`/detail/${data._id}`}>{data.name}</Link>
-        </h4>
-        <span>
-          <Moment format="DD/MM/YYYY">{data.dateOfEvent}</Moment>
-        </span>
-        <span>
-          {nameEventType.length > 0 && nameEventType.map((item) => item.name)}
-        </span>
+    <Link className="card-mini-link" to={`/detail/${data._id}`}>
+      <div className="card-m">
+        <img src={`http://localhost:8000/${data.img}`} alt="" />
+        <div className="card-m-info">
+          <h4>{data.name}</h4>
+          <span>
+            <Moment format="DD/MM/YYYY">{data.dateOfEvent}</Moment>
+          </span>
+          <span>
+            {nameEventType.length > 0 && nameEventType.map((item) => item.name)}
+          </span>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

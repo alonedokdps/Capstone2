@@ -1,14 +1,25 @@
 @use "../../scss/" as *;
+.card-mini-link {
+  max-width: calc(25% - 40px);
+  display: block;
+  border-radius: 8px;
+  transition: all 0.1s linear;
+  &:hover .card-m,
+  &:hover img {
+    background-color: #eee;
+    color: #999;
+    filter: grayscale(30%);
+  }
+}
 .card-m {
-  width: calc(25% - 40px);
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  transition: all 0.1s linear;
   cursor: pointer;
-  &:hover h4 a {
-    color: $hover;
-  }
+
   img {
     border-radius: 8px;
   }
@@ -18,7 +29,7 @@
     justify-content: flex-start;
     flex-direction: column;
     h4 {
-      font-size: 13px;
+      font-size: 15px;
     }
     h4,
     span {

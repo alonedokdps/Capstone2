@@ -27,15 +27,15 @@
     font-size: 14px;
     font-weight: bold;
     font-style: normal;
-
+    color: $grey-text;
     line-height: 20px;
     gap: 10px;
     transition: all 0.3s ease;
     &.active {
-      color: $hover;
+      color: $pink;
     }
     &:hover {
-      color: $hover;
+      color: $pink;
     }
     img {
       width: 24px;

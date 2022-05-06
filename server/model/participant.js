@@ -13,8 +13,9 @@ const participantSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
   QR_Code: {
-    type: String
+    type: String,
   },
 });
 

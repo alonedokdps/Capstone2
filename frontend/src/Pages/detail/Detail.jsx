@@ -5,6 +5,7 @@ import {BsArrowLeft} from "react-icons/bs";
 import CardInfo from "../../Components/card-info/CardInfo";
 import About from "../../Components/About/About";
 import ApiEventDetail from "../../api/Event.Detail.api";
+import EventDetails from "../../Components/eventDetail/EventDetails";
 
 const Detail = ({eventType}) => {
   const {id} = useParams();
@@ -14,6 +15,7 @@ const Detail = ({eventType}) => {
       .then((data) => {
         if (data) {
           setEventDetail(data);
+          console.log(data);
         }
       })
       .catch((err) => console.log(err));

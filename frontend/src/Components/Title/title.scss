@@ -15,6 +15,9 @@
     display: flex;
     flex-basis: 100%;
     align-items: center;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: $green-core;
     margin: 8px 0px;
   }
@@ -22,7 +25,7 @@
   h3::after {
     content: "";
     flex-grow: 1;
-    background: $green-core;
+    background: $gradient;
     height: 3px;
     font-size: 0px;
     line-height: 0px;

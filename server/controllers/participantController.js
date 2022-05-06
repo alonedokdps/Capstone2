@@ -54,11 +54,13 @@ const participantController = {
           );
 
           res.json({
-            message: "Change attended Successful",
-            data: updatedParticipant,
+            success: true,
+            message: " attended Successful",
+            // data: updatedParticipant,
           });
         } else {
           res.json({
+            success: true,
             message: "You already attended this event",
           });
         }

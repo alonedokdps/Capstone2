@@ -1,7 +1,7 @@
 @use "../../scss/" as *;
 
 .full-w-h-ab {
-  background-color: $green-core;
+  background-image: $gradient;
 
   width: 100%;
   min-height: 100vh;

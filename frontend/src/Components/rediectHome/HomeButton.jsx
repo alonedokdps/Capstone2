@@ -3,10 +3,14 @@ import {AiOutlineHome} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import "./style.scss";
 const HomeButton = () => {
-  const style = {color: "#fff", fontSize: "20px", fontWeight: "bold"};
+  const style = {
+    color: "#86a8e7",
+    fontSize: "20px",
+    fontWeight: "bold",
+  };
   return (
     <Link to="/" className="btn-return-home">
-      <AiOutlineHome style={style} />
+      <AiOutlineHome className="homeicon" style={style} />
     </Link>
   );
 };

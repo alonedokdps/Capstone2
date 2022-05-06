@@ -11,7 +11,7 @@ import ApiUser from "../../api/User.api.js";
 import {toast} from "react-toastify";
 import {Link, useNavigate} from "react-router-dom";
 const SignUp = ({change}) => {
-  const style = {color: "#2dc275", cursor: "pointer"};
+  const style = {color: "#black", cursor: "pointer"};
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const formik = useFormik({

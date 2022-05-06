@@ -8,6 +8,7 @@ form {
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   transition: all 0.3s ease;
   animation: zoom;
+  border-radius: 8px;
   animation-duration: 0.5s;
   overflow: hidden;
   // &:before {
@@ -35,8 +36,8 @@ form {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     padding: 0 20px 0;
     font-weight: 700;
-    border-left: 8px solid $green-core;
-    color: $green-core;
+    border-left: 8px solid #86a8e7;
+    color: #86a8e7;
     position: relative;
     font-size: 30px;
     display: flex;
@@ -100,7 +101,7 @@ form {
       position: absolute;
       top: 0;
       left: 10px;
-      background-color: $green-core;
+      background-color: #86a8e7;
       padding: 1px 5px;
       font-size: 10px;
       transform: translateY(-50%);
@@ -112,7 +113,7 @@ form {
       display: block;
       width: 400px;
       font-size: 14px;
-      border: 1px solid $green-core;
+      border: 1px solid #86a8e7;
       border-radius: 4px;
       background-color: transparent;
       color: black;

@@ -12,7 +12,7 @@ import ErrorMsg from "../errorsMsg/ErrorMsg";
 import {useCookies} from "react-cookie";
 const SignIn = ({change}) => {
   const [showPass, setShowPass] = useState(false);
-  const style = {color: "#2dc275", cursor: "pointer"};
+  const style = {color: "#86a8e7", cursor: "pointer"};
   const [cookies, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
   console.log(cookies);
@@ -33,7 +33,7 @@ const SignIn = ({change}) => {
           setCookie("token", res.token, {path: "/"});
           localStorage.setItem("user", JSON.stringify(res));
 
-          toast.success(res.message);
+          toast(res.message);
           navigate("/");
         } else {
           formik.resetForm();

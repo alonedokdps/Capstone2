@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const accountSchema = new mongoose.Schema(
   {
-    fullName: {
+    fullname: {
       type: String,
       required: false,
     },
@@ -31,6 +31,10 @@ const accountSchema = new mongoose.Schema(
       required: false,
     },
     class: {
+      type: String,
+      required: false,
+    },
+    avatar: {
       type: String,
       required: false,
     },

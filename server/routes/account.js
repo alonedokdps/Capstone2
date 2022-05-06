@@ -1,5 +1,6 @@
 const accountController = require("../controllers/accountController");
 const auth = require("../controllers/auth");
+const upload = require("../middlewares/Upload.js");
 
 const router = require("express").Router();
 
@@ -31,7 +32,11 @@ router.get(
   // auth.role(["Admin"]),
   accountController.getAccountByID
 );
-
+router.put(
+  "/updateAvatar",
+  upload.single("avatar"),
+  accountController.updateAvatar
+);
 //UPDATE A ACCOUNT
 router.put("/:id", auth.isAuthenticated, accountController.updateAccount);
 
