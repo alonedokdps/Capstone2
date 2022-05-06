@@ -36,4 +36,12 @@ router.delete("/deleteEvent/:id", eventController.deleteEvent); // auth.isAuthen
 ////SEARCH EVENT EVENT ID AND EVENT NAME
 router.get("/Search/", eventController.Search);
 
+router.get("/SortByDate/", eventController.SortByDate);
+
+router.get("/getWeek/", eventController.getWeek);
+
+router.get("/getMonth/", eventController.getMonth);
+
+router.get("/getDate/", eventController.getDate);
+
 module.exports = router;
