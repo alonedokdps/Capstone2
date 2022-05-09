@@ -1,21 +1,31 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Account.scss";
 import {BsFillPencilFill} from "react-icons/bs";
 import {AiOutlineClose} from "react-icons/ai";
-
-const Account = ({user, eventType, course}) => {
-  console.log(eventType);
+import AOS from "aos";
+import "aos/dist/aos.css";
+const Account = ({userById}) => {
+  console.log("user", userById);
   const [show, setShow] = useState(false);
   const [values, setValues] = useState({});
   const handleChange = (e) => {
-    console.log(values);
     setValues({...values, [e.target.name]: e.target.value});
   };
+
+  useEffect(() => {
+    AOS.init();
+  });
   return (
     <div className="user-account">
-      <h1 className={show && "edit"}>{show ? "Edit Account" : "Account"}</h1>
+      <h1 data-aos="fade-right" className={show && "edit"}>
+        {show ? "Edit Account" : "Account"}
+      </h1>
       <div className="user-account-container">
-        <form autocomplete="off" className="user-account-container-form">
+        <form
+          autocomplete="off"
+          className="user-account-container-form"
+          data-aos="fade-right"
+        >
           <div className="edit-btn">
             <button
               type="button"
@@ -42,7 +52,7 @@ const Account = ({user, eventType, course}) => {
               <input
                 autocomplete="off"
                 type="text"
-                defaultValue={user.fullname}
+                value={userById.fullname}
                 onChange={handleChange}
                 className={show && "edit"}
                 id="fullname"
@@ -59,7 +69,7 @@ const Account = ({user, eventType, course}) => {
                 type="text"
                 className={show && "edit"}
                 id="username"
-                defaultValue={user.username}
+                defaultValue={userById.username}
                 name="username"
                 onChange={handleChange}
                 placeholder="Enter your username"
@@ -75,7 +85,7 @@ const Account = ({user, eventType, course}) => {
                 className={show && "edit"}
                 id="email"
                 name="email"
-                defaultValue={user.email}
+                defaultValue={userById.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
               />
@@ -88,7 +98,7 @@ const Account = ({user, eventType, course}) => {
               </label>
               <input
                 autocomplete="off"
-                defaultValue={user.phone}
+                defaultValue={userById.phone}
                 type="text"
                 className={show && "edit"}
                 onChange={handleChange}
@@ -105,7 +115,7 @@ const Account = ({user, eventType, course}) => {
                 autocomplete="off"
                 type="date"
                 className={show && "edit"}
-                defaultValue={user.birthday}
+                defaultValue={userById.birthday}
                 onChange={handleChange}
                 id="birthday"
                 name="birthday"
@@ -123,7 +133,7 @@ const Account = ({user, eventType, course}) => {
                 id="password"
                 onChange={handleChange}
                 name="password"
-                defaultValue={user.password}
+                defaultValue={userById.password}
                 placeholder="Enter your password"
               />
             </div>
@@ -139,7 +149,7 @@ const Account = ({user, eventType, course}) => {
                 className={show && "edit"}
                 id="class"
                 onChange={handleChange}
-                defaultValue={user.class}
+                defaultValue={userById.class}
                 name="class"
                 placeholder="Enter your number"
               />
@@ -155,7 +165,7 @@ const Account = ({user, eventType, course}) => {
                 className={show && "edit"}
                 onChange={handleChange}
                 name="department"
-                defaultValue={user.departmentId}
+                defaultValue={userById.departmentId}
                 placeholder="Enter your birthday"
               />
             </div>
@@ -170,13 +180,13 @@ const Account = ({user, eventType, course}) => {
                 id="coures"
                 onChange={handleChange}
                 name="coures"
-                defaultValue={user.courseId}
+                defaultValue={userById.courseId}
                 placeholder="Enter your coures"
               />
             </div>
           </div>
           {show && (
-            <div className="account-input-fields">
+            <div className="account-input-fields" data-aos="zoom-in">
               <button
                 className={
                   show ? "btn-update-account edit" : "btn-update-account"

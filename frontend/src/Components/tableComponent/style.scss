@@ -1,0 +1,121 @@
+@use "../../scss/" as *;
+.table-container {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 10000000;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  overflow-y: hidden !important;
+  bottom: 0;
+  background-color: transparent !important;
+  backdrop-filter: blur(8px);
+  .description-circle {
+    position: absolute;
+    z-index: 10000000;
+    top: 30px;
+    right: 100px;
+    div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+  }
+  &-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1000;
+    background-color: transparent;
+    backdrop-filter: blur(8px);
+  }
+  &-content {
+    position: relative;
+    z-index: 1000000;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+
+    border-radius: 8px;
+    &-btn-export-table {
+      position: absolute;
+      top: -50px;
+      background-color: #6a5af9;
+      left: 0;
+      padding: 10px 15px;
+      border: none;
+      outline: none;
+      box-shadow: 20px 20px 20px 5px $clr-primary-dark;
+      color: #fff;
+      &:focus {
+        outline-width: 1px;
+        outline-style: dashed;
+        outline-color: black;
+      }
+    }
+    table {
+      border-collapse: collapse;
+      box-shadow: 20px 20px 20px 5px $clr-primary-dark;
+      background-color: white;
+      text-align: center;
+      width: 100%;
+      tbody {
+        position: relative;
+        tr .no-data-table {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          margin-top: 20px;
+        }
+        tr .no-data-table h1 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      th {
+        background-color: $clr-primary;
+        padding: 0.75rem 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        font-size: 0.7rem;
+        font-weight: 900;
+      }
+
+      td {
+        padding: 1rem 2rem;
+        font-size: 13px;
+        button {
+          width: 20px;
+          height: 20px;
+          background-color: $blue;
+          color: white;
+          border-radius: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          outline: none;
+        }
+      }
+
+      //   Color alternating rows
+      tr:nth-child(even) {
+        background-color: $clr-primary-light;
+      }
+      td:nth-last-child(2) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+    }
+  }
+}

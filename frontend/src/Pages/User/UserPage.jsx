@@ -8,6 +8,7 @@ import SidebarUser from "./SidebarUser";
 const UserPage = () => {
   const [user, setUser] = useState([]);
   const [fileName, setFileName] = useState("");
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData) {

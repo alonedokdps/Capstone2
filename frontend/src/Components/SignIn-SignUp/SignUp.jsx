@@ -71,7 +71,11 @@ const SignUp = ({change}) => {
   });
   console.log(formik);
   return (
-    <form onSubmit={formik.handleSubmit} autoComplete="off">
+    <form
+      onSubmit={formik.handleSubmit}
+      autoComplete="off"
+      data-aos="fade-left"
+    >
       <h3>
         SIGN UP{" "}
         <HiOutlineSwitchHorizontal

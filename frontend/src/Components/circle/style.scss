@@ -1,0 +1,32 @@
+@use "../../scss/" as *;
+.circle {
+  border: none;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.circle.red {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.circle.green {
+  width: 10px;
+  height: 10px;
+  background-color: #00ff00;
+  border-radius: 100%;
+}
+
+.circle.orange {
+  width: 10px;
+  height: 10px;
+  background-color: orange;
+  border-radius: 100%;
+}
+.circle.grey {
+  width: 10px;
+  height: 10px;
+  background-color: grey;
+  border-radius: 100%;
+}

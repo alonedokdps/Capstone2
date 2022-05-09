@@ -1,3 +1,4 @@
+const {json} = require("express/lib/response");
 const Event = require("../model/event");
 const EventDetail = require("../model/eventDetail");
 const eventDetailController = require("./eventDetailController");
@@ -37,15 +38,15 @@ const eventController = {
 
   //DUYET EVENT //Truyen vao Status {"status": "Accept"}/ {"status": "Reject"}
   updateStatusEvent: async (req, res) => {
-    const updateStatus = await Event.findByIdAndUpdate(
-      req.params.id,
-      {status: req.body.status},
-      (err, data) => {
-        err
-          ? res.status(500).send(err.message)
-          : res.status(200).send("update status success");
-      }
-    );
+    if (!req.body.status)
+      return res.json({success: false, message: "Status is required"});
+    const updateStatus = await Event.findByIdAndUpdate(req.params.id, {
+      status: req.body.status,
+      new: true,
+    });
+    if (updateStatus) {
+      res.status(200).json({success: true, message: "update status success"});
+    }
   },
 
   //GET ALL EVENTS
@@ -214,7 +215,6 @@ const eventController = {
     try {
       await EventDetail.find({eventId: req.params.id})
         .then((details) => {
-          // res.send(details);
           details.map((detail) => {
             let isDelete = eventDetailController.deleteEventDetail(detail._id);
             if (!isDelete) {
@@ -226,7 +226,7 @@ const eventController = {
           res.status(500).send(err.message);
         });
       await Event.findByIdAndDelete(req.params.id);
-      res.status(200).json("Deleted successfully!");
+      res.status(200).json({success: true, message: "Deleted successfully!"});
     } catch (err) {
       res.status(500).json(err.message);
     }
@@ -315,6 +315,21 @@ const eventController = {
       });
     } else {
       res.json({message: "Have not Event"});
+    }
+  },
+  getEventByStatus: async (req, res) => {
+    const query = req.query.status;
+
+    if (query) {
+      const event = await Event.find({status: query});
+      if (event.length > 0) {
+        res.json({success: true, event});
+      } else {
+        res.json({success: false, message: "404 Not found"});
+      }
+    } else {
+      const event = await Event.find({});
+      res.json({success: true, event});
     }
   },
 };

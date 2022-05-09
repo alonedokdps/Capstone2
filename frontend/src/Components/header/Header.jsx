@@ -15,6 +15,8 @@ import {Link} from "react-router-dom";
 import DropdownUser from "../Dropdown/DropdownUser";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import ApiSearch from "../../api/SearchEvent.api.js";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const Header = ({data}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [click, setClick] = useState(false);
@@ -23,6 +25,10 @@ const Header = ({data}) => {
   const [keyword, setKeyword] = useState("");
   const [role, setRole] = useState("");
   const {show, setShow, nodeRef} = useClickOutSide();
+
+  useEffect(() => {
+    AOS.init();
+  });
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user.role) {
@@ -86,12 +92,12 @@ const Header = ({data}) => {
         <div className="menu-mobile" onClick={() => setClick(!click)}>
           {click ? <AiOutlineClose /> : <CgMenuLeftAlt />}
         </div>
-        <div className="logo-header">
+        <div className="logo-header" data-aos="flip-left">
           <Link to="/">
             DEVENT <img src={logo} style={{width: "30px"}} />
           </Link>
         </div>
-        <div className="search">
+        <div className="search" data-aos="zoom-in">
           <AiOutlineSearch className="icon-search" />
           <input
             type="text"
@@ -115,18 +121,20 @@ const Header = ({data}) => {
         <div className="user-icon">
           {cookies.token && (
             <BsCalendar2Event
+              data-aos="fade-right"
               style={{fontSize: "25px", margin: "0 20px", color: "black"}}
             />
           )}
           {role && role === "Admin" && (
             <Link to="/add-event" className="icon-add">
               <BsPatchPlus
+                data-aos="fade-down"
                 style={{fontSize: "25px", margin: "0 20px", color: "black"}}
               />
             </Link>
           )}
           {!cookies.token && (
-            <Link to="/login" className="sign-in">
+            <Link data-aos="fade-left" to="/login" className="sign-in">
               Sign in | Sign up
             </Link>
           )}
@@ -137,6 +145,7 @@ const Header = ({data}) => {
               onClick={() => setShow(!show)}
             >
               <RiUser3Line
+                data-aos="fade-left"
                 style={{
                   fontSize: "25px",
                   margin: "0 20px",

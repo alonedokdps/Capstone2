@@ -16,9 +16,12 @@ import ApiRegistrationEvent from "../../api/RegisTrationEvent.api.js";
 import {VscOrganization} from "react-icons/vsc";
 import allParticipants from "../../api/GetAllParticipants.api";
 import ApiAttend from "../../api/AttendEvent.api.js";
-import useAlert from "../Alert/Alert";
+
 import Qrcode from "../qr-code/Qrcode";
+import ApiUpdateScore from "../../api/UpdateScore.api";
+import AlertCustom from "../AlertCustome/AlertCustom";
 const CardInfo = ({data, eventType}) => {
+  console.log(data);
   const [qr_data, setQrData] = useState([]);
   // const [listRegistration, setListRegistration] = useState([]);
   const [checkRegister, setCheckRegister] = useState(false);
@@ -26,6 +29,8 @@ const CardInfo = ({data, eventType}) => {
   // console.log("listRegistration", listRegistration);
   const [showQR, setShowQr] = useState(false);
   const [idParticipant, setIdParticipant] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [msg, setMsg] = useState("");
   // const {alertComponent, check, setCheck} = useAlert({
   //   mess: "Do you want to register?",
   // });
@@ -59,13 +64,21 @@ const CardInfo = ({data, eventType}) => {
   }, [data._id, qr_data]);
   const handleAttendEvent = (e) => {
     e.preventDefault();
-
+    const dataUser = JSON.parse(localStorage.getItem("user"));
     if (checkAttend) return;
     ApiAttend.AttendEvent(idParticipant)
       .then((data) => {
         if (data.success) {
-          toast.success(data.message);
           setCheckAttend(true);
+          toast.success(data.message);
+          ApiUpdateScore.UpdateScore(dataUser.id)
+            .then((data) => {
+              if (data.success) {
+                setMsg(data.message);
+                setShowAlert(true);
+              }
+            })
+            .catch((err) => console.log(err));
         } else {
           toast.error(data.message);
         }
@@ -179,6 +192,13 @@ const CardInfo = ({data, eventType}) => {
         </div>
       </div>
       {showQR && <Qrcode open={showQR} handleClose={() => setShowQr(false)} />}
+      {showAlert && (
+        <AlertCustom
+          title="congratulations"
+          msg={msg}
+          handleClose={setShowAlert}
+        />
+      )}
     </>
   );
 };

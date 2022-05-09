@@ -32,6 +32,7 @@ router.get(
   // auth.role(["Admin"]),
   accountController.getAccountByID
 );
+router.put("/updateScore", accountController.updateScore);
 router.put(
   "/updateAvatar",
   upload.single("avatar"),

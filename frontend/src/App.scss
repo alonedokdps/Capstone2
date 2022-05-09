@@ -18,12 +18,12 @@ body {
     width: 5px;
   }
   &::-webkit-scrollbar-track {
-    background-color: #eee;
+    background-color: #fff;
     border-radius: 100rem;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 100rem;
-    background-color: $green-core;
+    background-image: $gradient;
   }
 }
 li,

@@ -1,12 +1,12 @@
 @use "../../scss/" as *;
 .user-account {
+  animation: none !important;
   h1 {
     color: black;
     font-weight: bold;
-    transition: all 0.3s ease;
   }
   h1.edit {
-    color: $pink;
+    color: black;
   }
   .user-account-container {
     display: flex;
@@ -42,7 +42,7 @@
         outline: none;
         border-radius: 8px;
         color: #fff;
-        background-color: $pink;
+        background-color: black;
         font-weight: bold;
       }
     }
@@ -51,7 +51,7 @@
       background-color: transparent !important;
       box-shadow: none;
       padding: 20px 0 !important;
-
+      animation: none !important;
       .account-input-fields {
         display: flex;
         justify-content: center;
@@ -64,7 +64,7 @@
           color: white;
           padding: 10px 30px;
           border-radius: 4px;
-          background-color: $pink;
+          background-color: black;
           cursor: pointer;
           font-weight: 500;
           transition: all 0.3s ease;
@@ -92,18 +92,19 @@
           width: 100%;
         }
         .btn-update-account.edit {
-          background-color: $pink;
+          background-color: black;
           color: #fff;
           border: none;
         }
         .text-field.edit {
-          border: 1px solid $pink;
+          border: 1px solid black;
         }
         .text-field {
           border: 1px solid black;
           z-index: 1000;
           transition: all 0.3s ease;
           border-radius: 6px;
+          animation: none !important;
 
           label {
             display: inline-block;
@@ -116,7 +117,7 @@
             z-index: 1000;
           }
           label.edit {
-            background-color: $pink;
+            background-color: black;
           }
           input {
             display: block;

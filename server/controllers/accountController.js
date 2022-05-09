@@ -97,6 +97,24 @@ const accountController = {
       res.status(500).json(err);
     }
   },
+  updateScore: async (req, res) => {
+    try {
+      const account = await Account.findById(req.body.accountId);
+      const update = await account.updateOne({
+        $set: {
+          score: account.score + 5,
+        },
+      });
+      if (update) {
+        res.json({
+          success: true,
+          message: "Congratulations ! You get 5 training points",
+        });
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 };
 
 module.exports = accountController;

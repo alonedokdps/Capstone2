@@ -70,11 +70,14 @@ const participantController = {
 
   //GET ALL PARTICIPANT IN EVENT
   getAllParticipants: async (req, res) => {
+    if (req.query.eventId === "") return res.json([]);
     try {
       const participants = await Participant.find({
-        eventId: req.params.eventId,
+        eventId: req.query.eventId,
       });
-      res.json(participants);
+      if (participants) {
+        res.json(participants);
+      }
     } catch (err) {
       res.json({message: err});
     }
@@ -86,7 +89,6 @@ const participantController = {
       const removedParticipants = await Participant.remove({
         eventId: req.body.eventId,
       });
-      res.json(removedParticipants);
     } catch (err) {
       res.json({message: err});
     }

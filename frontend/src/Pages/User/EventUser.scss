@@ -1,0 +1,94 @@
+@use "../../scss/" as *;
+.event-user {
+  max-height: calc(100% - 20px);
+  h1 {
+    margin-bottom: 20px;
+  }
+  .event-status {
+    h1 {
+      margin-bottom: 10px;
+    }
+    &-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+    }
+  }
+  .event-management {
+    margin-top: 30px;
+    &-box {
+      display: flex;
+      justify-content: center;
+
+      gap: 20px;
+      &-row1 {
+        flex-basis: 65%;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        &-container {
+          margin-top: 20px;
+          //   display: flex;
+          //   align-items: center;
+          //   flex-direction: column;
+          width: 100%;
+          max-height: 400px;
+          height: 400px;
+
+          overflow-y: scroll;
+          .No-data {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-height: 400px;
+            height: 400px;
+            h4 {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              font-size: 20px;
+              font-weight: 500;
+            }
+          }
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: $grey-text;
+            border-radius: 10px;
+          }
+        }
+
+        .tabs1 {
+          display: flex;
+        }
+
+        .tabs1 .tab-item.active {
+          color: #6a5af9;
+          border-bottom-color: currentColor;
+        }
+
+        .tabs1 .tab-item {
+          font-size: 12px;
+          white-space: nowrap;
+          padding: 10px 15px;
+          cursor: pointer;
+          color: #999;
+          font-weight: 500;
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: inherit;
+          border-bottom: 1px solid transparent;
+        }
+      }
+      &-row2 {
+        flex-basis: 35%;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        padding: 20px;
+      }
+    }
+  }
+}

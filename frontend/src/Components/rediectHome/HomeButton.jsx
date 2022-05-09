@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {AiOutlineHome} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import "./style.scss";
+
 const HomeButton = () => {
   const style = {
     color: "#86a8e7",

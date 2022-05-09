@@ -59,5 +59,5 @@ app.use("/api/participant", participantRoute);
 // ======================================= //
 
 app.listen(8000, () => {
-  console.log(`server on runing `);
+  console.log(`server on runing on port http://localhost:8000 `);
 });

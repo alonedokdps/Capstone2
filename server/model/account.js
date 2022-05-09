@@ -52,6 +52,11 @@ const accountSchema = new mongoose.Schema(
       default: "User",
       required: false,
     },
+    score: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   {timestamps: true}
 );

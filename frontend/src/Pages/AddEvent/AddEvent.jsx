@@ -62,11 +62,11 @@ const AddEvent = () => {
 
     formdata.append("accountId", JSON.parse(localStorage.getItem("user")).id);
     ApiEvent.addEvent(formdata)
-      .then((res) => {
+      .then(async (res) => {
         if (res.status) {
-          Navigate(`/detail/${res.data._id}`, {replace: true});
-          toast.success(res.message);
-          console.log(res.data._id);
+          await toast.success(res.message);
+          await Navigate(`/detail/${res.data._id}`, {replace: true});
+          window.location.reload();
         }
       })
       .catch((err) => toast.error(err));

@@ -2,7 +2,8 @@ import axios from "./AxiosClient";
 const getAllParticipants = async (id) => {
   const {data} = await axios({
     method: "get",
-    url: `/participant/GetAllParticipants/${id}`,
+    url: `/participant/GetAllParticipants`,
+    params: {eventId: id},
   });
   return data;
 };
