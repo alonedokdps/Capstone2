@@ -37,16 +37,20 @@ const Header = ({data}) => {
     } else {
       setRole("");
     }
-  }, []);
+  }, [setCookie]);
   const handleChangeSearch = (e) => {
     setKeyword(e.target.value);
   };
   useEffect(() => {
+    const abortController = new AbortController();
     ApiSearch.SearchApi(keyword)
       .then((res) => {
         setFillterData(res.data);
       })
       .catch((error) => console.log(error));
+    return () => {
+      abortController.abort();
+    };
   }, [keyword]);
   const activeHeader = () => {
     if (window.scrollY > 80) {
@@ -63,7 +67,6 @@ const Header = ({data}) => {
     window.addEventListener("scroll", activeHeader);
     return () => {
       window.removeEventListener("scroll", activeHeader);
-      // console.log("cleaned");
     };
   }, []);
   return (

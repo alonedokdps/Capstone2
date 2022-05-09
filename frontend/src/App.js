@@ -44,66 +44,9 @@ function App() {
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
   const [userById, setUserById] = useState({});
-  // useEffect(() => {
-  //   const userData = JSON.parse(localStorage.getItem("user"));
-  //   if (userData) {
-  //     ApiCourses.getCourses()
-  //       .then((courses) => {
-  //         setCourse(courses);
-  //         console.log(course);
-  //       })
-  //       .catch((err) => console.log(err));
-  //     ApiDepartment.getDepartments()
-  //       .then((data) => setDepartment(data))
-  //       .catch((err) => console.log(err));
-  //     ApiEventType.getEventType()
-  //       .then((data) => {
-  //         if (data) {
-  //           setEventType(data);
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //     ApiGetUserById.GetUserById(userData.id)
-  //       .then((data) => {
-  //         if (data) {
-  //           setUser({
-  //             ...data,
-  //             birthday: moment(data.birthday).format("YYYY-MM-DD"),
-  //           });
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  //   getAllEventApi
-  //     .getAllEvent()
-  //     .then((data) => {
-  //       if (data) {
-  //         // const cloneData = [...data];
-  //         // const cloneEventType = [...eventType];
-  //         // const filter = cloneData.map((item) => {
-  //         //   item.dateOfEvent = moment(item.dateOfEvent).format("YYYY-MM-DD");
-  //         //   item.createdAt = moment(item.createdAt).format("YYYY-MM-DD");
-  //         //   item.updatedAt = moment(item.updatedAt).format("YYYY-MM-DD");
 
-  //         //   cloneEventType.map((item2) => {
-  //         //     if (item.eventTypeId === item2._id) {
-  //         //       item.eventTypeId = item2.name;
-  //         //     }
-  //         //   });
-  //         //   return item;
-  //         // });
-
-  //         console.log(data);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  //   APigetEventByStatus.getEventByStatus(valueFilter).then((data) => {
-  //     if (data) {
-  //       setTotalData(data.event);
-  //     }
-  //   });
-  // }, [valueFilter]);
   useEffect(() => {
+    let controller = new AbortController();
     const userData = JSON.parse(localStorage.getItem("user"));
     ApiGetUserById.GetUserById(userData.id).then((data) => {
       if (data) {
@@ -131,6 +74,7 @@ function App() {
         });
       }
     });
+    return () => controller?.abort();
   }, []);
   useEffect(() => {
     ApiGetAllAccount.getAllAccount().then((data) => {
@@ -165,6 +109,8 @@ function App() {
     });
   }, []);
   useEffect(() => {
+    const abortController = new AbortController();
+
     const userData = JSON.parse(localStorage.getItem("user"));
     getAllEventApi
       .getAllEvent()
@@ -206,8 +152,12 @@ function App() {
         }
       })
       .catch((err) => console.log(err));
+    return () => {
+      abortController.abort();
+    };
   }, [valueFilter, idEvent, deleteEvent, updateStatus]);
   useEffect(() => {
+    const abortController = new AbortController();
     APigetEventByStatus.getEventByStatus("Accept")
       .then((data) => {
         if (data) {
@@ -235,6 +185,9 @@ function App() {
         }
       })
       .catch((err) => console.log(err));
+    return () => {
+      abortController.abort();
+    };
   }, [updateStatus, deleteEvent]);
   const selectEvent = (e) => {
     setIdEvent(e.target.dataset.value);

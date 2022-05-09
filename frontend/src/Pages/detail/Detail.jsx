@@ -10,16 +10,16 @@ import EventDetails from "../../Components/eventDetail/EventDetails";
 const Detail = ({eventType}) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
-  useEffect(() => {
-    ApiEventDetail.getEventDetal(id)
-      .then((data) => {
-        if (data) {
-          setEventDetail(data);
-          console.log(data);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [id]);
+  // useEffect(() => {
+  //   ApiEventDetail.getEventDetal(id)
+  //     .then((data) => {
+  //       if (data) {
+  //         setEventDetail(data);
+  //         console.log(data);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [id]);
 
   const getEventTypeFromId = (id) => {
     const event = eventType.filter((item) => item._id === id);

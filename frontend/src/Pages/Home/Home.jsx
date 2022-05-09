@@ -19,10 +19,15 @@ import "aos/dist/aos.css";
 const Home = ({eventType, data}) => {
   const [num, setNum] = useState(5);
   const [featuredEvent, setFeaturedEvent] = useState([]);
-  // useEffect(() => {
-  //   getAllEventApi.getAllEvent().then((data) => console.log("data", data));
-  // }, []);
   useEffect(() => {
+    const abortController = new AbortController();
+    getAllEventApi.getAllEvent().then((data) => console.log("data", data));
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+  useEffect(() => {
+    const abortController = new AbortController();
     getAllEventApi
       .getAllEvent()
       .then((data) => {
@@ -31,17 +36,26 @@ const Home = ({eventType, data}) => {
         }
       })
       .catch((err) => console.log(err));
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   const resize = () => {
-    if (window.innerWidth < 1024) {
-      setNum(4);
-      if (window.innerWidth < 600) {
-        setNum(2);
+    const handleScroll = () => {
+      if (window.innerWidth < 1024) {
+        setNum(4);
+        if (window.innerWidth < 600) {
+          setNum(2);
+        }
+      } else {
+        setNum(5);
       }
-    } else {
-      setNum(5);
-    }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return function cleanupListener() {
+      window.removeEventListener("scroll", handleScroll);
+    };
   };
   useEffect(() => {
     window.addEventListener("resize", resize);

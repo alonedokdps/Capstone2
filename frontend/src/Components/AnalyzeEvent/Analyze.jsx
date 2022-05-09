@@ -20,6 +20,7 @@ const Analyze = ({
   const [open, setOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
+    const abortController = new AbortController();
     if (idEvent) {
       ApiEventDetail.getEventDetal(idEvent).then((res) => {
         if (res) {
@@ -33,6 +34,9 @@ const Analyze = ({
     } else {
       setStatus("");
     }
+    return () => {
+      abortController.abort();
+    };
   }, [idEvent]);
   const handleClose = () => {
     setOpen(false);
