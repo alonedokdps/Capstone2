@@ -20,7 +20,8 @@ import ApiAttend from "../../api/AttendEvent.api.js";
 import Qrcode from "../qr-code/Qrcode";
 import ApiUpdateScore from "../../api/UpdateScore.api";
 import AlertCustom from "../AlertCustome/AlertCustom";
-const CardInfo = ({data, eventType}) => {
+import CountDown from "../CountDown/CountDown";
+const CardInfo = ({data, eventType, img}) => {
   console.log(data);
   const [qr_data, setQrData] = useState([]);
   // const [listRegistration, setListRegistration] = useState([]);
@@ -31,6 +32,7 @@ const CardInfo = ({data, eventType}) => {
   const [idParticipant, setIdParticipant] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [msg, setMsg] = useState("");
+  const [showCountDown, setshowCountDown] = useState(false);
   // const {alertComponent, check, setCheck} = useAlert({
   //   mess: "Do you want to register?",
   // });
@@ -199,6 +201,7 @@ const CardInfo = ({data, eventType}) => {
           handleClose={setShowAlert}
         />
       )}
+      {showCountDown && <CountDown />}
     </>
   );
 };
