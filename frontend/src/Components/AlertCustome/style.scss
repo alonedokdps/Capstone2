@@ -23,6 +23,28 @@
     backdrop-filter: blur(8px);
   }
   &-content {
+    &-error {
+      display: flex;
+      align-items: center;
+      justify-content: Center;
+      flex-direction: column;
+      &-img {
+        img {
+          width: 180px;
+          height: 180px;
+          object-fit: cover;
+        }
+      }
+      &-btn {
+        padding: 10px 15px;
+        background-color: crimson;
+        border: none;
+        outline: none;
+
+        border-radius: 8px;
+        color: white;
+      }
+    }
     position: relative;
     z-index: 1000000;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,

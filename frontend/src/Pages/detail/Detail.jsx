@@ -6,6 +6,7 @@ import {BsArrowLeft} from "react-icons/bs";
 import {ImLocation} from "react-icons/im";
 import {BiTimeFive} from "react-icons/bi";
 import {FaAudioDescription} from "react-icons/fa";
+import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 
 import CardInfo from "../../Components/card-info/CardInfo";
 import About from "../../Components/About/About";
@@ -18,10 +19,16 @@ import Button from "../../Components/button/Button";
 const Detail = ({eventType}) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
-  const dateValue = new Date(new Date());
-  const txt =
-    "Bức tranh kinh tế thế giới đầu nửa năm 2022 mang nhiều màu sắc khác nhau. Các nền kinh tế lớn phục hồi mạnh dựa vào các gói kích thích kinh tế trước đó hỗ trợ các chỉ số chứng khoán dao động trên vùng đỉnh. Nhưng gần như cùng thời điểm, các ngân hàng trung ương phát đi tín hiệu bắt đầu tăng lãi suất cơ bản, giảm các gói kích thích kinh tế. Trung tuần tháng 3.2022, FED- cục Dữ trữ Liên hang (Mỹ) phát đi thông điệp tăng lãi suất sáu lần trong năm nay. Chuỗi cung ứng sản xuất hàng hóa vừa phục hồi một phần thì chiến tranh Nga- Ukraine xảy ra, đẩy giá dầu thô và nhiều loại nguyên liệu sản xuất lên đỉnh cao nhất trong 10 năm, gây áp lực lạm phát lên kinh tế toàn cầu và gây quan ngại về chiến tranh tiền tệ.";
+  const [showDetail, setShowDetail] = useState(0);
+  const dateValue = new Date(eventDetail.dateOfEvent);
 
+  const openViewDetail = () => {
+    if (showDetail == 2) {
+      setShowDetail(0);
+      return;
+    }
+    setShowDetail((prev) => prev + 1);
+  };
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -35,6 +42,7 @@ const Detail = ({eventType}) => {
             }
             return item;
           });
+          console.log(data);
           setEventDetail({...data, img: y.join("")});
         }
       })
@@ -47,11 +55,7 @@ const Detail = ({eventType}) => {
   useEffect(() => {
     AOS.init();
   }, []);
-  const getEventTypeFromId = (id) => {
-    const event = eventType.filter((item) => item._id === id);
-    return event;
-  };
-  const nameEventType = getEventTypeFromId(eventDetail.eventTypeId);
+
   return (
     <div className="detail-container">
       <div
@@ -60,41 +64,197 @@ const Detail = ({eventType}) => {
           backgroundImage:
             "url(https://images.tkbcdn.com/1/1560/600/Upload/eventcover/2022/03/28/BC8905.jpg)",
         }}
-        data-aos="zoom-in"
       >
-        <Link to="/" className="detail-event-btn-back-home">
+        <Link
+          to="/"
+          className={
+            !showDetail == 0
+              ? "detail-event-btn-back-home active"
+              : "detail-event-btn-back-home"
+          }
+        >
           <BsArrowLeft />
         </Link>
         <div className="detail-event-background-overlay-filter">
-          <div className="detail-event-background-overlay-filter-content">
-            <div className="detail-event-background-overlay-filter-content-infomation">
-              <div className="detail-event-background-overlay-filter-content-infomation-calendar">
-                <CalendarComponent value={dateValue}></CalendarComponent>
-              </div>
-              <div className="detail-event-background-overlay-filter-content-infomation-text">
-                <h4>Hội nghị Đầu tư 2022: ĐỒNG TIỀN THÔNG MINH</h4>
-                <span>
-                  <BiTimeFive /> 7:00 - 11:00
-                </span>
-                <span>
-                  <ImLocation />
-                  157 Nam Kỳ Khởi Nghĩa, Phường Võ Thị Sáu, Quận 3, TP Hồ Chí
-                  Minh
-                </span>
+          <div
+            className={
+              !showDetail == 0
+                ? "detail-event-background-overlay-filter-content active"
+                : "detail-event-background-overlay-filter-content"
+            }
+          >
+            <div
+              className={
+                !showDetail == 0
+                  ? "detail-event-background-overlay-filter-content-infomation active"
+                  : "detail-event-background-overlay-filter-content-infomation"
+              }
+            >
+              <div className="detail-event-background-overlay-filter-content-infomation-dexv1">
+                <div
+                  className="detail-event-background-overlay-filter-content-infomation-dexv1-calendar"
+                  data-aos="fade-right"
+                >
+                  <CalendarComponent value={dateValue}></CalendarComponent>
+                </div>
+                <div
+                  className="detail-event-background-overlay-filter-content-infomation-dexv1-text"
+                  data-aos="fade-down"
+                >
+                  <h4>{eventDetail.name}</h4>
+                  <span>
+                    <BiTimeFive /> {eventDetail.timeStart} -{" "}
+                    {eventDetail.timeEnd}
+                  </span>
+                  <span>
+                    <ImLocation />
+                    {eventDetail.address}
+                  </span>
 
-                <p>
-                  {txt.slice(0, 200)}
-                  <span>...view</span>
-                </p>
+                  {eventDetail.description && (
+                    <p>
+                      {eventDetail.description.slice(0, 200)}
+                      <span onClick={openViewDetail}>...view more</span>
+                    </p>
+                  )}
+                </div>
+                <div
+                  className="detail-event-background-overlay-filter-content-infomation-dexv1-peoples-participant"
+                  data-aos="fade-left"
+                >
+                  <div className="detail-event-background-overlay-filter-content-infomation-dexv1-peoples-participant-1">
+                    <div className="detail-event-background-overlay-filter-content-infomation-dexv1-peoples-participant-1-2">
+                      <div className="detail-event-background-overlay-filter-content-infomation-dexv1-peoples-participant-1-2-3"></div>
+                    </div>
+                  </div>
+                  <Button buttonStyle="btn-registerV2">Register</Button>
+                </div>
               </div>
-              <div className="detail-event-background-overlay-filter-content-infomation-peoples-participant">
-                <div className="detail-event-background-overlay-filter-content-infomation-peoples-participant-1">
-                  <div className="detail-event-background-overlay-filter-content-infomation-peoples-participant-1-2">
-                    <div className="detail-event-background-overlay-filter-content-infomation-peoples-participant-1-2-3"></div>
+
+              {!showDetail == 0 && (
+                <div className="dexv2 " data-aos="fade-down">
+                  <h4>About</h4>
+                  <div className="dexv2-about">
+                    <div className="dexv2-about-field">
+                      <h5>Name:</h5>
+                      <p>Hoi nghi viec lam</p>
+                    </div>
+                    <div className="dexv2-about-field">
+                      <h5>Organized by:</h5>
+                      <p>Duy Tan University</p>
+                    </div>
+                    <div className="dexv2-about-field">
+                      <h5>Category:</h5>
+                      <p>Course</p>
+                    </div>
+                    <div className="dexv2-about-field">
+                      <h5>Time:</h5>
+                      <p>2023-06-02T00:00:00.000+00:00</p> <p>7:00 - 9:00</p>
+                    </div>
+                    <div className="dexv2-about-field">
+                      <h5>Address:</h5>
+                      <p>
+                        157 Nam Kỳ Khởi Nghĩa, Phường Võ Thị Sáu, Quận 3, TP Hồ
+                        Chí Minh
+                      </p>
+                    </div>
+                    <div className="dexv2-about-field">
+                      <h5>Seat:</h5>
+                      <p>90</p>
+                    </div>
+                    <div className="dexv2-about-description">
+                      <div className="dexv2-about-description-title">
+                        <h5>{eventDetail.name}</h5>
+                      </div>
+                      <p>{eventDetail.description}</p>
+                      {showDetail == 2 && (
+                        <div
+                          className="dexv2-about-description-detailevent"
+                          data-aos="fade-down"
+                        >
+                          <h4>Event Detail</h4>
+                          {eventDetail.details &&
+                          eventDetail.details.length > 0 ? (
+                            eventDetail.details.map((item, index) => {
+                              return (
+                                <>
+                                  <div
+                                    className="dexv2-about-description-detailevent-item"
+                                    key={item._id}
+                                  >
+                                    <h5>
+                                      {item.nameD}{" "}
+                                      {`(${item.timeStart} - ${item.timeEnd})`}
+                                    </h5>
+                                    <p>{item.descriptionD}</p>
+                                  </div>
+                                </>
+                              );
+                            })
+                          ) : (
+                            <div className="dexv2-about-description-detailevent-nonedata">
+                              Not Event detail
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* {showDetail == 2 && (
+                        <div
+                          className="dexv2-about-description-detailevent"
+                          data-aos="fade-down"
+                        >
+                          <h4>Event Detail</h4>
+                          <div className="dexv2-about-description-detailevent-item">
+                            <h5>
+                              Frist Sesstion:số ghế đến quý khách qua email hoặc
+                              Zalo (7:00 - 9:00){" "}
+                            </h5>
+                            <p>
+                              {" "}
+                              lễ, thứ 7, CN), BTC sẽ chủ động sắp xếp chỗ ngồi
+                              cho quý khách theo sơ đồ và thứ tự ưu tiên đặt
+                              chỗ. BTC sẽ gửi số ghế đến quý khách qua email
+                              hoặc Zalo. Trong trường hợp đặt vé sát ngày diễn
+                              ra show, BTC sẽ gửi số ghế sớm nhất có thể cho quý
+                              khách Sơ đồ chỗ ngồi:
+                            </p>
+                          </div>
+                          <div className="dexv2-about-description-detailevent-item">
+                            <h5>
+                              Frist Sesstion:số ghế đến quý khách qua email hoặc
+                              Zalo (7:00 - 9:00){" "}
+                            </h5>
+                            <p>
+                              {" "}
+                              lễ, thứ 7, CN), BTC sẽ chủ động sắp xếp chỗ ngồi
+                              cho quý khách theo sơ đồ và thứ tự ưu tiên đặt
+                              chỗ. BTC sẽ gửi số ghế đến quý khách qua email
+                              hoặc Zalo. Trong trường hợp đặt vé sát ngày diễn
+                              ra show, BTC sẽ gửi số ghế sớm nhất có thể cho quý
+                              khách Sơ đồ chỗ ngồi:
+                            </p>
+                          </div>
+                        </div>
+                      )} */}
+                      <div
+                        className="dexv2-about-description-viewDetail"
+                        onClick={openViewDetail}
+                      >
+                        <span>
+                          {showDetail == 1 ? (
+                            <IoIosArrowDown />
+                          ) : showDetail == 2 ? (
+                            <IoIosArrowUp />
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <Button buttonStyle="btn-registerV2">Register</Button>
-              </div>
+              )}
             </div>
           </div>
         </div>

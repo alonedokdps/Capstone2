@@ -155,6 +155,8 @@ const Analyze = ({
       )}
       {showAlert && (
         <AlertCustom
+          title="warning"
+          diffId="Please choose event if you want to delete !"
           handleClick={handleDeleteEvent}
           idEvent={idEvent}
           handleClose={setShowAlert}

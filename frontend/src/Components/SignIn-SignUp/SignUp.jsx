@@ -233,7 +233,8 @@ const SignUp = ({change}) => {
         </div>
         <div class="text-field register">
           <label class="label-password" for="confirmpassword">
-            Password <Eye showPass={showPass} setShowPass={setShowPass} />
+            Confirm Password{" "}
+            <Eye showPass={showPass} setShowPass={setShowPass} />
           </label>
           <input
             autocomplete="off"

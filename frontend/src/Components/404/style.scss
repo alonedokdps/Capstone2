@@ -1,0 +1,19 @@
+@use "../../scss/" as *;
+.nofoundpage {
+  background-image: url("https://colorlib.com/cdn-cgi/image/quality=80,format=auto,onerror=redirect,metadata=none/wp/wp-content/uploads/sites/2/404-error-template-3.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 40px;
+  a {
+    display: block;
+    background-image: $gradient;
+    padding: 10px 20px;
+    color: #fff;
+  }
+}

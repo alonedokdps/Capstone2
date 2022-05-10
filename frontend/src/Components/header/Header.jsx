@@ -17,13 +17,13 @@ import useClickOutSide from "../../hooks/useClickOutSide";
 import ApiSearch from "../../api/SearchEvent.api.js";
 import AOS from "aos";
 import "aos/dist/aos.css";
-const Header = ({data}) => {
+const Header = ({data, role, setRole}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [click, setClick] = useState(false);
   const [active, setActive] = useState(false);
   const [fillterData, setFillterData] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const [role, setRole] = useState("");
+
   const {show, setShow, nodeRef} = useClickOutSide();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Header = ({data}) => {
     } else {
       setRole("");
     }
-  }, [setCookie]);
+  }, [setCookie, setRole]);
   const handleChangeSearch = (e) => {
     setKeyword(e.target.value);
   };

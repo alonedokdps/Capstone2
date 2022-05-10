@@ -16,5 +16,11 @@ router.delete(
   "/RemoveAllParticipant",
   participantController.RemoveAllParticipant
 );
-
+router.get("/getRegistered", participantController.getRegistered);
+router.get("/getAttended", participantController.getAttended);
+router.get(
+  "/getRegisteredOfEvent/:id",
+  participantController.getRegisteredOfEvent
+);
+router.get("/getAttendedOfEvent/:id", participantController.getAttendedOfEvent);
 module.exports = router;

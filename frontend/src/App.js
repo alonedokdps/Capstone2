@@ -27,11 +27,11 @@ import ApiGetAllAccount from "./api/GetAllAccout.api";
 
 import AlertCustom from "./Components/AlertCustome/AlertCustom";
 import CountDown from "./Components/CountDown/CountDown";
+import NotfoundPage from "./Components/404/NotfoundPage";
 function App() {
-  const [eventType, setEventType] = useState([]);
   const [totalData, setTotalData] = useState([]);
   const [course, setCourse] = useState([]);
-  const [department, setDepartment] = useState([]);
+
   const [user, setUser] = useState([]);
   const [valueFilter, setValueFilter] = useState("");
   const [count, setCount] = useState([]);
@@ -41,44 +41,25 @@ function App() {
   const [active, setActive] = useState(1);
   const [numberParticipants, setParticipants] = useState([]);
   const [idEvent, setIdEvent] = useState("");
-  const [ActiveEvent, setActiveEvent] = useState("");
+  const [role, setRole] = useState("");
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
   const [userById, setUserById] = useState({});
-  const date = new Date();
-  console.log(date.getTime());
+
   useEffect(() => {
     let controller = new AbortController();
     const userData = JSON.parse(localStorage.getItem("user"));
-    ApiGetUserById.GetUserById(userData.id).then((data) => {
-      if (data) {
-        ApiCourses.getCourses().then((course) => {
-          if (course) {
-            course.filter((item) => {
-              if (item._id === data.courseId) {
-                ApiDepartment.getDepartments().then((department) => {
-                  if (department) {
-                    department.filter((item2) => {
-                      if (item2._id === data.departmentId) {
-                        setUserById({
-                          ...data,
-                          courseId: item.name,
-                          departmentId: item2.name,
-                          birthday: moment(data.birthday).format("YYYY-MM-DD"),
-                        });
-                      }
-                    });
-                  }
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-    return () => controller?.abort();
-  }, []);
-  useEffect(() => {
+    if (!userData) {
+      return toast("🦄 Hi! For better, please login!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     ApiGetAllAccount.getAllAccount().then((data) => {
       if (data) {
         ApiCourses.getCourses().then((course) => {
@@ -109,11 +90,38 @@ function App() {
         });
       }
     });
+    ApiGetUserById.GetUserById(userData.id).then((data) => {
+      if (data) {
+        ApiCourses.getCourses().then((course) => {
+          if (course) {
+            course.filter((item) => {
+              if (item._id === data.courseId) {
+                ApiDepartment.getDepartments().then((department) => {
+                  if (department) {
+                    department.filter((item2) => {
+                      if (item2._id === data.departmentId) {
+                        setUserById({
+                          ...data,
+                          courseId: item.name,
+                          departmentId: item2.name,
+                          birthday: moment(data.birthday).format("YYYY-MM-DD"),
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+    return () => controller?.abort();
   }, []);
+
   useEffect(() => {
     const abortController = new AbortController();
 
-    const userData = JSON.parse(localStorage.getItem("user"));
     getAllEventApi
       .getAllEvent()
       .then((data) => setCount(data))
@@ -242,16 +250,19 @@ function App() {
       <BrowserRouter>
         <ScrollToTop>
           <Routes>
-            <Route path="/" element={<Layout data={totalData} />}>
-              <Route index element={<Home eventType={eventType} />} />
+            <Route path="*" element={<NotfoundPage />} />
+            <Route
+              path="/"
+              element={
+                <Layout role={role} setRole={setRole} data={totalData} />
+              }
+            >
+              <Route index element={<Home />} />
 
               <Route path="movies" element={<h3>dsadsadsa</h3>} />
             </Route>
             <Route path="/login" element={<Login getForm="login" />} />{" "}
-            <Route
-              path="detail/:id"
-              element={<Detail eventType={eventType} />}
-            />
+            <Route path="detail/:id" element={<Detail />} />
             <Route path="/register" element={<Login getForm="register" />} />
             <Route path="/add-event" element={<AddEvent />} />
             <Route path="/user" element={<UserPage />}>
@@ -259,12 +270,7 @@ function App() {
                 index
                 path="account"
                 element={
-                  <Account
-                    user={user}
-                    userById={userById}
-                    eventType={eventType}
-                    course={course}
-                  />
+                  <Account user={user} userById={userById} course={course} />
                 }
               />
               {/* <Route path="edit" element={<h1>a</h1>} /> */}
@@ -275,7 +281,6 @@ function App() {
                     handleChangeFilter={handleChangeFilter}
                     valueFilter={valueFilter}
                     setValueFilter={setValueFilter}
-                    eventType={eventType}
                     totalEvent={totalData}
                     count={count}
                     pending={pending}

@@ -33,7 +33,63 @@ const participantController = {
       res.json({message: err});
     }
   },
-
+  //get registered event
+  getRegisteredOfEvent: async (req, res) => {
+    try {
+      const registered = await Participant.find({
+        eventId: req.params.id,
+        isAttended: false,
+      });
+      if (registered) {
+        res.json(registered);
+      } else {
+        res.json([]);
+      }
+    } catch (err) {
+      res.json({message: err});
+    }
+  },
+  getAttendedOfEvent: async (req, res) => {
+    try {
+      const attended = await Participant.find({
+        eventId: req.params.id,
+        isAttended: true,
+      });
+      if (registered) {
+        res.json(registered);
+      } else {
+        res.json([]);
+      }
+    } catch (err) {
+      res.json({message: err});
+    }
+  },
+  //get registered
+  getRegistered: async (req, res) => {
+    try {
+      const registered = await Participant.find({isAttended: false});
+      if (registered.length > 0) {
+        res.json({registered});
+      } else {
+        res.json([]);
+      }
+    } catch (err) {
+      res.json({message: err});
+    }
+  },
+  //get attend
+  getAttended: async (req, res) => {
+    try {
+      const attended = await Participant.find({isAttended: true});
+      if (attended.length > 0) {
+        res.json({attended});
+      } else {
+        res.json([]);
+      }
+    } catch (err) {
+      res.json({message: err});
+    }
+  },
   //ATTEND EVENT
   AttendEvent: async (req, res) => {
     const participantExists = await Participant.find();
@@ -49,6 +105,7 @@ const participantController = {
             {
               $set: {
                 isAttended: true,
+                // timeAttended: new Date(),
               },
             }
           );

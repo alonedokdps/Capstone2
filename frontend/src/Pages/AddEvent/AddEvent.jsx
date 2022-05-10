@@ -45,8 +45,12 @@ const AddEvent = () => {
       organizedBy,
       timeEnd,
       timeStart,
+      seat,
     } = data;
     const formdata = new FormData();
+    if (seat) {
+      formdata.append("seat", seat);
+    }
     formdata.append("img", data.img[0]);
     formdata.append("address", address);
     formdata.append("budgetOfEvent", budgetOfEvent);
@@ -58,6 +62,7 @@ const AddEvent = () => {
     formdata.append("organizedBy", organizedBy);
     formdata.append("timeEnd", timeEnd);
     formdata.append("timeStart", timeStart);
+
     formdata.append("details", JSON.stringify(details));
 
     formdata.append("accountId", JSON.parse(localStorage.getItem("user")).id);
@@ -140,6 +145,16 @@ const AddEvent = () => {
                 control={control}
                 {...register("img")}
               />
+            </div>
+            <div className="box-x-input">
+              <label htmlFor="seat">Seat</label>
+              <MyInput
+                name="seat"
+                id="seat"
+                control={control}
+                type="text"
+                placeholder="default is infinite "
+              ></MyInput>
             </div>
           </div>
           <div className="box-input">

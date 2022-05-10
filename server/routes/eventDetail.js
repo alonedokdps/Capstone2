@@ -9,7 +9,7 @@ router.post("/", eventDetailController.addEventDetail);
 router.get("/", eventDetailController.getAllEventDetails);
 
 //GET AN EVENT DETAIL
-router.get("/:id", eventDetailController.getAnEventDetail);
+router.get("/getAnEventDetail/:id", eventDetailController.getAnEventDetail);
 
 //UPDATE AN EVENT DETAIL
 router.put("/:id", eventDetailController.updateEventDetail);

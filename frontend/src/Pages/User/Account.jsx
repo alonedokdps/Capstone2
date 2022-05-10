@@ -5,7 +5,6 @@ import {AiOutlineClose} from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
 const Account = ({userById}) => {
-  console.log("user", userById);
   const [show, setShow] = useState(false);
   const [values, setValues] = useState({});
   const handleChange = (e) => {

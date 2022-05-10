@@ -24,10 +24,9 @@ const DropdownUser = ({setRole}) => {
       <div
         onClick={() => {
           removeCookie("token", {path: "/"});
-
           localStorage.clear();
           setRole("");
-          toast.info("Logout");
+          window.location.reload();
         }}
         className="dropdown-user-item"
       >
