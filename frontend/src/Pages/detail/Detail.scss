@@ -22,13 +22,117 @@
         align-items: center;
         width: 100%;
         height: 100vh;
+
         &-infomation {
-          .calendar-image {
-            width: 85px;
-            z-index: 7;
-            position: relative;
-            border-radius: 2px;
-            border: 1px solid #ccc;
+          display: flex;
+          border-radius: 8px;
+          justify-content: center;
+          gap: 30px;
+          background-color: white;
+
+          padding: 20px 40px;
+          backdrop-filter: blur(10px);
+          &-peoples-participant {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+            flex-direction: column;
+            &-1 {
+              width: 200px;
+              height: 200px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 100%;
+              border: 6px solid $blue;
+              border-top: 6px solid transparent !important;
+              animation: loading2 1s infinite;
+              @keyframes loading2 {
+                50% {
+                  transform: rotate(-200deg);
+                }
+
+                75% {
+                  transform: rotate(-160deg);
+                }
+
+                100% {
+                  transform: rotate(-180deg);
+                }
+              }
+              &-2 {
+                width: 180px;
+                height: 180px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 100%;
+                border: 5px solid $pink;
+                border-left: 4px solid transparent !important;
+                animation: loading2 1s infinite;
+                @keyframes loading2 {
+                  50% {
+                    transform: rotate(-200deg);
+                  }
+
+                  75% {
+                    transform: rotate(-160deg);
+                  }
+
+                  100% {
+                    transform: rotate(-180deg);
+                  }
+                }
+                &-3 {
+                  width: 160px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 160px;
+                  border-radius: 100%;
+                  position: relative;
+                  border: 4px solid $greenLight;
+                  transition: all 0.3s ease;
+                  border-right: 4px solid transparent !important;
+                  animation: loading2 1s infinite;
+                  @keyframes loading2 {
+                    50% {
+                      transform: rotate(-200deg);
+                    }
+
+                    75% {
+                      transform: rotate(-160deg);
+                    }
+
+                    100% {
+                      transform: rotate(-180deg);
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          &-text {
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 10px;
+
+            h4 {
+              margin-top: 1rem;
+              font-size: 1.5rem;
+            }
+            span,
+            p {
+              color: black;
+              align-items: center;
+              display: flex;
+              gap: 5px;
+              font-size: 13px;
+            }
           }
         }
       }

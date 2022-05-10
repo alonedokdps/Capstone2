@@ -49,6 +49,12 @@ const eventSchema = new mongoose.Schema(
     note: {
       type: String,
     },
+    seat: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+
     status: {
       type: String,
       enum: ["Pending", "Accept", "Reject"],

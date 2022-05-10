@@ -47,150 +47,150 @@ function App() {
   const [userById, setUserById] = useState({});
   const date = new Date();
   console.log(date.getTime());
-  // useEffect(() => {
-  //   let controller = new AbortController();
-  //   const userData = JSON.parse(localStorage.getItem("user"));
-  //   ApiGetUserById.GetUserById(userData.id).then((data) => {
-  //     if (data) {
-  //       ApiCourses.getCourses().then((course) => {
-  //         if (course) {
-  //           course.filter((item) => {
-  //             if (item._id === data.courseId) {
-  //               ApiDepartment.getDepartments().then((department) => {
-  //                 if (department) {
-  //                   department.filter((item2) => {
-  //                     if (item2._id === data.departmentId) {
-  //                       setUserById({
-  //                         ...data,
-  //                         courseId: item.name,
-  //                         departmentId: item2.name,
-  //                         birthday: moment(data.birthday).format("YYYY-MM-DD"),
-  //                       });
-  //                     }
-  //                   });
-  //                 }
-  //               });
-  //             }
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
-  //   return () => controller?.abort();
-  // }, []);
-  // useEffect(() => {
-  //   ApiGetAllAccount.getAllAccount().then((data) => {
-  //     if (data) {
-  //       ApiCourses.getCourses().then((course) => {
-  //         if (course) {
-  //           const newData1 = data.map((item) => {
-  //             course.map((item2) => {
-  //               if (item.courseId === item2._id) {
-  //                 item.courseId = item2.name;
-  //               }
-  //             });
-  //             return item;
-  //           });
-  //           setUser(newData1);
-  //           ApiDepartment.getDepartments().then((department) => {
-  //             if (department) {
-  //               const newData2 = newData1.map((item) => {
-  //                 department.map((item2) => {
-  //                   if (item.departmentId === item2._id) {
-  //                     item.departmentId = item2.name;
-  //                   }
-  //                 });
-  //                 return item;
-  //               });
-  //               setUser((prev) => newData2);
-  //             }
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
-  // }, []);
-  // useEffect(() => {
-  //   const abortController = new AbortController();
+  useEffect(() => {
+    let controller = new AbortController();
+    const userData = JSON.parse(localStorage.getItem("user"));
+    ApiGetUserById.GetUserById(userData.id).then((data) => {
+      if (data) {
+        ApiCourses.getCourses().then((course) => {
+          if (course) {
+            course.filter((item) => {
+              if (item._id === data.courseId) {
+                ApiDepartment.getDepartments().then((department) => {
+                  if (department) {
+                    department.filter((item2) => {
+                      if (item2._id === data.departmentId) {
+                        setUserById({
+                          ...data,
+                          courseId: item.name,
+                          departmentId: item2.name,
+                          birthday: moment(data.birthday).format("YYYY-MM-DD"),
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+    return () => controller?.abort();
+  }, []);
+  useEffect(() => {
+    ApiGetAllAccount.getAllAccount().then((data) => {
+      if (data) {
+        ApiCourses.getCourses().then((course) => {
+          if (course) {
+            const newData1 = data.map((item) => {
+              course.map((item2) => {
+                if (item.courseId === item2._id) {
+                  item.courseId = item2.name;
+                }
+              });
+              return item;
+            });
+            setUser(newData1);
+            ApiDepartment.getDepartments().then((department) => {
+              if (department) {
+                const newData2 = newData1.map((item) => {
+                  department.map((item2) => {
+                    if (item.departmentId === item2._id) {
+                      item.departmentId = item2.name;
+                    }
+                  });
+                  return item;
+                });
+                setUser((prev) => newData2);
+              }
+            });
+          }
+        });
+      }
+    });
+  }, []);
+  useEffect(() => {
+    const abortController = new AbortController();
 
-  //   const userData = JSON.parse(localStorage.getItem("user"));
-  //   getAllEventApi
-  //     .getAllEvent()
-  //     .then((data) => setCount(data))
-  //     .catch((err) => console.log(err));
+    const userData = JSON.parse(localStorage.getItem("user"));
+    getAllEventApi
+      .getAllEvent()
+      .then((data) => setCount(data))
+      .catch((err) => console.log(err));
 
-  //   APigetEventByStatus.getEventByStatus(valueFilter)
-  //     .then((data) => {
-  //       if (data.event) {
-  //         ApiEventType.getEventType().then((type) => {
-  //           if (type) {
-  //             const cloneData = [...data.event];
-  //             const newData = cloneData.map((item) => {
-  //               item.dateOfEvent = moment(item.dateOfEvent).format(
-  //                 "DD/MM/YYYY"
-  //               );
-  //               type.map((item2) => {
-  //                 if (item.eventTypeId === item2._id) {
-  //                   item.eventTypeId = item2.name;
-  //                 }
-  //               });
-  //               return item;
-  //             });
+    APigetEventByStatus.getEventByStatus(valueFilter)
+      .then((data) => {
+        if (data.event) {
+          ApiEventType.getEventType().then((type) => {
+            if (type) {
+              const cloneData = [...data.event];
+              const newData = cloneData.map((item) => {
+                item.dateOfEvent = moment(item.dateOfEvent).format(
+                  "DD/MM/YYYY"
+                );
+                type.map((item2) => {
+                  if (item.eventTypeId === item2._id) {
+                    item.eventTypeId = item2.name;
+                  }
+                });
+                return item;
+              });
 
-  //             setTotalData(newData);
-  //           }
-  //         });
-  //       } else {
-  //         setTotalData([]);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
+              setTotalData(newData);
+            }
+          });
+        } else {
+          setTotalData([]);
+        }
+      })
+      .catch((err) => console.log(err));
 
-  //   allParticipants
-  //     .getAllParticipants(idEvent)
-  //     .then((data) => {
-  //       if (data) {
-  //         setParticipants(data);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  //   return () => {
-  //     abortController.abort();
-  //   };
-  // }, [valueFilter, idEvent, deleteEvent, updateStatus]);
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  //   APigetEventByStatus.getEventByStatus("Accept")
-  //     .then((data) => {
-  //       if (data) {
-  //         setAccept(data.event.length);
-  //       } else {
-  //         setAccept(0);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  //   APigetEventByStatus.getEventByStatus("Pending")
-  //     .then((data) => {
-  //       if (data) {
-  //         setPending(data.event.length);
-  //       } else {
-  //         setPending(0);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  //   APigetEventByStatus.getEventByStatus("Reject")
-  //     .then((data) => {
-  //       if (data) {
-  //         setReject(data.event.length);
-  //       } else {
-  //         setReject(0);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  //   return () => {
-  //     abortController.abort();
-  //   };
-  // }, [updateStatus, deleteEvent]);
+    allParticipants
+      .getAllParticipants(idEvent)
+      .then((data) => {
+        if (data) {
+          setParticipants(data);
+        }
+      })
+      .catch((err) => console.log(err));
+    return () => {
+      abortController.abort();
+    };
+  }, [valueFilter, idEvent, deleteEvent, updateStatus]);
+  useEffect(() => {
+    const abortController = new AbortController();
+    APigetEventByStatus.getEventByStatus("Accept")
+      .then((data) => {
+        if (data) {
+          setAccept(data.event.length);
+        } else {
+          setAccept(0);
+        }
+      })
+      .catch((err) => console.log(err));
+    APigetEventByStatus.getEventByStatus("Pending")
+      .then((data) => {
+        if (data) {
+          setPending(data.event.length);
+        } else {
+          setPending(0);
+        }
+      })
+      .catch((err) => console.log(err));
+    APigetEventByStatus.getEventByStatus("Reject")
+      .then((data) => {
+        if (data) {
+          setReject(data.event.length);
+        } else {
+          setReject(0);
+        }
+      })
+      .catch((err) => console.log(err));
+    return () => {
+      abortController.abort();
+    };
+  }, [updateStatus, deleteEvent]);
   const selectEvent = (e) => {
     setIdEvent(e.target.dataset.value);
   };

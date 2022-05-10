@@ -10,6 +10,12 @@ const STYLES = [
   "btn-login",
   "btn-register",
   "btn-clear",
+  "btn-registerV2",
+  "btn-attendV2",
+  "btn-registerV2-success",
+  "btn-attendV2-success",
+  "btn-registerV2-fail",
+  "btn-attendV2-fail",
 ];
 const SIZES = ["btn-xs", "btn-s", "btn-m", "btn-l", "btn-xl"];
 

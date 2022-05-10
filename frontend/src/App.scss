@@ -1,5 +1,6 @@
 @use "./scss/" as *;
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 *,
 *::before,
 *::after {
@@ -83,6 +84,9 @@ img {
     }
   }
 }
+.e-footer-container {
+  display: none !important;
+}
 .col-sm {
   width: 20%;
 }
@@ -91,4 +95,13 @@ img {
 }
 .col-lg {
   width: 33.33%;
+}
+.e-calendar,
+.e-bigger.e-small .e-calendar {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: none;
+  border: none;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  border-radius: 8px;
 }
