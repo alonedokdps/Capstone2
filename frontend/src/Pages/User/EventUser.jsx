@@ -74,6 +74,13 @@ const EventUser = ({
                 >
                   Rejected
                 </div>
+                <div
+                  className={`tab-item ${active === 5 ? "active" : ""} `}
+                  data-value={"Expired"}
+                  onClick={handleChangeFilter}
+                >
+                  Expired
+                </div>
               </div>
               <div className="event-management-box-row1-container">
                 {totalEvent && totalEvent.length > 0 ? (
@@ -88,6 +95,7 @@ const EventUser = ({
                           name={item.name}
                           eventType={item.eventTypeId}
                           date={item.dateOfEvent}
+                          status={item.status}
                           selectEvent={selectEvent}
                         />
                       </>

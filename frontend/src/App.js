@@ -12,7 +12,15 @@ import AddEvent from "./Pages/AddEvent/AddEvent";
 import {useEffect, useState} from "react";
 import ScrollToTop from "./Components/ScrollTop/ScrollToTop";
 import UserPage from "./Pages/User/UserPage";
-
+import {
+  FcHome,
+  FcCustomerSupport,
+  FcCollaboration,
+  FcBinoculars,
+  FcLike,
+  FcVoicePresentation,
+  FcReadingEbook,
+} from "react-icons/fc";
 import Account from "./Pages/User/Account";
 import ApiGetUserById from "./api/GetUserById.api";
 import ApiCourses from "./api/Course.api";
@@ -124,7 +132,49 @@ function App() {
     ApiEventType.getEventType()
       .then((data) => {
         if (data) {
-          setCategory(data);
+          const newArr = data.map((item) => {
+            if (item.name === "Seminars") {
+              item = {
+                ...item,
+                path: `${item.name}`,
+                icon: <FcCustomerSupport />,
+              };
+            } else if (item.name === "Conferences") {
+              item = {
+                ...item,
+                path: `${item.name}`,
+                icon: <FcCollaboration />,
+              };
+            } else if (item.name === "Trade shows") {
+              item = {
+                ...item,
+                path: `${item.name.replace(/\s+/g, "")}`,
+                icon: <FcBinoculars />,
+              };
+            } else if (item.name === "Festivals") {
+              item = {
+                ...item,
+                path: `${item.name.replace(/\s+/g, "")}`,
+                icon: <FcLike />,
+              };
+            } else if (item.name === "Reunions") {
+              item = {
+                ...item,
+                path: `${item.name.replace(/\s+/g, "")}`,
+                icon: <FcVoicePresentation />,
+              };
+            } else if (item.name === "Workshops") {
+              item = {
+                ...item,
+                path: `${item.name.replace(/\s+/g, "")}`,
+                icon: <FcReadingEbook />,
+              };
+            }
+
+            return item;
+          });
+
+          setCategory(newArr);
         }
       })
       .then((err) => console.log(err));
@@ -195,7 +245,7 @@ function App() {
     APigetEventByStatus.getEventByStatus("Reject")
       .then((data) => {
         if (data) {
-          setReject(data.event.length);
+          setReject(data.event?.length);
         } else {
           setReject(0);
         }
@@ -247,6 +297,9 @@ function App() {
       case "Reject":
         setActive(4);
         break;
+      case "Expired":
+        setActive(5);
+        break;
       default:
         setActive(1);
     }
@@ -269,11 +322,13 @@ function App() {
               }
             >
               <Route index element={<Home />} />
-
-              <Route path="movies" element={<h3>dsadsadsa</h3>} />
+              {category &&
+                category.map((item) => (
+                  <Route path={item.path} element={<h1>data</h1>} />
+                ))}
             </Route>
             <Route path="/login" element={<Login getForm="login" />} />{" "}
-            <Route path="detail/:id" element={<Detail />} />
+            <Route path="detail/:id" element={<Detail category={category} />} />
             <Route path="/register" element={<Login getForm="register" />} />
             <Route path="/add-event" element={<AddEvent />} />
             <Route path="/user" element={<UserPage />}>

@@ -8,10 +8,14 @@
   .detail-event-background {
     height: 100%;
     width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
     padding: 20px;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='myBackground.jpg', sizingMethod='scale')";
 
     &-overlay-filter {
       &-content.active {

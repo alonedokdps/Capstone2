@@ -285,10 +285,12 @@ const eventController = {
   },
 
   getMonth: async (req, res) => {
+    const query = req.query.eventType;
     const date = new Date();
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     const event = await Event.find({
+      eventTypeId: query,
       dateOfEvent: {$gte: firstDay, $lt: lastDay},
     });
     if (event.length > 0) {
@@ -330,6 +332,90 @@ const eventController = {
     } else {
       const event = await Event.find({});
       res.json({success: true, event});
+    }
+  },
+  getEventByEventype: async (req, res) => {
+    const eventType = req.query.eventType;
+    const getMonth = req.query.getMonth;
+    const getDay = req.query.getDay;
+    const getWeek = req.query.getWeek;
+    const getOnline = req.query.getOnline;
+    const getDepartment = req.query.getDepartment;
+    const date = new Date();
+    const week = Array(7)
+      .fill(new Date(date))
+      .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    if (!eventType) return res.json([]);
+
+    if (eventType && getMonth === "get%month") {
+      const eventMonth = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+        dateOfEvent: {$gte: firstDay, $lt: lastDay},
+      });
+      if (eventMonth) {
+        res.json({eventMonth});
+      } else {
+        res.json({message: "No events this week"});
+      }
+    } else if (eventType && getWeek === "get%week") {
+      const eventWeek = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+        dateOfEvent: {$gte: week.shift(), $lt: week.pop()},
+      });
+      if (eventWeek) {
+        res.json({eventWeek});
+      } else {
+        res.json({message: "No events this week"});
+      }
+    } else if (eventType && getDay === "get%day") {
+      const tomorrow = new Date();
+      tomorrow.setHours(24, 0, 0, 0);
+      const eventDay = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+        dateOfEvent: {$gte: new Date(), $lt: tomorrow},
+      });
+      if (eventDay) {
+        res.json(eventDay);
+      } else {
+        res.json({message: "There are no events today !"});
+      }
+    } else if (eventType && getDepartment) {
+      const eventDepartment = await Event.find({
+        status: "Accept",
+        checkDepartment: true,
+        departmentOfevent: getDepartment,
+      });
+      if (eventDepartment) {
+        res.json({eventDepartment});
+      } else {
+        res.json("No anything event");
+      }
+    } else if (eventType && getOnline === "get%online") {
+      const eventOnline = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+        online: true,
+      });
+      if (eventOnline) {
+        res.json({eventOnline});
+      } else {
+        res.json("No anything event");
+      }
+    } else {
+      const event = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+      });
+      if (event) {
+        res.json({event});
+      } else {
+        res.json("No anything event");
+      }
     }
   },
 };

@@ -29,7 +29,8 @@ const AddEvent = () => {
     // resolver: yupResolver(schema),
   } = useForm({mode: "onChange"});
   const imgValue = useWatch({control, name: "img"});
-
+  const checkOnline = watch("checkOnline");
+  const checkDepartment = watch("checkDepartment");
   const {fields, append, remove} = useFieldArray({control, name: "details"});
   const onSubmit = (data) => {
     console.log(data);
@@ -46,6 +47,10 @@ const AddEvent = () => {
       timeEnd,
       timeStart,
       seat,
+      linkOnline,
+      checkOnline,
+      checkDepartment,
+      departmentOfevent,
     } = data;
     const formdata = new FormData();
     if (seat) {
@@ -62,16 +67,24 @@ const AddEvent = () => {
     formdata.append("organizedBy", organizedBy);
     formdata.append("timeEnd", timeEnd);
     formdata.append("timeStart", timeStart);
-
     formdata.append("details", JSON.stringify(details));
-
     formdata.append("accountId", JSON.parse(localStorage.getItem("user")).id);
+
+    formdata.append("checkDepartment", checkDepartment ? true : false);
+    formdata.append(
+      "departmentOfevent",
+      departmentOfevent ? departmentOfevent : ""
+    );
+
+    formdata.append("online", checkOnline ? true : false);
+    formdata.append("linkOnline", linkOnline ? linkOnline : "");
+
     ApiEvent.addEvent(formdata)
-      .then(async (res) => {
+      .then((res) => {
         if (res.status) {
-          await toast.success(res.message);
-          await Navigate(`/detail/${res.data._id}`, {replace: true});
-          window.location.reload();
+          toast.success(res.message);
+          Navigate(`/detail/${res.data._id}`, {replace: true});
+          window.location.reload(`/detail/${res.data._id}`);
         }
       })
       .catch((err) => toast.error(err));
@@ -111,6 +124,66 @@ const AddEvent = () => {
                 control={control}
                 type="text"
               ></MyInput>
+            </div>
+          </div>
+          <div className="box-input check-online">
+            <div className="box-x-input">
+              <div className="check-online">
+                <MyInput
+                  name="checkOnline"
+                  id="checkOnline"
+                  control={control}
+                  type="checkbox"
+                ></MyInput>
+                <label htmlFor="checkOnline">Online</label>
+              </div>
+
+              <div className="link-online">
+                <label
+                  htmlFor="linkOnline"
+                  style={{color: checkOnline ? "black" : "#bdc3c7"}}
+                >
+                  Link online
+                </label>
+                <MyInput
+                  name="linkOnline"
+                  id="linkOnline"
+                  placeholder={
+                    checkOnline ? "Enter link online" : "Check to active"
+                  }
+                  control={control}
+                  type="text"
+                  disabled={checkOnline ? false : true}
+                ></MyInput>
+              </div>
+            </div>
+            <div className="box-x-input">
+              <div className="check-online">
+                <MyInput
+                  name="checkDepartment"
+                  id="checkDepartment"
+                  placeholder="Enter your organization"
+                  control={control}
+                  type="checkbox"
+                ></MyInput>
+                <label htmlFor="checkDepartment">Require department</label>
+              </div>
+
+              <div className="link-online">
+                <label
+                  htmlFor="departmentOfevent"
+                  style={{color: checkDepartment ? "black" : "#bdc3c7"}}
+                >
+                  Department
+                </label>
+                <DropSelect
+                  control={control}
+                  setValue={setValue}
+                  name="departmentOfevent"
+                  selectName="type"
+                  data={EventType}
+                ></DropSelect>
+              </div>
             </div>
           </div>
           <div className="box-input">

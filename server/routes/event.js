@@ -44,5 +44,6 @@ router.get("/getMonth/", eventController.getMonth);
 
 router.get("/getDate/", eventController.getDate);
 router.get("/getEventByStatus", eventController.getEventByStatus);
+router.get("/getEventByEventype/", eventController.getEventByEventype);
 
 module.exports = router;

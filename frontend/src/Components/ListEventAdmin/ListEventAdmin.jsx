@@ -6,6 +6,7 @@ const ListEventAdmin = ({
   key,
   img,
   name,
+  status,
   eventType,
   date,
   id,
@@ -14,7 +15,13 @@ const ListEventAdmin = ({
 }) => {
   return (
     <div
-      className={`list-event-admin ${id === idEvent ? "active" : ""}`}
+      className={`list-event-admin ${
+        status === "Pending"
+          ? "isPending"
+          : status === "Accept"
+          ? "isAccept"
+          : "isRejected"
+      } ${id === idEvent ? "active" : ""}`}
       onClick={selectEvent}
       data-value={id}
     >

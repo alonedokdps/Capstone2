@@ -48,6 +48,7 @@ const eventSchema = new mongoose.Schema(
     },
     note: {
       type: String,
+      required: false,
     },
     seat: {
       type: Number,
@@ -55,7 +56,26 @@ const eventSchema = new mongoose.Schema(
 
       default: null,
     },
-
+    online: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    linkOnline: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    checkDepartment: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    departmentOfevent: {
+      type: String,
+      required: false,
+      default: null,
+    },
     status: {
       type: String,
       enum: ["Pending", "Accept", "Reject"],

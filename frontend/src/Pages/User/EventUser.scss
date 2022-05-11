@@ -62,17 +62,20 @@
 
         .tabs1 {
           display: flex;
+          transition: all 0.5s linear;
         }
 
         .tabs1 .tab-item.active {
           color: #6a5af9;
           border-bottom-color: currentColor;
+          transition: all 0.5s linear;
         }
 
         .tabs1 .tab-item {
           font-size: 12px;
           white-space: nowrap;
           padding: 10px 15px;
+          transition: all 0.5s linear;
           cursor: pointer;
           color: #999;
           font-weight: 500;

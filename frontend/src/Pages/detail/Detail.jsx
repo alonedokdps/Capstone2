@@ -16,7 +16,8 @@ import CountDown from "./../../Components/CountDown/CountDown";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Button from "../../Components/button/Button";
-const Detail = ({eventType}) => {
+import Moment from "react-moment";
+const Detail = ({category}) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
   const [showDetail, setShowDetail] = useState(0);
@@ -42,15 +43,22 @@ const Detail = ({eventType}) => {
             }
             return item;
           });
-          console.log(data);
-          setEventDetail({...data, img: y.join("")});
+          const nameEventype = category.filter(
+            (item) => item._id === data.eventTypeId
+          );
+
+          setEventDetail({
+            ...data,
+            eventTypeId: nameEventype[0].name,
+            img: y.join(""),
+          });
         }
       })
       .catch((err) => console.log(err));
     return () => {
       abortController.abort();
     };
-  }, [id]);
+  }, [category, id]);
 
   useEffect(() => {
     AOS.init();
@@ -61,8 +69,7 @@ const Detail = ({eventType}) => {
       <div
         className="detail-event-background"
         style={{
-          backgroundImage:
-            "url(https://images.tkbcdn.com/1/1560/600/Upload/eventcover/2022/03/28/BC8905.jpg)",
+          backgroundImage: `url(http://localhost:8000/${eventDetail.img})`,
         }}
       >
         <Link
@@ -137,30 +144,36 @@ const Detail = ({eventType}) => {
                   <div className="dexv2-about">
                     <div className="dexv2-about-field">
                       <h5>Name:</h5>
-                      <p>Hoi nghi viec lam</p>
+                      <p>{eventDetail.name}</p>
                     </div>
                     <div className="dexv2-about-field">
                       <h5>Organized by:</h5>
-                      <p>Duy Tan University</p>
+                      <p>{eventDetail.organizedBy}</p>
                     </div>
                     <div className="dexv2-about-field">
                       <h5>Category:</h5>
-                      <p>Course</p>
+                      <p>{eventDetail.eventTypeId}</p>
                     </div>
                     <div className="dexv2-about-field">
                       <h5>Time:</h5>
-                      <p>2023-06-02T00:00:00.000+00:00</p> <p>7:00 - 9:00</p>
-                    </div>
-                    <div className="dexv2-about-field">
-                      <h5>Address:</h5>
                       <p>
-                        157 Nam Kỳ Khởi Nghĩa, Phường Võ Thị Sáu, Quận 3, TP Hồ
-                        Chí Minh
+                        {
+                          <Moment format="DD/MM/YYYY">
+                            {eventDetail.dateOfEvent}
+                          </Moment>
+                        }
+                      </p>{" "}
+                      <p>
+                        ( {eventDetail.timeStart} - {eventDetail.timeEnd})
                       </p>
                     </div>
                     <div className="dexv2-about-field">
+                      <h5>Address:</h5>
+                      <p>{eventDetail.address}</p>
+                    </div>
+                    <div className="dexv2-about-field">
                       <h5>Seat:</h5>
-                      <p>90</p>
+                      <p>{eventDetail.seat}</p>
                     </div>
                     <div className="dexv2-about-description">
                       <div className="dexv2-about-description-title">
