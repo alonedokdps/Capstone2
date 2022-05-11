@@ -4,12 +4,12 @@ import Header from "../Components/header/Header";
 import Sidebar from "../Components/sidebar/Sidebar";
 
 import "./layout.scss";
-const Layout = ({data, role, setRole}) => {
+const Layout = ({data, category, role, setRole}) => {
   return (
     <div className="layout">
       <Header role={role} setRole={setRole} data={data} />
       <div className="container">
-        <Sidebar />
+        <Sidebar category={category} />
         <div className="content">
           <Outlet />
         </div>

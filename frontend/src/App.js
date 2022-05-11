@@ -31,7 +31,7 @@ import NotfoundPage from "./Components/404/NotfoundPage";
 function App() {
   const [totalData, setTotalData] = useState([]);
   const [course, setCourse] = useState([]);
-
+  const [category, setCategory] = useState([]);
   const [user, setUser] = useState([]);
   const [valueFilter, setValueFilter] = useState("");
   const [count, setCount] = useState([]);
@@ -121,7 +121,13 @@ function App() {
 
   useEffect(() => {
     const abortController = new AbortController();
-
+    ApiEventType.getEventType()
+      .then((data) => {
+        if (data) {
+          setCategory(data);
+        }
+      })
+      .then((err) => console.log(err));
     getAllEventApi
       .getAllEvent()
       .then((data) => setCount(data))
@@ -171,7 +177,7 @@ function App() {
     APigetEventByStatus.getEventByStatus("Accept")
       .then((data) => {
         if (data) {
-          setAccept(data.event.length);
+          setAccept(data.event?.length);
         } else {
           setAccept(0);
         }
@@ -180,7 +186,7 @@ function App() {
     APigetEventByStatus.getEventByStatus("Pending")
       .then((data) => {
         if (data) {
-          setPending(data.event.length);
+          setPending(data.event?.length);
         } else {
           setPending(0);
         }
@@ -254,7 +260,12 @@ function App() {
             <Route
               path="/"
               element={
-                <Layout role={role} setRole={setRole} data={totalData} />
+                <Layout
+                  role={role}
+                  category={category}
+                  setRole={setRole}
+                  data={totalData}
+                />
               }
             >
               <Route index element={<Home />} />
