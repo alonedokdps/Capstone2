@@ -77,7 +77,7 @@ const Detail = ({category}) => {
           const nameEventype = category.filter(
             (item) => item._id === data.eventTypeId
           );
-
+          document.title = data.name;
           setEventDetail({
             ...data,
             eventTypeId: nameEventype[0]?.name,
@@ -88,6 +88,7 @@ const Detail = ({category}) => {
       .catch((err) => console.log(err));
     return () => {
       abortController.abort();
+      document.title = "DEVENT";
     };
   }, [category, id, isRegister]);
   const handleRegister = () => {

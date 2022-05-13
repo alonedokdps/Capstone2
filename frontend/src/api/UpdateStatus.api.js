@@ -1,7 +1,7 @@
 import axios from "./AxiosClient";
 const UpdateStatus = async (id, values) => {
   const {data} = await axios({
-    method: "post",
+    method: "put",
     url: `/event/updateStatus/${id}`,
     data: {status: values},
   });

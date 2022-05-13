@@ -9,26 +9,39 @@ import "aos/dist/aos.css";
 import Table from "../tableComponent/Table";
 import AlertCustom from "../AlertCustome/AlertCustom";
 const Analyze = ({
+  totalEvent,
   numberParticipants,
   user,
   handleDeleteEvent,
   idEvent,
   UpdateStatusEvent,
+  updateAllow,
+  checked,
+  setChecked,
 }) => {
   const [getStatus, setStatus] = useState("");
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [seat, setSeat] = useState(null);
+  const [allow, setAllow] = useState(null);
+
   useEffect(() => {
     const abortController = new AbortController();
     if (idEvent) {
       ApiEventDetail.getEventDetal(idEvent).then((res) => {
         if (res) {
+          const allowdata = res.allow ? true : false;
           setStatus(res.status);
+          setSeat(res.seat);
+          setAllow(res.allow);
           setName(res.name);
+          setChecked(allowdata);
         } else {
           setStatus("");
           setName("");
+          setSeat(null);
+          setAllow(null);
         }
       });
     } else {
@@ -37,16 +50,16 @@ const Analyze = ({
     return () => {
       abortController.abort();
     };
-  }, [idEvent]);
+  }, [idEvent, setChecked]);
+
   const handleClose = () => {
     setOpen(false);
   };
-  useEffect(() => {
-    AOS.init();
-  });
+
   const showAlertDelete = () => {
     setShowAlert(true);
   };
+
   return (
     <>
       <div className="analyze-event">
@@ -89,19 +102,27 @@ const Analyze = ({
             <FiTrash2 />
           </div>
         </div>
-        <div className="analyze-event-participant1">
+        <div
+          className={`analyze-event-participant1 ${
+            numberParticipants.length === seat && "maximum"
+          }`}
+        >
           <div
             className={
               !idEvent && getStatus === ""
                 ? "analyze-event-participant1-2 active"
-                : "analyze-event-participant1-2"
+                : `analyze-event-participant1-2 ${
+                    numberParticipants.length === seat && "maximum"
+                  }`
             }
           >
             <div
               className={
                 !idEvent && getStatus === ""
                   ? "analyze-event-participant1-2-3 active"
-                  : "analyze-event-participant1-2-3"
+                  : `analyze-event-participant1-2-3 ${
+                      numberParticipants.length === seat && "maximum"
+                    }`
               }
             >
               <div className="analyze-event-participant1-2-3-number">
@@ -115,8 +136,11 @@ const Analyze = ({
                     </>
                   ) : (
                     <>
-                      {" "}
-                      {numberParticipants.length} <MdOutlineEmojiPeople />
+                      {numberParticipants.length === seat
+                        ? "Maximum"
+                        : seat !== null
+                        ? `${numberParticipants.length}/${seat}`
+                        : seat === null && numberParticipants.length}
                     </>
                   )}
                 </h1>
@@ -143,6 +167,27 @@ const Analyze = ({
             </div>
           </div>
         </div>
+        {idEvent && (
+          <div className="analyze-event-allow">
+            <input
+              type="checkbox"
+              id="switch"
+              onChange={updateAllow}
+              class="switch-input"
+              checked={checked}
+            />
+            <label for="switch" class="switch ">
+              <span
+                className={
+                  checked === false ? "switch-name" : "switch-name allow"
+                }
+              >
+                {checked === false && "Not allow"}
+                {checked === true && "Allow attendance"}
+              </span>
+            </label>
+          </div>
+        )}
       </div>
       {open && (
         <Table

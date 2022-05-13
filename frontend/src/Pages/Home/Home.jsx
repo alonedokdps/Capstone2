@@ -14,8 +14,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Cardmini from "../../Components/cardSmall/Cardmini";
-import AOS from "aos";
-import "aos/dist/aos.css";
+
 const Home = ({eventType, data}) => {
   const [num, setNum] = useState(5);
   const [featuredEvent, setFeaturedEvent] = useState([]);
@@ -27,6 +26,7 @@ const Home = ({eventType, data}) => {
     };
   }, []);
   useEffect(() => {
+    document.title = "Home";
     const abortController = new AbortController();
     getAllEventApi
       .getAllEvent()
@@ -38,6 +38,7 @@ const Home = ({eventType, data}) => {
       .catch((err) => console.log(err));
     return () => {
       abortController.abort();
+      document.title = "";
     };
   }, []);
 
@@ -63,9 +64,7 @@ const Home = ({eventType, data}) => {
       window.removeEventListener("resize", resize);
     };
   }, []);
-  useEffect(() => {
-    AOS.init();
-  });
+
   return (
     <div className="section home  ">
       <Slide data={featuredEvent} />

@@ -115,6 +115,7 @@ const accountController = {
       res.status(500).json(err);
     }
   },
+
   getAccountByQuery: async (req, res) => {
     const search = req.query.search;
     const department = req.query.department;

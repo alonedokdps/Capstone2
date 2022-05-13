@@ -35,7 +35,20 @@ const eventController = {
         res.status(500).send(err.message);
       });
   },
+  uppdateAllow: async (req, res) => {
+    const eventId = await Event.findOne({_id: req.params.id});
 
+    const uppdateAllow = await Event.findByIdAndUpdate(req.params.id, {
+      allow: !eventId.allow,
+      new: true,
+    });
+
+    if (uppdateAllow?.allow === false) {
+      res.json({success: true, message: "Allowed attendance"});
+    } else {
+      res.json({success: true, message: "Disallowed attendance"});
+    }
+  },
   //DUYET EVENT //Truyen vao Status {"status": "Accept"}/ {"status": "Reject"}
   updateStatusEvent: async (req, res) => {
     if (!req.body.status)

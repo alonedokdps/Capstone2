@@ -64,7 +64,7 @@ const eventSchema = new mongoose.Schema(
     linkOnline: {
       type: String,
       required: false,
-      default: null,
+      default: false,
     },
     checkDepartment: {
       type: Boolean,
@@ -74,7 +74,12 @@ const eventSchema = new mongoose.Schema(
     departmentOfevent: {
       type: String,
       required: false,
-      default: null,
+      default: false,
+    },
+    allow: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     status: {
       type: String,

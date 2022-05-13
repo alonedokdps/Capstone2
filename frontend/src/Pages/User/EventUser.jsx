@@ -23,10 +23,14 @@ const EventUser = ({
   reject,
   selectEvent,
   UpdateStatusEvent,
+  updateAllow,
+  checked,
+  setChecked,
 }) => {
   useEffect(() => {
     AOS.init();
   });
+
   return (
     <div className="event-user">
       <h1 data-aos="fade-right">Events</h1>
@@ -123,10 +127,13 @@ const EventUser = ({
             <div className="event-management-box-row2" data-aos="fade-left">
               <Analyze
                 user={user}
+                setChecked={setChecked}
                 numberParticipants={numberParticipants}
                 handleDeleteEvent={handleDeleteEvent}
                 idEvent={idEvent}
                 UpdateStatusEvent={UpdateStatusEvent}
+                updateAllow={updateAllow}
+                checked={checked}
               />
             </div>
           </div>

@@ -39,6 +39,7 @@ import NotfoundPage from "./Components/404/NotfoundPage";
 import EventType from "./Pages/EventByEventType/EventType";
 import APIventByEventType from "./api/EventByEventType.api";
 import AccountManagement from "./Pages/User/AccountManagement";
+import ApiuppdateAllow from "./api/uppdateAllow.api";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -57,6 +58,7 @@ function App() {
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
   const [userById, setUserById] = useState({});
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     let controller = new AbortController();
@@ -273,6 +275,15 @@ function App() {
       }
     });
   };
+  const updateAllow = () => {
+    setChecked(!checked);
+    ApiuppdateAllow.uppdateAllow(idEvent).then((data) => {
+      if (data) {
+        toast(data.message);
+        setUpdateStatus(updateStatus + 1);
+      }
+    });
+  };
   const UpdateStatusEvent = (e) => {
     if (!idEvent) {
       alert("You are not choosing a  event");
@@ -283,7 +294,6 @@ function App() {
       if (data.success) {
         toast(data.message);
         setUpdateStatus(updateStatus + 1);
-        setIdEvent("");
       }
     });
   };
@@ -361,6 +371,8 @@ function App() {
                 path="event"
                 element={
                   <EventUser
+                    checked={checked}
+                    updateAllow={updateAllow}
                     handleChangeFilter={handleChangeFilter}
                     valueFilter={valueFilter}
                     setValueFilter={setValueFilter}
@@ -377,6 +389,7 @@ function App() {
                     handleDeleteEvent={handleDeleteEvent}
                     UpdateStatusEvent={UpdateStatusEvent}
                     user={user}
+                    setChecked={setChecked}
                   />
                 }
               />

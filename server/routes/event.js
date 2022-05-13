@@ -7,7 +7,7 @@ const upload = require("../middlewares/Upload.js");
 router.post("/addEvent", upload.single("img"), eventController.addEvent);
 
 //GET ALL EVENTS
-router.post("/updateStatus/:id", eventController.updateStatusEvent);
+router.put("/updateStatus/:id", eventController.updateStatusEvent);
 
 //GET ALL EVENT
 router.get("/getAllEvent", eventController.getAllEvents);
@@ -30,6 +30,7 @@ router.get("/getEvent/:id", eventController.getEventByEventId);
 //UPDATE EVENT
 router.put("/updateEvent/:id", eventController.updateEvent);
 
+router.post("/uppdateAllow/:id", eventController.uppdateAllow);
 //DELETE EVENT
 router.delete("/deleteEvent/:id", eventController.deleteEvent); // auth.isAuthenticated, auth.role(['Admin', 'DepartmentManager']),
 

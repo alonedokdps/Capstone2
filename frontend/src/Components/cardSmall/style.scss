@@ -1,6 +1,9 @@
 @use "../../scss/" as *;
 .card-mini-link {
-  max-width: calc(25% - 40px);
+  // max-width: calc(25% - 40px);
+  max-width: calc(25% - 30px);
+  min-height: calc(25% - 30px);
+
   display: block;
   border-radius: 8px;
   transition: all 0.1s linear;

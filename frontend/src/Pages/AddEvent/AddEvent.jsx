@@ -90,6 +90,7 @@ const AddEvent = () => {
       .catch((err) => toast.error(err));
   };
   useEffect(() => {
+    document.title = "Add Event";
     ApiEventType.getEventType()
       .then((data) => {
         if (data) {
@@ -97,6 +98,9 @@ const AddEvent = () => {
         }
       })
       .catch((err) => console.log(err));
+    return () => {
+      document.title = "";
+    };
   }, []);
   return (
     <div className="section-add-event">

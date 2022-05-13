@@ -10,6 +10,7 @@ const EventType = ({category}) => {
   const [query, setQuery] = useState({eventid: "", getQuery: ""});
   const [getEventbyType, setGetEventByType] = useState([]);
   useEffect(() => {
+    document.title = `Event${pathname}`;
     const getId = category.filter((item) => {
       if (item.name === pathname.split("/")[1]) {
         return item;

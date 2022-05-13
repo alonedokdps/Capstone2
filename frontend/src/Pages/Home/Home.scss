@@ -10,7 +10,7 @@
     justify-content: center;
     -webkit-box-flex: 0;
     flex-grow: 0;
-    gap: 10px;
+    gap: 15px;
     flex-shrink: 0;
     border-radius: 0 !important;
   }
@@ -18,10 +18,12 @@
 .cardbox-row-grid {
   width: 100%;
   display: flex;
-  gap: 20px;
+  flex: 1;
+  column-gap: 40px;
+  row-gap: 20px;
   flex-wrap: wrap;
-  -webkit-box-flex: 0;
-  flex-grow: 0;
-  flex-shrink: 0;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
