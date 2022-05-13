@@ -1,0 +1,15 @@
+.select-typeshow {
+  position: relative;
+  cursor: pointer;
+  &-selectbox {
+    position: relative;
+    &-item {
+      background-color: red;
+      position: absolute;
+      align-items: center;
+      &-value {
+        padding: 10px;
+      }
+    }
+  }
+}

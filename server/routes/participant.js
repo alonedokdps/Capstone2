@@ -23,4 +23,8 @@ router.get(
   participantController.getRegisteredOfEvent
 );
 router.get("/getAttendedOfEvent/:id", participantController.getAttendedOfEvent);
+router.get(
+  "/checkStatusAttendedOrRegistered/:id",
+  participantController.checkStatusAttendedOrRegistered
+);
 module.exports = router;

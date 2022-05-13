@@ -29,10 +29,16 @@
     align-items: center;
   }
   &-img img {
+    max-width: 100px;
+    min-width: 100px;
     width: 100px;
     height: 70px;
     object-fit: cover;
     max-height: 70px;
+  }
+  &-name {
+    min-width: 300px;
+    max-width: 300px;
   }
   &-name h4 {
     font-weight: 400;

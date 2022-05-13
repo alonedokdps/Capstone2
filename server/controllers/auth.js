@@ -59,6 +59,8 @@ async function login(req, res) {
           token,
           id: account._id,
           role: account.role,
+          name: account.username,
+          departmentId: account.departmentId,
         });
       });
     }

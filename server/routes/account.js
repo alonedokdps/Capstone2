@@ -48,5 +48,6 @@ router.delete(
   auth.role(["Admin"]),
   accountController.deleteAccount
 );
+router.get("/getAccountByQuery/:role", accountController.getAccountByQuery);
 
 module.exports = router;

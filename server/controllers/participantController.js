@@ -12,7 +12,7 @@ const participantController = {
     if (participantExists.length > 0) {
       return res.json({
         success: false,
-        message: "Participant already exists",
+        message: "You have registered for this event ",
       });
     }
     try {
@@ -27,6 +27,7 @@ const participantController = {
           success: true,
           _id: savedParticipant._id,
           eventId: savedParticipant.eventId,
+          message: "Participant registered successfully !",
         },
       });
     } catch (err) {
@@ -148,6 +149,28 @@ const participantController = {
       });
     } catch (err) {
       res.json({message: err});
+    }
+  },
+  checkStatusAttendedOrRegistered: async (req, res) => {
+    const check = await Participant.find({
+      eventId: req.params.id,
+      accountId: req.query.accId,
+    });
+    console.log(check.length);
+    if (check.length === 0) return res.json("You are not registered");
+    if (check) {
+      const x = check.filter((item) => {
+        if (item.accountId == req.query.accId) {
+          return item;
+        }
+      });
+      if (x !== []) {
+        if (x[0].isAttended === false) {
+          res.json("registered");
+        } else {
+          res.json("attended");
+        }
+      }
     }
   },
 };

@@ -4,6 +4,8 @@ import "./style.scss";
 import {AiFillSetting} from "react-icons/ai";
 import {BiLogOut} from "react-icons/bi";
 import {MdEvent} from "react-icons/md";
+import {FaToolbox} from "react-icons/fa";
+
 import {useCookies} from "react-cookie";
 import {toast} from "react-toastify";
 
@@ -13,12 +15,18 @@ const DropdownUser = ({setRole}) => {
     <div className="dropdown-user">
       <Link to="/user/account">
         <div className="dropdown-user-item">
-          <AiFillSetting /> Account
+          <AiFillSetting />
+          My Account
         </div>
       </Link>
       <Link to="/user/event">
         <div className="dropdown-user-item">
           <MdEvent /> Event
+        </div>
+      </Link>
+      <Link to="/user/management-account">
+        <div className="dropdown-user-item">
+          <FaToolbox /> Account management
         </div>
       </Link>
       <div

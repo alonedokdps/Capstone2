@@ -13,7 +13,7 @@ const Cardmini = ({data}) => {
           <span>
             <Moment format="DD/MM/YYYY">{data.dateOfEvent}</Moment>
           </span>
-          <span>khoa hoc</span>
+          <span>{data.eventTypeId}</span>
         </div>
       </div>
     </Link>

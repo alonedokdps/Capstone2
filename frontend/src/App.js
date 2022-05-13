@@ -36,6 +36,10 @@ import ApiGetAllAccount from "./api/GetAllAccout.api";
 import AlertCustom from "./Components/AlertCustome/AlertCustom";
 import CountDown from "./Components/CountDown/CountDown";
 import NotfoundPage from "./Components/404/NotfoundPage";
+import EventType from "./Pages/EventByEventType/EventType";
+import APIventByEventType from "./api/EventByEventType.api";
+import AccountManagement from "./Pages/User/AccountManagement";
+
 function App() {
   const [totalData, setTotalData] = useState([]);
   const [course, setCourse] = useState([]);
@@ -126,7 +130,9 @@ function App() {
     });
     return () => controller?.abort();
   }, []);
+  // -------------------------------------------------------
 
+  // -----------------------------------------------------
   useEffect(() => {
     const abortController = new AbortController();
     ApiEventType.getEventType()
@@ -258,6 +264,7 @@ function App() {
   const selectEvent = (e) => {
     setIdEvent(e.target.dataset.value);
   };
+
   const handleDeleteEvent = (id) => {
     ApiDeleteEvent.DeleteEvent(id).then((data) => {
       if (data.success) {
@@ -300,6 +307,9 @@ function App() {
       case "Expired":
         setActive(5);
         break;
+      case "Deleted":
+        setActive(6);
+        break;
       default:
         setActive(1);
     }
@@ -324,7 +334,10 @@ function App() {
               <Route index element={<Home />} />
               {category &&
                 category.map((item) => (
-                  <Route path={item.path} element={<h1>data</h1>} />
+                  <Route
+                    path={item.path}
+                    element={<EventType category={category} />}
+                  />
                 ))}
             </Route>
             <Route path="/login" element={<Login getForm="login" />} />{" "}
@@ -332,6 +345,10 @@ function App() {
             <Route path="/register" element={<Login getForm="register" />} />
             <Route path="/add-event" element={<AddEvent />} />
             <Route path="/user" element={<UserPage />}>
+              <Route
+                path="management-account"
+                element={<AccountManagement />}
+              />
               <Route
                 index
                 path="account"

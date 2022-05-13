@@ -6,7 +6,7 @@ import {AiOutlineClose, AiOutlineSearch} from "react-icons/ai";
 import {BsCalendar2Event} from "react-icons/bs";
 import {RiUser3Line} from "react-icons/ri";
 
-import {BiUserCircle} from "react-icons/bi";
+import {BsBell} from "react-icons/bs";
 
 import logo from "../../images/imgicon/logo.svg";
 import {CgMenuLeftAlt} from "react-icons/cg";
@@ -122,17 +122,35 @@ const Header = ({data, role, setRole}) => {
           </div>
         </div>
         <div className="user-icon">
+          <BsBell
+            style={{
+              fontSize: "25px",
+              margin: "0 20px",
+              color: "black",
+              cursor: "pointer",
+            }}
+          />
           {cookies.token && (
             <BsCalendar2Event
               data-aos="fade-right"
-              style={{fontSize: "25px", margin: "0 20px", color: "black"}}
+              style={{
+                fontSize: "25px",
+                margin: "0 20px",
+                color: "black",
+                cursor: "pointer",
+              }}
             />
           )}
           {role && role === "Admin" && (
             <Link to="/add-event" className="icon-add">
               <BsPatchPlus
                 data-aos="fade-down"
-                style={{fontSize: "25px", margin: "0 20px", color: "black"}}
+                style={{
+                  fontSize: "25px",
+                  margin: "0 20px",
+                  color: "black",
+                  cursor: "pointer",
+                }}
               />
             </Link>
           )}

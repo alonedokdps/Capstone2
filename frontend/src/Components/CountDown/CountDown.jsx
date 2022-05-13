@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./style.scss";
-const CountDown = ({open = false, handleClose = () => {}}) => {
+const CountDown = ({open = false, handleClose = () => {}, date}) => {
   const [timerDays, setTimerDays] = useState("00");
   const [timerHours, settimerHours] = useState("00");
   const [timerMinutes, settimerMinutes] = useState("00");
   const [TimerSeconds, setTimerSeconds] = useState("00");
   let interval = useRef();
   const startTimer = () => {
-    const countdownday = new Date("May 09,2023 00:00:00").getTime();
+    const countdownday = new Date(date).getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = countdownday - now;
@@ -46,7 +46,7 @@ const CountDown = ({open = false, handleClose = () => {}}) => {
     <div className="countdown-container">
       <div className="countdown-container-overlay" onClick={handleClose}></div>
       <div className="countdown-container-content" data-aos="zoom-out-down">
-        <h1>You can check in later...</h1>
+        <h1>The event will take place later ...</h1>
         <ul className="countdown-container-content-datetime">
           <li className="countdown-container-content-datetime-item">
             <span className="countdown-container-content-datetime-item-number days">

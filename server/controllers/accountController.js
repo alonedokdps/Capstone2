@@ -115,6 +115,65 @@ const accountController = {
       res.status(500).json(err);
     }
   },
+  getAccountByQuery: async (req, res) => {
+    const search = req.query.search;
+    const department = req.query.department;
+    const course = req.query.course;
+    const classs = req.query.classs;
+    const role = req.params.role;
+    if (role === "Admin") {
+      if (!department && !course && !classs && !search) {
+        const event = await Account.find({});
+        if (event) {
+          res.json({event});
+        }
+      }
+      if (search) {
+        const event = await Account.find({fullname: search});
+        if (event) {
+          res.json({event});
+        }
+      }
+      if (department && course && classs && search) {
+        const event = await Account.find({
+          fullname: search,
+          departmentId: department,
+          courseId: courseId,
+          class: classs,
+        });
+        if (event) {
+          res.json({event});
+        }
+      }
+    } else {
+      if (!department && !course && !classs && !search) {
+        const event = await Account.find({departmentId: department});
+        if (event) {
+          res.json({event});
+        }
+      }
+      if (search) {
+        const event = await Account.find({
+          fullname: search,
+          departmentId: department,
+        });
+        if (event) {
+          res.json({event});
+        }
+      }
+      if (department && course && classs && search) {
+        const event = await Account.find({
+          fullname: search,
+          departmentId: department,
+          courseId: courseId,
+          class: classs,
+        });
+        if (event) {
+          res.json({event});
+        }
+      }
+    }
+  },
 };
 
 module.exports = accountController;
