@@ -40,6 +40,9 @@ import EventType from "./Pages/EventByEventType/EventType";
 import APIventByEventType from "./api/EventByEventType.api";
 import AccountManagement from "./Pages/User/AccountManagement";
 import ApiuppdateAllow from "./api/uppdateAllow.api";
+import ApigetAllAccQuery from "./api/getAllAccQuery.api";
+import ApiUpdateRole from "./api/updateRole.api";
+import ApideleteAccount from "./api/deleteAccount.api";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -54,11 +57,19 @@ function App() {
   const [active, setActive] = useState(1);
   const [numberParticipants, setParticipants] = useState([]);
   const [idEvent, setIdEvent] = useState("");
+  const [idAccount, setIdAccount] = useState("");
   const [role, setRole] = useState("");
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
   const [userById, setUserById] = useState({});
   const [checked, setChecked] = useState(false);
+  const [department, setDepartment] = useState([]);
+  const [eventAccepted, setEventAccepted] = useState([]);
+  const [ListStudent, setListStudent] = useState([]);
+  const [queryListstudent, setQueryListStudent] = useState({
+    search: "",
+    department: "",
+  });
 
   useEffect(() => {
     let controller = new AbortController();
@@ -98,6 +109,17 @@ function App() {
                   return item;
                 });
                 setUser((prev) => newData2);
+                setDepartment(department);
+              }
+            });
+            ApigetAllAccQuery.getAllAccQuery(
+              queryListstudent.search,
+              queryListstudent.department
+            ).then((data) => {
+              if (data) {
+                setListStudent(data);
+              } else {
+                setListStudent([]);
               }
             });
           }
@@ -131,7 +153,12 @@ function App() {
       }
     });
     return () => controller?.abort();
-  }, []);
+  }, [
+    queryListstudent.department,
+    queryListstudent.search,
+    queryListstudent,
+    updateStatus,
+  ]);
   // -------------------------------------------------------
 
   // -----------------------------------------------------
@@ -236,6 +263,19 @@ function App() {
       .then((data) => {
         if (data) {
           setAccept(data.event?.length);
+          ApiEventType.getEventType().then((eventype) => {
+            if (data && eventype) {
+              const newData = data.event.map((event) => {
+                eventype.map((eventype) => {
+                  if (event.eventTypeId === eventype._id) {
+                    event.eventTypeId = eventype.name;
+                  }
+                });
+                return event;
+              });
+              setEventAccepted(newData);
+            }
+          });
         } else {
           setAccept(0);
         }
@@ -324,6 +364,28 @@ function App() {
         setActive(1);
     }
   };
+  const UpdateRole = (e) => {
+    ApiUpdateRole.UpdateRole(
+      e.target.getAttribute("data-id"),
+      e.target.value
+    ).then((data) => {
+      if (data && data.success) {
+        toast(data.message);
+        setUpdateStatus(updateStatus + 1);
+      }
+    });
+  };
+  const deleteAccount = (id) => {
+    ApideleteAccount.deleteAccount(id).then((data) => {
+      if (data.success) {
+        toast(data.message);
+        setUpdateStatus(updateStatus + 1);
+      }
+    });
+  };
+  const handleChangeQueryListStudent = (e) => {
+    setQueryListStudent({...queryListstudent, [e.target.name]: e.target.value});
+  };
   return (
     <>
       <BrowserRouter>
@@ -341,7 +403,7 @@ function App() {
                 />
               }
             >
-              <Route index element={<Home />} />
+              <Route index element={<Home eventAccepted={eventAccepted} />} />
               {category &&
                 category.map((item) => (
                   <Route
@@ -357,7 +419,16 @@ function App() {
             <Route path="/user" element={<UserPage />}>
               <Route
                 path="management-account"
-                element={<AccountManagement />}
+                element={
+                  <AccountManagement
+                    handleChangeQueryListStudent={handleChangeQueryListStudent}
+                    ChangeId={UpdateRole}
+                    ListStudent={ListStudent}
+                    nameTable={queryListstudent.department}
+                    department={department}
+                    deleteAccount={deleteAccount}
+                  />
+                }
               />
               <Route
                 index

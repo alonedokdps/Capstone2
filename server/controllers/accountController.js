@@ -89,14 +89,7 @@ const accountController = {
     }
   },
   //DELETE ACCOUNT
-  deleteAccount: async (req, res) => {
-    try {
-      await Account.findByIdAndDelete(req.params.id);
-      res.status(200).json("Deleted successfully!");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+
   updateScore: async (req, res) => {
     try {
       const account = await Account.findById(req.body.accountId);
@@ -173,6 +166,75 @@ const accountController = {
           res.json({event});
         }
       }
+    }
+  },
+  updateRole: async (req, res) => {
+    try {
+      const account = await Account.findById(req.params.id);
+      const update = await account.updateOne({
+        $set: {
+          role: req.body.nameRole,
+        },
+      });
+      if (update) {
+        res
+          .status(200)
+          .json({success: true, message: "Updated Role successfully!"});
+      }
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  getAllAccQuery: async (req, res) => {
+    const search = req.query.search;
+    const department = req.query.department;
+    try {
+      if (department && search) {
+        const event = await Account.find({
+          departmentId: department,
+          fullname: search,
+        });
+        if (event) {
+          res.json(event);
+        } else {
+          res.json([]);
+        }
+      } else if (search) {
+        const event = await Account.find({
+          fullname: search,
+        });
+        if (event) {
+          res.json(event);
+        } else {
+          res.json([]);
+        }
+      } else if (department) {
+        const event = await Account.find({
+          departmentId: department,
+        });
+        if (event) {
+          res.json(event);
+        } else {
+          res.json([]);
+        }
+      } else {
+        const event = await Account.find({});
+        if (event) {
+          res.json(event);
+        } else {
+          res.json([]);
+        }
+      }
+    } catch (err) {}
+  },
+  deleteAccount: async (req, res) => {
+    try {
+      if (req.params.id) {
+        await Account.findByIdAndDelete(req.params.id);
+        res.json({success: true, message: "Account deleted successfully"});
+      }
+    } catch (err) {
+      console.log(err);
     }
   },
 };

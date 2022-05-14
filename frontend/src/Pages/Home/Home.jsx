@@ -15,32 +15,11 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Cardmini from "../../Components/cardSmall/Cardmini";
 
-const Home = ({eventType, data}) => {
+const Home = ({eventAccepted}) => {
   const [num, setNum] = useState(5);
-  const [featuredEvent, setFeaturedEvent] = useState([]);
-  useEffect(() => {
-    const abortController = new AbortController();
-    getAllEventApi.getAllEvent().then((data) => console.log("data", data));
-    return () => {
-      abortController.abort();
-    };
-  }, []);
-  useEffect(() => {
-    document.title = "Home";
-    const abortController = new AbortController();
-    getAllEventApi
-      .getAllEvent()
-      .then((data) => {
-        if (data) {
-          setFeaturedEvent(data);
-        }
-      })
-      .catch((err) => console.log(err));
-    return () => {
-      abortController.abort();
-      document.title = "";
-    };
-  }, []);
+
+  useEffect(() => {}, []);
+  useEffect(() => {}, []);
 
   const resize = () => {
     const handleScroll = () => {
@@ -67,7 +46,7 @@ const Home = ({eventType, data}) => {
 
   return (
     <div className="section home  ">
-      <Slide data={featuredEvent} />
+      {/* <Slide /> */}
       <Title title="New Event" />
       <div className="cardbox-row" data-aos="fade-up">
         <Swiper
@@ -84,7 +63,6 @@ const Home = ({eventType, data}) => {
           className="cardbox-row-slide"
         >
           <SwiperSlide>
-            {" "}
             <Card />
           </SwiperSlide>
         </Swiper>
@@ -94,11 +72,11 @@ const Home = ({eventType, data}) => {
 "
       />
       <div className="cardbox-row-grid" data-aos="fade-up">
-        {featuredEvent &&
-          featuredEvent.length > 0 &&
-          featuredEvent.map((item, index) => (
-            <Cardmini eventType={eventType} data={item} />
-          ))}
+        {eventAccepted &&
+          eventAccepted.length > 0 &&
+          eventAccepted.map((item) => {
+            return <Cardmini data={item} />;
+          })}
       </div>
     </div>
   );

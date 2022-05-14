@@ -22,12 +22,21 @@
     background-color: transparent;
     backdrop-filter: blur(8px);
   }
+
   &-content {
     &-error {
       display: flex;
       align-items: center;
       justify-content: Center;
       flex-direction: column;
+      &-msg {
+        strong {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+      }
       &-img {
         img {
           width: 180px;

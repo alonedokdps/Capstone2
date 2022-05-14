@@ -269,3 +269,16 @@
     }
   }
 }
+.button-attend-gruop {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: 13px;
+
+  .icon-qrcode {
+    position: absolute;
+    right: -10px;
+  }
+}

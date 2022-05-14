@@ -156,7 +156,7 @@ const participantController = {
       eventId: req.params.id,
       accountId: req.query.accId,
     });
-    console.log(check.length);
+
     if (check.length === 0) return res.json("You are not registered");
     if (check) {
       const x = check.filter((item) => {

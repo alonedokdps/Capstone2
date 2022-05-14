@@ -8,7 +8,13 @@ import {BiTimeFive} from "react-icons/bi";
 import {FaAudioDescription} from "react-icons/fa";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 import {BiInfinite} from "react-icons/bi";
-import {AiOutlineCheckCircle, AiFillCheckCircle} from "react-icons/ai";
+import {
+  AiOutlineCheckCircle,
+  AiOutlineQrcode,
+  AiOutlineStar,
+  AiFillStar,
+  AiFillCheckCircle,
+} from "react-icons/ai";
 
 import CardInfo from "../../Components/card-info/CardInfo";
 import About from "../../Components/About/About";
@@ -23,6 +29,7 @@ import Moment from "react-moment";
 import APIGetRegister from "./../../api/GetRegister.api";
 import {toast} from "react-toastify";
 import ApiCheckRegisterOrAttend from "../../api/CheckRegisterOrAttend.api";
+import AlertCustom from "../../Components/AlertCustome/AlertCustom";
 const Detail = ({category}) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
@@ -32,6 +39,7 @@ const Detail = ({category}) => {
   const [check, setCheck] = useState("");
   const [showCountDown, setShowCountDown] = useState(false);
   const dateValue = new Date(eventDetail.dateOfEvent);
+  const [warning, setWarning] = useState(false);
 
   const openViewDetail = () => {
     if (showDetail == 2) {
@@ -43,27 +51,7 @@ const Detail = ({category}) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-
     const userData = JSON.parse(localStorage.getItem("user"));
-    const idAcc = userData.id;
-    if (userData) {
-      ApiCheckRegisterOrAttend.CheckRegisterOrAttend(id, idAcc)
-        .then((data) => {
-          if (data) {
-            console.log(data);
-            setCheck(data);
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-
-    APIGetRegister.GetRegister(id).then((data) => {
-      if (data) {
-        setNumberRegister(data?.length);
-      } else {
-        setNumberRegister(0);
-      }
-    });
     ApiEventDetail.getEventDetal(id)
       .then((data) => {
         if (data) {
@@ -86,6 +74,28 @@ const Detail = ({category}) => {
         }
       })
       .catch((err) => console.log(err));
+    if (!userData) return toast("Hi! To register, please login!");
+
+    const idAcc = userData.id && userData.id;
+    if (userData) {
+      ApiCheckRegisterOrAttend.CheckRegisterOrAttend(id, idAcc)
+        .then((data) => {
+          if (data) {
+            console.log(data);
+            setCheck(data);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    APIGetRegister.GetRegister(id).then((data) => {
+      if (data) {
+        setNumberRegister(data?.length);
+      } else {
+        setNumberRegister(0);
+      }
+    });
+
     return () => {
       abortController.abort();
       document.title = "DEVENT";
@@ -112,7 +122,11 @@ const Detail = ({category}) => {
   useEffect(() => {
     AOS.init();
   }, []);
-
+  const checkEventWhenAllowAttend = () => {
+    if (eventDetail.allow === true && check === "You are not registered") {
+      setWarning(true);
+    }
+  };
   return (
     <>
       <div className="detail-container">
@@ -210,22 +224,51 @@ const Detail = ({category}) => {
                         </div>
                       </div>
                     </div>
-                    {check === "You are not registered" ? (
+
+                    {check === "You are not registered" &&
+                    eventDetail.allow === false ? (
                       <Button
                         buttonStyle="btn-registerV2"
                         onClick={handleRegister}
                       >
                         <AiOutlineCheckCircle /> Register
                       </Button>
-                    ) : check === "registered" ? (
+                    ) : check === "You are not registered" &&
+                      eventDetail.allow === true ? (
+                      <Button
+                        buttonStyle="btn-registerV2"
+                        onClick={
+                          eventDetail.allow === true &&
+                          check === "You are not registered"
+                            ? checkEventWhenAllowAttend
+                            : handleRegister
+                        }
+                      >
+                        <AiOutlineCheckCircle /> Register
+                      </Button>
+                    ) : check === "registered" &&
+                      eventDetail.allow === false ? (
                       <Button
                         buttonStyle="btn-registerV2-success"
                         onClick={handleRegister}
                       >
                         <AiFillCheckCircle /> Registered
                       </Button>
+                    ) : check === "registered" && eventDetail.allow === true ? (
+                      <div className="button-attend-gruop">
+                        <Button buttonStyle="btn-attendV2-success">
+                          <AiOutlineStar /> Attendance
+                        </Button>
+                        {/* <Button buttonStyle="btn-attendV2-fail">
+                          <AiFillStar /> Attended
+                        </Button> */}
+                        <AiOutlineQrcode
+                          className="icon-qrcode"
+                          style={{fontSize: "20px", cursor: "pointer"}}
+                        />
+                      </div>
                     ) : (
-                      ""
+                      []
                     )}
                   </div>
                 </div>
@@ -327,6 +370,14 @@ const Detail = ({category}) => {
           </div>
         </div>
       </div>
+      {warning && (
+        <AlertCustom
+          handleClose={setWarning}
+          title="warning"
+          diffId="Sorry, the event is in attendance status, you cannot register for this event :("
+        />
+      )}
+
       {showCountDown && (
         <CountDown
           date={eventDetail.dateOfEvent}

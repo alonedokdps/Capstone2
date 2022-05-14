@@ -42,12 +42,8 @@ router.put(
 router.put("/:id", auth.isAuthenticated, accountController.updateAccount);
 
 //DELETE A ACCOUNT
-router.delete(
-  "/:id",
-  auth.isAuthenticated,
-  auth.role(["Admin"]),
-  accountController.deleteAccount
-);
+router.delete("/deleteAccount/:id", accountController.deleteAccount);
 router.get("/getAccountByQuery/:role", accountController.getAccountByQuery);
-
+router.put("/updateRole/:id", accountController.updateRole);
+router.get("/getAllAccQuery", accountController.getAllAccQuery);
 module.exports = router;

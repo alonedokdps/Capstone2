@@ -185,3 +185,99 @@
   font-weight: 500;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+.btn-attendV2-fail {
+  background-color: #6a5af9;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+}
+.btn-attendV2-success {
+  background-color: #6a5af9;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+  padding: 10px 20px;
+  text-align: center;
+
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+  @-webkit-keyframes glowing {
+    0% {
+      background-color: #6a5af9;
+      -webkit-box-shadow: 0 0 3px #6a5af9;
+    }
+    50% {
+      background-color: #6a5af9;
+      -webkit-box-shadow: 0 0 40px #6a5af9;
+    }
+    100% {
+      background-color: #6a5af9;
+      -webkit-box-shadow: 0 0 3px #6a5af9;
+    }
+  }
+
+  @-moz-keyframes glowing {
+    0% {
+      background-color: #6a5af9;
+      -moz-box-shadow: 0 0 3px #6a5af9;
+    }
+    50% {
+      background-color: #6a5af9;
+      -moz-box-shadow: 0 0 40px #6a5af9;
+    }
+    100% {
+      background-color: #6a5af9;
+      -moz-box-shadow: 0 0 3px #6a5af9;
+    }
+  }
+
+  @-o-keyframes glowing {
+    0% {
+      background-color: #6a5af9;
+      box-shadow: 0 0 3px #6a5af9;
+    }
+    50% {
+      background-color: #6a5af9;
+      box-shadow: 0 0 40px #6a5af9;
+    }
+    100% {
+      background-color: #6a5af9;
+      box-shadow: 0 0 3px #6a5af9;
+    }
+  }
+
+  @keyframes glowing {
+    0% {
+      background-color: #6a5af9;
+      box-shadow: 0 0 3px #6a5af9;
+    }
+    50% {
+      background-color: #6a5af9;
+      box-shadow: 0 0 40px #6a5af9;
+    }
+    100% {
+      background-color: #6a5af9;
+      box-shadow: 0 0 3px #6a5af9;
+    }
+  }
+}
