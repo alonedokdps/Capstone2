@@ -186,7 +186,7 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .btn-attendV2-fail {
-  background-color: #6a5af9;
+  background-color: grey;
   -webkit-border-radius: 10px;
   border-radius: 10px;
   border: none;
@@ -280,4 +280,18 @@
       box-shadow: 0 0 3px #6a5af9;
     }
   }
+}
+.btn-cant-register {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: grey;
+  color: white;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  font-weight: 500;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

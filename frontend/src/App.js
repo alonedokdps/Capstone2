@@ -43,6 +43,7 @@ import ApiuppdateAllow from "./api/uppdateAllow.api";
 import ApigetAllAccQuery from "./api/getAllAccQuery.api";
 import ApiUpdateRole from "./api/updateRole.api";
 import ApideleteAccount from "./api/deleteAccount.api";
+import XulyQr from "./Pages/QrafterScancode/XulyQr";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -66,6 +67,8 @@ function App() {
   const [department, setDepartment] = useState([]);
   const [eventAccepted, setEventAccepted] = useState([]);
   const [ListStudent, setListStudent] = useState([]);
+  const [eventId, setEventId] = useState("");
+  const [idParticipant, setIdParticipant] = useState("");
   const [queryListstudent, setQueryListStudent] = useState({
     search: "",
     department: "",
@@ -413,7 +416,27 @@ function App() {
                 ))}
             </Route>
             <Route path="/login" element={<Login getForm="login" />} />{" "}
-            <Route path="detail/:id" element={<Detail category={category} />} />
+            <Route
+              path="detail/:id"
+              element={
+                <Detail
+                  setEventId={setEventId}
+                  setIdParticipant={setIdParticipant}
+                  setUpdateStatus={setUpdateStatus}
+                  updateStatus={updateStatus}
+                  category={category}
+                />
+              }
+            />
+            <Route
+              path="/Qrprocess"
+              element={
+                <XulyQr
+                  updateStatus={updateStatus}
+                  setUpdateStatus={setUpdateStatus}
+                />
+              }
+            />
             <Route path="/register" element={<Login getForm="register" />} />
             <Route path="/add-event" element={<AddEvent />} />
             <Route path="/user" element={<UserPage />}>

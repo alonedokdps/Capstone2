@@ -50,6 +50,16 @@ const participantController = {
       res.json({message: err});
     }
   },
+  getRegisteredbyidAccountOfEvent: async (req, res) => {
+    const registered = await Participant.find({
+      eventId: req.params.id,
+      accountId: req.query.idacc,
+      isAttended: false,
+    });
+    if (registered) {
+      res.json(registered);
+    }
+  },
   getAttendedOfEvent: async (req, res) => {
     try {
       const attended = await Participant.find({
@@ -106,15 +116,14 @@ const participantController = {
             {
               $set: {
                 isAttended: true,
-                // timeAttended: new Date(),
+                timeAttended: new Date(),
               },
             }
           );
-
+          console.log(updatedParticipant);
           res.json({
             success: true,
-            message: " attended Successful",
-            // data: updatedParticipant,
+            message: "attended Successful",
           });
         } else {
           res.json({
@@ -140,7 +149,21 @@ const participantController = {
       res.json({message: err});
     }
   },
-
+  getParticipantByEventIdAccid: async (req, res) => {
+    try {
+      const participants = await Participant.find({
+        eventId: req.params.id,
+        accountId: req.body.accId,
+      });
+      if (participants) {
+        res.json(participants);
+      } else {
+        res.json([]);
+      }
+    } catch (err) {
+      res.json(err);
+    }
+  },
   // REMOVE ALL PARTICIPANT IN EVENT
   RemoveAllParticipant: async (req, res) => {
     try {

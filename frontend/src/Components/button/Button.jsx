@@ -16,6 +16,7 @@ const STYLES = [
   "btn-attendV2-success",
   "btn-registerV2-fail",
   "btn-attendV2-fail",
+  "btn-cant-register",
 ];
 const SIZES = ["btn-xs", "btn-s", "btn-m", "btn-l", "btn-xl"];
 

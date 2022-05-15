@@ -17,10 +17,10 @@ const participantSchema = new mongoose.Schema({
   QR_Code: {
     type: String,
   },
-  // timeAttended: {
-  //   type: Date,
-  //   required: false,
-  // },
+  timeAttended: {
+    type: Date,
+    required: false,
+  },
 });
 
 let Participant = mongoose.model("Participant", participantSchema);

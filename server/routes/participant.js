@@ -27,4 +27,9 @@ router.get(
   "/checkStatusAttendedOrRegistered/:id",
   participantController.checkStatusAttendedOrRegistered
 );
+router.get(
+  "/getRegisteredbyidAccountOfEvent/:id",
+  participantController.getRegisteredbyidAccountOfEvent
+);
+
 module.exports = router;

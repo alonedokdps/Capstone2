@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import QRCode from "qrcode.react";
 import "./style.scss";
-const Qrcode = ({open = false, handleClose = () => {}}) => {
+const Qrcode = ({open = false, handleClose = () => {}, value}) => {
   if (typeof document === "undefined") {
     return <div className="qrcode-container"></div>;
   }
@@ -11,7 +11,7 @@ const Qrcode = ({open = false, handleClose = () => {}}) => {
     <div className="qrcode-container">
       <div className="qrcode-container-overlay" onClick={handleClose}></div>
       <div className="qrcode-container-content">
-        <QRCode size="200" value="https://reactjs.org/" renderAs="canvas" />,
+        <QRCode size="200" value={value} renderAs="canvas" />,
         <div>Scan QR-code to attend</div>
       </div>
     </div>,

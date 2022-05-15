@@ -1,9 +1,12 @@
 import axios from "./AxiosClient";
-const AttendEvent = async (values) => {
+const AttendEvent = async (idevent, idparticipant) => {
   const {data} = await axios({
     method: "patch",
     url: "/participant/AttendEvent",
-    data: values,
+    data: {
+      eventId: idevent,
+      _id: idparticipant,
+    },
   });
   return data;
 };

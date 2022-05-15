@@ -5,9 +5,9 @@ import {CalendarComponent} from "@syncfusion/ej2-react-calendars";
 import {BsArrowLeft} from "react-icons/bs";
 import {ImLocation} from "react-icons/im";
 import {BiTimeFive} from "react-icons/bi";
-import {FaAudioDescription} from "react-icons/fa";
+
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
-import {BiInfinite} from "react-icons/bi";
+
 import {
   AiOutlineCheckCircle,
   AiOutlineQrcode,
@@ -15,12 +15,11 @@ import {
   AiFillStar,
   AiFillCheckCircle,
 } from "react-icons/ai";
+import {MdOutlineDoNotDisturb} from "react-icons/md";
 
-import CardInfo from "../../Components/card-info/CardInfo";
-import About from "../../Components/About/About";
 import ApiEventDetail from "../../api/Event.Detail.api";
 import ApiRegistrationEvent from "../../api/RegisTrationEvent.api";
-import EventDetails from "../../Components/eventDetail/EventDetails";
+
 import CountDown from "./../../Components/CountDown/CountDown";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -30,7 +29,18 @@ import APIGetRegister from "./../../api/GetRegister.api";
 import {toast} from "react-toastify";
 import ApiCheckRegisterOrAttend from "../../api/CheckRegisterOrAttend.api";
 import AlertCustom from "../../Components/AlertCustome/AlertCustom";
-const Detail = ({category}) => {
+import apigetRegisteredOfEvent from "../../api/getRegisteredOfEvent.api";
+import ApiAttend from "../../api/AttendEvent.api";
+import ApiUpdateScore from "../../api/UpdateScore.api";
+import Qrcode from "./../../Components/qr-code/Qrcode";
+const Detail = ({
+  category,
+  updateStatus,
+  setUpdateStatus,
+  dataQR,
+  setEventId,
+  setIdParticipant,
+}) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
   const [showDetail, setShowDetail] = useState(0);
@@ -40,7 +50,24 @@ const Detail = ({category}) => {
   const [showCountDown, setShowCountDown] = useState(false);
   const dateValue = new Date(eventDetail.dateOfEvent);
   const [warning, setWarning] = useState(false);
+  const [idParticipant, setIdParticipants] = useState("");
+  const [showPoint, setshowPoint] = useState("");
+  const [showQr, setShowQr] = useState(false);
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) return;
+    const newUser = JSON.parse(user);
+    if (eventDetail._id && idParticipant) {
+      const newUser2 = {
+        ...newUser,
+        idevent: eventDetail._id,
+        idPar: idParticipant,
+      };
+      localStorage.setItem("Qrcode", JSON.stringify(newUser2));
+    }
+    // return () => localStorage.removeItem("Qrcode");
+  }, [eventDetail._id, idParticipant, id]);
   const openViewDetail = () => {
     if (showDetail == 2) {
       setShowDetail(0);
@@ -49,9 +76,34 @@ const Detail = ({category}) => {
     setShowDetail((prev) => prev + 1);
   };
 
+  const handleAttend = () => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    ApiAttend.AttendEvent(id, idParticipant).then((data) => {
+      if (data.success === true) {
+        setIsRegister(isRegister + 1);
+        setUpdateStatus(updateStatus + 1);
+        ApiUpdateScore.UpdateScore(userData?.id).then((data) =>
+          console.log(data)
+        );
+        toast(data.message);
+        setshowPoint(true);
+      } else {
+        toast.info(data.message);
+      }
+    });
+  };
+
   useEffect(() => {
     const abortController = new AbortController();
     const userData = JSON.parse(localStorage.getItem("user"));
+    APIGetRegister.GetRegister(id).then((data) => {
+      if (data) {
+        setNumberRegister(data?.length);
+      } else {
+        setNumberRegister(0);
+      }
+    });
+
     ApiEventDetail.getEventDetal(id)
       .then((data) => {
         if (data) {
@@ -71,13 +123,22 @@ const Detail = ({category}) => {
             eventTypeId: nameEventype[0]?.name,
             img: y.join(""),
           });
+          setEventId(data._id);
         }
       })
       .catch((err) => console.log(err));
-    if (!userData) return toast("Hi! To register, please login!");
+    // if (!userData) return toast("Hi! To register, please login!");
 
     const idAcc = userData.id && userData.id;
     if (userData) {
+      apigetRegisteredOfEvent.getRegisteredOfEvent(id, idAcc).then((data) => {
+        if (data && data.length > 0) {
+          setIdParticipants(data[0]?._id);
+          setIdParticipant(data[0]?._id);
+        } else {
+          setIdParticipants("");
+        }
+      });
       ApiCheckRegisterOrAttend.CheckRegisterOrAttend(id, idAcc)
         .then((data) => {
           if (data) {
@@ -87,14 +148,6 @@ const Detail = ({category}) => {
         })
         .catch((err) => console.log(err));
     }
-
-    APIGetRegister.GetRegister(id).then((data) => {
-      if (data) {
-        setNumberRegister(data?.length);
-      } else {
-        setNumberRegister(0);
-      }
-    });
 
     return () => {
       abortController.abort();
@@ -111,7 +164,9 @@ const Detail = ({category}) => {
       };
       ApiRegistrationEvent.RegistrationEvent(data).then((data) => {
         if (data.Data_QR) {
+          // console.log("data.Data_QR", data.Data_QR);
           toast(data.Data_QR.message);
+          setUpdateStatus(updateStatus + 1);
           setIsRegister(isRegister + 1);
         } else {
           toast.error(data.message);
@@ -224,9 +279,15 @@ const Detail = ({category}) => {
                         </div>
                       </div>
                     </div>
-
-                    {check === "You are not registered" &&
-                    eventDetail.allow === false ? (
+                    {numberRegister === eventDetail.seat ? (
+                      <Button
+                        buttonStyle="btn-cant-register"
+                        onClick={handleRegister}
+                      >
+                        <MdOutlineDoNotDisturb /> can't register
+                      </Button>
+                    ) : check === "You are not registered" &&
+                      eventDetail.allow === false ? (
                       <Button
                         buttonStyle="btn-registerV2"
                         onClick={handleRegister}
@@ -256,19 +317,32 @@ const Detail = ({category}) => {
                       </Button>
                     ) : check === "registered" && eventDetail.allow === true ? (
                       <div className="button-attend-gruop">
-                        <Button buttonStyle="btn-attendV2-success">
+                        <Button
+                          onClick={handleAttend}
+                          buttonStyle="btn-attendV2-success"
+                        >
                           <AiOutlineStar /> Attendance
                         </Button>
-                        {/* <Button buttonStyle="btn-attendV2-fail">
-                          <AiFillStar /> Attended
-                        </Button> */}
                         <AiOutlineQrcode
+                          onClick={() => setShowQr(true)}
+                          className="icon-qrcode"
+                          style={{fontSize: "20px", cursor: "pointer"}}
+                        />
+                      </div>
+                    ) : check === "attended" ? (
+                      <div className="button-attend-gruop">
+                        <Button buttonStyle="btn-attendV2-fail">
+                          <AiFillStar /> Attended
+                        </Button>
+
+                        <AiOutlineQrcode
+                          onClick={() => setShowQr(true)}
                           className="icon-qrcode"
                           style={{fontSize: "20px", cursor: "pointer"}}
                         />
                       </div>
                     ) : (
-                      []
+                      ""
                     )}
                   </div>
                 </div>
@@ -377,7 +451,21 @@ const Detail = ({category}) => {
           diffId="Sorry, the event is in attendance status, you cannot register for this event :("
         />
       )}
-
+      {showPoint && (
+        <AlertCustom
+          handleClose={setshowPoint}
+          idEvent={id}
+          title="congratulations"
+          msg="You get 5 points for training points
+"
+        />
+      )}
+      {showQr && (
+        <Qrcode
+          value={"http://localhost:3000/Qrprocess"}
+          handleClose={() => setShowQr(false)}
+        />
+      )}
       {showCountDown && (
         <CountDown
           date={eventDetail.dateOfEvent}

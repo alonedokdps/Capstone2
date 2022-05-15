@@ -60,7 +60,18 @@ const AlertCustom = ({
               )}
 
               {title === "congratulations" ? (
-                <div className="alert-container-content-body-msg">{msg}</div>
+                <>
+                  {" "}
+                  <div className="alert-container-content-body-msg">
+                    <h2>{msg}</h2>
+                  </div>
+                  <button
+                    className="alert-container-content-body-btn"
+                    onClick={() => handleClose(false)}
+                  >
+                    Close
+                  </button>
+                </>
               ) : (
                 <div className="alert-container-content-body-button">
                   <button

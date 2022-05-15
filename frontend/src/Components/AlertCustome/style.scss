@@ -24,6 +24,22 @@
   }
 
   &-content {
+    &-body-msg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 15px;
+    }
+    &-body-btn {
+      padding: 10px 15px;
+      background-color: crimson;
+      border: none;
+      outline: none;
+
+      border-radius: 8px;
+      color: white;
+    }
     &-error {
       display: flex;
       align-items: center;
