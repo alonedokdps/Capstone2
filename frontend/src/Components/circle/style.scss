@@ -30,3 +30,24 @@
   background-color: grey;
   border-radius: 100%;
 }
+.circle.isPending {
+  width: 10px;
+  height: 10px;
+  background-color: orange;
+  border-radius: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.circle.isAccept {
+  width: 10px;
+  height: 10px;
+  background-color: #00ff00;
+  border-radius: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.circle.isRejected {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

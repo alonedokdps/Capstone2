@@ -41,7 +41,7 @@ const ListEventAdmin = ({
       <div className="list-event-admin-date">
         <span>{date}</span>
       </div>
-      <Circle />
+      <Circle status={status} />
     </div>
   );
 };

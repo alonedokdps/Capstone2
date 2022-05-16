@@ -39,7 +39,8 @@ const participantController = {
     try {
       const registered = await Participant.find({
         eventId: req.params.id,
-        isAttended: false,
+        // $and: [{isAttended: false}, {isAttended: true}],
+        // isAttended: false,
       });
       if (registered) {
         res.json(registered);

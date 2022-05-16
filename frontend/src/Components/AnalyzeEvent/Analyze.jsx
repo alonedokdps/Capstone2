@@ -16,6 +16,7 @@ const Analyze = ({
   idEvent,
   UpdateStatusEvent,
   updateAllow,
+  updateStatus,
   checked,
   setChecked,
 }) => {
@@ -50,7 +51,7 @@ const Analyze = ({
     return () => {
       abortController.abort();
     };
-  }, [idEvent, setChecked]);
+  }, [idEvent, setChecked, updateStatus]);
 
   const handleClose = () => {
     setOpen(false);

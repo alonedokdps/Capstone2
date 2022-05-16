@@ -12,11 +12,11 @@ import {toast} from "react-toastify";
 const DropdownUser = ({setRole}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   return (
-    <div className="dropdown-user">
-      <Link to="/user/account">
+    <div className="dropdown-user" data-aos="zoom-in-down">
+      <Link to="/user/profile">
         <div className="dropdown-user-item">
           <AiFillSetting />
-          My Account
+          Profile
         </div>
       </Link>
       <Link to="/user/event">
@@ -29,6 +29,7 @@ const DropdownUser = ({setRole}) => {
           <FaToolbox /> Account management
         </div>
       </Link>
+
       <div
         onClick={() => {
           removeCookie("token", {path: "/"});

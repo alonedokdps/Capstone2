@@ -1,5 +1,9 @@
 @use "../../scss/" as *;
 .Account-Management {
+  &-count {
+    margin: 10px 0;
+    padding: 10px 0;
+  }
   &-table table tbody tr td:last-child {
     display: flex;
     flex-shrink: 1;

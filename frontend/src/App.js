@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "./App.scss";
 import moment from "moment";
 import Layout from "./Layout/Layout";
@@ -13,7 +13,6 @@ import {useEffect, useState} from "react";
 import ScrollToTop from "./Components/ScrollTop/ScrollToTop";
 import UserPage from "./Pages/User/UserPage";
 import {
-  FcHome,
   FcCustomerSupport,
   FcCollaboration,
   FcBinoculars,
@@ -33,11 +32,9 @@ import {toast} from "react-toastify";
 import ApiUpdateStatus from "./api/UpdateStatus.api";
 import ApiGetAllAccount from "./api/GetAllAccout.api";
 
-import AlertCustom from "./Components/AlertCustome/AlertCustom";
-import CountDown from "./Components/CountDown/CountDown";
 import NotfoundPage from "./Components/404/NotfoundPage";
 import EventType from "./Pages/EventByEventType/EventType";
-import APIventByEventType from "./api/EventByEventType.api";
+
 import AccountManagement from "./Pages/User/AccountManagement";
 import ApiuppdateAllow from "./api/uppdateAllow.api";
 import ApigetAllAccQuery from "./api/getAllAccQuery.api";
@@ -58,7 +55,7 @@ function App() {
   const [active, setActive] = useState(1);
   const [numberParticipants, setParticipants] = useState([]);
   const [idEvent, setIdEvent] = useState("");
-  const [idAccount, setIdAccount] = useState("");
+
   const [role, setRole] = useState("");
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
@@ -67,8 +64,7 @@ function App() {
   const [department, setDepartment] = useState([]);
   const [eventAccepted, setEventAccepted] = useState([]);
   const [ListStudent, setListStudent] = useState([]);
-  const [eventId, setEventId] = useState("");
-  const [idParticipant, setIdParticipant] = useState("");
+
   const [queryListstudent, setQueryListStudent] = useState({
     search: "",
     department: "",
@@ -411,7 +407,9 @@ function App() {
                 category.map((item) => (
                   <Route
                     path={item.path}
-                    element={<EventType category={category} />}
+                    element={
+                      <EventType category={category} department={department} />
+                    }
                   />
                 ))}
             </Route>
@@ -420,8 +418,6 @@ function App() {
               path="detail/:id"
               element={
                 <Detail
-                  setEventId={setEventId}
-                  setIdParticipant={setIdParticipant}
                   setUpdateStatus={setUpdateStatus}
                   updateStatus={updateStatus}
                   category={category}
@@ -438,7 +434,10 @@ function App() {
               }
             />
             <Route path="/register" element={<Login getForm="register" />} />
-            <Route path="/add-event" element={<AddEvent />} />
+            <Route
+              path="/add-event"
+              element={<AddEvent department={department} />}
+            />
             <Route path="/user" element={<UserPage />}>
               <Route
                 path="management-account"
@@ -455,7 +454,7 @@ function App() {
               />
               <Route
                 index
-                path="account"
+                path="profile"
                 element={
                   <Account user={user} userById={userById} course={course} />
                 }
@@ -483,6 +482,7 @@ function App() {
                     handleDeleteEvent={handleDeleteEvent}
                     UpdateStatusEvent={UpdateStatusEvent}
                     user={user}
+                    updateStatus={updateStatus}
                     setChecked={setChecked}
                   />
                 }
@@ -490,7 +490,6 @@ function App() {
             </Route>
           </Routes>
         </ScrollToTop>
-
         <ReactToastify />
       </BrowserRouter>
     </>

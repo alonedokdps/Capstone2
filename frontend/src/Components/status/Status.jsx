@@ -8,7 +8,7 @@ const Status = ({styleStatus, number, name}) => {
     <div className={`status ${checkStyle}`}>
       <h4>{name}</h4>
       <p>{number ? number : 0}</p>
-      <Circle />
+      {/* <Circle /> */}
     </div>
   );
 };

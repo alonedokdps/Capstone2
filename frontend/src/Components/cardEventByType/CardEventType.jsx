@@ -5,7 +5,7 @@ import "./style.scss";
 
 const CardEventType = ({data}) => {
   return (
-    <div className="card-event-type">
+    <div className="card-event-type" data-aos="zoom-in">
       <Link to={`/detail/${data._id}`}>
         <div className="card-event-type-img">
           <img src={`http://localhost:8000/${data.img}`} alt="" />

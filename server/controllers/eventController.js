@@ -250,7 +250,10 @@ const eventController = {
     try {
       const q = req.query.name;
       if (!q) return res.status(200).json([]);
-      const result = await Event.find({name: {$regex: q, $options: "i"}});
+      const result = await Event.find({
+        name: {$regex: q, $options: "i"},
+        status: "Accept",
+      });
       if (result) {
         res.status(200).json({success: true, data: result});
       }
@@ -362,7 +365,7 @@ const eventController = {
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     if (!eventType) return res.json([]);
 
-    if (eventType && getMethod === "get%month") {
+    if (eventType && getMethod === "get-month") {
       const data = await Event.find({
         status: "Accept",
         eventTypeId: eventType,
@@ -373,7 +376,7 @@ const eventController = {
       } else {
         res.json({message: "No events this week"});
       }
-    } else if (eventType && getMethod === "get%week") {
+    } else if (eventType && getMethod === "get-week") {
       const data = await Event.find({
         status: "Accept",
         eventTypeId: eventType,
@@ -384,7 +387,7 @@ const eventController = {
       } else {
         res.json({message: "No events this week"});
       }
-    } else if (eventType && getMethod === "get%day") {
+    } else if (eventType && getMethod === "get-day") {
       const tomorrow = new Date();
       tomorrow.setHours(24, 0, 0, 0);
       const data = await Event.find({
@@ -393,15 +396,38 @@ const eventController = {
         dateOfEvent: {$gte: new Date(), $lt: tomorrow},
       });
       if (data) {
-        res.json(data);
+        res.json({data});
       } else {
         res.json({message: "There are no events today !"});
       }
-    } else if (eventType && getMethod === "get%online") {
+    } else if (eventType && getMethod === "get-online") {
       const data = await Event.find({
         status: "Accept",
         eventTypeId: eventType,
         online: true,
+      });
+      if (data) {
+        res.json({data});
+      } else {
+        res.json("No anything event");
+      }
+    } else if (eventType && getMethod === "get-offline") {
+      const data = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+        online: false,
+      });
+      if (data) {
+        res.json({data});
+      } else {
+        res.json("No anything event");
+      }
+    } else if (eventType && getMethod) {
+      const data = await Event.find({
+        status: "Accept",
+        eventTypeId: eventType,
+        checkDepartment: true,
+        departmentOfevent: getMethod,
       });
       if (data) {
         res.json({data});

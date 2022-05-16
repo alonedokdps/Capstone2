@@ -1,14 +1,24 @@
+@use "../../scss/" as *;
 .select-typeshow {
   position: relative;
   cursor: pointer;
   &-selectbox {
     position: relative;
+    font-size: 12px;
     &-item {
-      background-color: red;
+      width: max-content;
+      background-color: white;
       position: absolute;
       align-items: center;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
       &-value {
         padding: 10px;
+        transition: all 0.1s linear;
+        &:hover {
+          background-color: $grey-text;
+        }
       }
     }
   }

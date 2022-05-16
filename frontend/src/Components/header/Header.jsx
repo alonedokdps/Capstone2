@@ -95,12 +95,12 @@ const Header = ({data, role, setRole}) => {
         <div className="menu-mobile" onClick={() => setClick(!click)}>
           {click ? <AiOutlineClose /> : <CgMenuLeftAlt />}
         </div>
-        <div className="logo-header" data-aos="flip-left">
+        <div className="logo-header" data-aos="fade-right">
           <Link to="/">
             DEVENT <img src={logo} style={{width: "30px"}} />
           </Link>
         </div>
-        <div className="search" data-aos="zoom-in">
+        <div className="search" data-aos="fade-right">
           <AiOutlineSearch className="icon-search" />
           <input
             type="text"
@@ -113,7 +113,7 @@ const Header = ({data, role, setRole}) => {
               fillterData.length > 0 &&
               fillterData.map((item) => (
                 <Link to={`/detail/${item._id}`} onClick={ResetFilter}>
-                  <div className="result-item">
+                  <div className="result-item" data-aos="fade-up">
                     <img src={`http://localhost:8000/${item.img}`} />
                     <h4>{item.name}</h4>
                   </div>
@@ -123,6 +123,7 @@ const Header = ({data, role, setRole}) => {
         </div>
         <div className="user-icon">
           <BsBell
+            data-aos="fade-right"
             style={{
               fontSize: "25px",
               margin: "0 20px",
@@ -144,7 +145,7 @@ const Header = ({data, role, setRole}) => {
           {role && role === "Admin" && (
             <Link to="/add-event" className="icon-add">
               <BsPatchPlus
-                data-aos="fade-down"
+                data-aos="fade-right"
                 style={{
                   fontSize: "25px",
                   margin: "0 20px",
@@ -155,7 +156,7 @@ const Header = ({data, role, setRole}) => {
             </Link>
           )}
           {!cookies.token && (
-            <Link data-aos="fade-left" to="/login" className="sign-in">
+            <Link data-aos="fade-right" to="/login" className="sign-in">
               Sign in | Sign up
             </Link>
           )}
@@ -166,7 +167,7 @@ const Header = ({data, role, setRole}) => {
               onClick={() => setShow(!show)}
             >
               <RiUser3Line
-                data-aos="fade-left"
+                data-aos="fade-right"
                 style={{
                   fontSize: "25px",
                   margin: "0 20px",

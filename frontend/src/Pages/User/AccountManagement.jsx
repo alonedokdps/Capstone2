@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Status from "../../Components/status/Status";
 import "./AccountManagement.scss";
 import {BsTrash} from "react-icons/bs";
-import {GrView} from "react-icons/gr";
+
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
 
 const AccountManagement = ({
@@ -28,12 +28,12 @@ const AccountManagement = ({
   }, [department, nameTable]);
   return (
     <div className="Account-Management">
-      <h1>Account management</h1>
-      <div className="Account-Management-count">
+      <h1 data-aos="fade-right">Account management</h1>
+      <div data-aos="fade-right" className="Account-Management-count">
         <Status number={ListStudent.length} name="Total" />
       </div>
       <div className="Account-Management-table">
-        <div className="Account-Management-table-tool">
+        <div className="Account-Management-table-tool" data-aos="fade-left">
           <div className="Account-Management-table-tool-select-box">
             <select
               id="department"
@@ -66,7 +66,7 @@ const AccountManagement = ({
             />
           </div>
         </div>
-        <table id="table-student-list">
+        <table id="table-student-list" data-aos="zoom-in-up">
           <thead>
             <tr>
               {" "}

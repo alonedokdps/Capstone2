@@ -15,7 +15,7 @@ const Sidebar = ({category}) => {
   const {pathname} = useLocation();
 
   return (
-    <div className="sidebar">
+    <div className="sidebar" data-aos="fade-right">
       <ul>
         <li>
           <Link className={pathname === "/" && "active"} to="/">

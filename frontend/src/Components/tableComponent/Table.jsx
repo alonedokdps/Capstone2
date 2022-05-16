@@ -54,7 +54,7 @@ const Table = ({
   }
   return ReactDOM.createPortal(
     <div className="table-container">
-      <div className="description-circle">
+      {/* <div className="description-circle">
         <div>
           <Circle styleColor="green" />
           Attendance
@@ -63,7 +63,7 @@ const Table = ({
           <Circle styleColor="orange" />
           Registered
         </div>
-      </div>
+      </div> */}
       <div className="table-container-overlay" onClick={handleClose}></div>
 
       <div className="table-container-content" data-aos="zoom-in">

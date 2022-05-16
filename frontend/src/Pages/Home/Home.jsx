@@ -8,7 +8,6 @@ import {EffectFade} from "swiper";
 import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-fade";
-import getAllEventApi from "../../api/AllEvent.api";
 
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -17,9 +16,6 @@ import Cardmini from "../../Components/cardSmall/Cardmini";
 
 const Home = ({eventAccepted}) => {
   const [num, setNum] = useState(5);
-
-  useEffect(() => {}, []);
-  useEffect(() => {}, []);
 
   const resize = () => {
     const handleScroll = () => {
@@ -46,7 +42,7 @@ const Home = ({eventAccepted}) => {
 
   return (
     <div className="section home  ">
-      {/* <Slide /> */}
+      <Slide data={eventAccepted} />
       <Title title="New Event" />
       <div className="cardbox-row" data-aos="fade-up">
         <Swiper
@@ -71,7 +67,7 @@ const Home = ({eventAccepted}) => {
         title="Featured Events
 "
       />
-      <div className="cardbox-row-grid" data-aos="fade-up">
+      <div className="cardbox-row-grid">
         {eventAccepted &&
           eventAccepted.length > 0 &&
           eventAccepted.map((item) => {

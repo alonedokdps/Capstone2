@@ -12,10 +12,9 @@ import {BsTrash} from "react-icons/bs";
 import "./style.scss";
 import HomeButton from "../../Components/rediectHome/HomeButton";
 import {useNavigate} from "react-router-dom";
-const AddEvent = () => {
+const AddEvent = ({department}) => {
   const [EventType, setEventType] = useState([]);
   const Navigate = useNavigate();
-  const [img, setImg] = useState();
 
   const {
     register,
@@ -185,7 +184,7 @@ const AddEvent = () => {
                   setValue={setValue}
                   name="departmentOfevent"
                   selectName="type"
-                  data={EventType}
+                  data={department}
                 ></DropSelect>
               </div>
             </div>

@@ -4,13 +4,15 @@ import {Link, useLocation} from "react-router-dom";
 import "./sidebaruser.scss";
 import {BsArrowLeft, BsFillCameraFill} from "react-icons/bs";
 import {MdEvent} from "react-icons/md";
+import {FaToolbox} from "react-icons/fa";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 const sidebarNavItems = [
   {
-    name: "Account",
+    name: "Profile",
     icon: <BiUserCircle />,
-    to: "account",
+    to: "profile",
     section: "account",
   },
   {
@@ -18,6 +20,12 @@ const sidebarNavItems = [
     icon: <MdEvent />,
     to: "event",
     section: "event",
+  },
+  {
+    name: "Account management",
+    icon: <FaToolbox />,
+    to: "management-account",
+    section: "management-account",
   },
 ];
 const SidebarUser = ({data, handleSubmit}) => {
@@ -30,6 +38,7 @@ const SidebarUser = ({data, handleSubmit}) => {
 
   const checkActive = (name) => {
     const x = location.pathname.includes(name);
+
     return x;
   };
   return (

@@ -36,11 +36,12 @@
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 100px;
+    justify-content: space-between;
+    flex-shrink: 1;
+
     margin-top: 30px;
 
-    padding: 30px;
+    padding: 30px 10px;
     border-radius: 8px;
     &-t {
       h4 {
@@ -49,6 +50,7 @@
       span {
         color: $grey-text;
         font-weight: 400 !important;
+        font-size: 14px;
       }
     }
     &-f {

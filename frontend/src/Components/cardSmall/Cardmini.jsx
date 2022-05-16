@@ -5,7 +5,11 @@ import "./style.scss";
 
 const Cardmini = ({data}) => {
   return (
-    <Link className="card-mini-link" to={`/detail/${data._id}`}>
+    <Link
+      className="card-mini-link"
+      data-aos="zoom-in"
+      to={`/detail/${data._id}`}
+    >
       <div className="card-m">
         <img src={`http://localhost:8000/${data.img}`} alt="" />
         <div className="card-m-info">

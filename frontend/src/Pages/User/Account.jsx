@@ -17,7 +17,7 @@ const Account = ({userById}) => {
   return (
     <div className="user-account">
       <h1 data-aos="fade-right" className={show && "edit"}>
-        {show ? "Edit Account" : "Account"}
+        {show ? "Edit Profile" : "Profile"}
       </h1>
       <div className="user-account-container">
         <form

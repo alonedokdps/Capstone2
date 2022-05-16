@@ -13,7 +13,7 @@ router.put("/updateStatus/:id", eventController.updateStatusEvent);
 router.get("/getAllEvent", eventController.getAllEvents);
 
 //GET ALL EVENT BY ACCOUNT ID
-router.get("/getEventByAccountId/:id", eventController.getAllEventByAccountId);
+// router.get("/getEventByAccountId/:id", eventController.getAllEventByAccountId);
 
 //GET ALL EVENT PENDING
 router.get("/getEventPending", eventController.getAllEventPending);

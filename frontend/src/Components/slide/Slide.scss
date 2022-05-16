@@ -1,19 +1,105 @@
 @use "../../scss/" as *;
-.slide {
-  width: 100%;
-}
 
 .slide-item {
-  display: flex;
-  justify-content: center;
+  overflow: hidden;
+  &-link {
+    overflow: hidden;
+    .swiper-slide-item-overlay {
+      display: flex;
 
-  img {
-    max-width: 100%;
-    object-fit: cover;
-    width: 80%;
-    border-radius: $border-radius;
-    @include mobile {
-      width: 100%;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+      transition: all 0.2s linear;
+      overflow: hidden;
+      span {
+        display: none;
+        position: absolute !important;
+        bottom: 11px;
+        right: 132px;
+        background-color: white;
+        color: black;
+        padding: 10px;
+        font-weight: 700;
+        border-radius: 20px;
+        transition: all 0.5s linear;
+      }
+      img {
+        max-width: 80%;
+        // -webkit-filter: blur(1px) brightness(0.3);
+        // -moz-filter: blur(1px) brightness(0.3);
+        // -ms-filter: blur(1px) brightness(0.3);
+        // -o-filter: blur(1px) brightness(0.3);
+        // filter: blur(1px) brightness(0.3);
+        -webkit-transition: all 0.5s linear;
+        transition: all 0.5s linear;
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+        overflow: hidden;
+        object-fit: cover;
+
+        border-radius: $border-radius;
+      }
+      &:hover {
+        span {
+          display: block;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          animation: fadeIn 0.5s ease-in-out;
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+        }
+        img {
+          -webkit-filter: blur(1px) brightness(0.5);
+          -moz-filter: blur(1px) brightness(0.5);
+          -ms-filter: blur(1px) brightness(0.5);
+          -o-filter: blur(1px) brightness(0.5);
+          filter: blur(1px) brightness(0.5);
+          transition: all 0.4s linear;
+
+          border-radius: $border-radius;
+        }
+        .swiper-slide-item-overlay-info {
+          width: 100%;
+          position: absolute;
+          color: white;
+          left: 165px;
+          top: 50px;
+          word-break: break-word;
+          -webkit-box-orient: vertical;
+          display: flex;
+          overflow-wrap: break-word;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          overflow-wrap: break-word;
+          gap: 10px;
+          transition: all 0.4s linear;
+          z-index: 1000;
+          animation: fadeIn 0.5s ease-in-out;
+          @keyframes fadeIn {
+            0% {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+        }
+      }
+      &-info {
+        display: none;
+      }
     }
   }
 }

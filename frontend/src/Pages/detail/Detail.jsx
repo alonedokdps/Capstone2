@@ -66,7 +66,7 @@ const Detail = ({
       };
       localStorage.setItem("Qrcode", JSON.stringify(newUser2));
     }
-    // return () => localStorage.removeItem("Qrcode");
+    return () => localStorage.removeItem("Qrcode");
   }, [eventDetail._id, idParticipant, id]);
   const openViewDetail = () => {
     if (showDetail == 2) {
@@ -98,6 +98,7 @@ const Detail = ({
     const userData = JSON.parse(localStorage.getItem("user"));
     APIGetRegister.GetRegister(id).then((data) => {
       if (data) {
+        console.log(data?.length);
         setNumberRegister(data?.length);
       } else {
         setNumberRegister(0);
@@ -127,7 +128,7 @@ const Detail = ({
         }
       })
       .catch((err) => console.log(err));
-    // if (!userData) return toast("Hi! To register, please login!");
+    if (!userData) return toast("Hi! To register, please login!");
 
     const idAcc = userData.id && userData.id;
     if (userData) {
@@ -153,7 +154,7 @@ const Detail = ({
       abortController.abort();
       document.title = "DEVENT";
     };
-  }, [category, id, isRegister]);
+  }, [category, id, isRegister, setEventId, setIdParticipant]);
   const handleRegister = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData && eventDetail) {
@@ -279,12 +280,10 @@ const Detail = ({
                         </div>
                       </div>
                     </div>
-                    {numberRegister === eventDetail.seat ? (
-                      <Button
-                        buttonStyle="btn-cant-register"
-                        onClick={handleRegister}
-                      >
-                        <MdOutlineDoNotDisturb /> can't register
+                    {numberRegister === eventDetail.seat &&
+                    check === "You are not registered" ? (
+                      <Button buttonStyle="btn-cant-register">
+                        <MdOutlineDoNotDisturb /> Can't register
                       </Button>
                     ) : check === "You are not registered" &&
                       eventDetail.allow === false ? (
@@ -457,7 +456,7 @@ const Detail = ({
           idEvent={id}
           title="congratulations"
           msg="You get 5 points for training points
-"
+  "
         />
       )}
       {showQr && (

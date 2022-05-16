@@ -12,7 +12,7 @@ const EventUser = ({
   totalEvent,
   user,
   handleChangeFilter,
-
+  updateStatus,
   count,
   pending,
   accept,
@@ -131,6 +131,7 @@ const EventUser = ({
                 numberParticipants={numberParticipants}
                 handleDeleteEvent={handleDeleteEvent}
                 idEvent={idEvent}
+                updateStatus={updateStatus}
                 UpdateStatusEvent={UpdateStatusEvent}
                 updateAllow={updateAllow}
                 checked={checked}
