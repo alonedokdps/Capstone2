@@ -193,7 +193,7 @@ const accountController = {
         const event = await Account.find({
           departmentId: department,
           fullname: search,
-          role: {$nin: ["Admin", "DepartmentManager"]},
+          role: {$nin: ["Admin", "User"]},
         });
         if (event) {
           res.json(event);
@@ -203,7 +203,7 @@ const accountController = {
       } else if (search) {
         const event = await Account.find({
           fullname: search,
-          role: {$nin: ["Admin", "DepartmentManager"]},
+          role: {$nin: ["Admin", "User"]},
         });
         if (event) {
           res.json(event);
@@ -213,7 +213,7 @@ const accountController = {
       } else if (department) {
         const event = await Account.find({
           departmentId: department,
-          role: {$nin: ["Admin", "DepartmentManager"]},
+          role: {$nin: ["Admin", "User"]},
         });
         if (event) {
           res.json(event);
@@ -222,7 +222,7 @@ const accountController = {
         }
       } else {
         const event = await Account.find({
-          role: {$nin: ["Admin", "DepartmentManager"]},
+          role: {$nin: ["Admin", "User"]},
         });
         if (event) {
           res.json(event);

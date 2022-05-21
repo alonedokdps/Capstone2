@@ -37,9 +37,8 @@ const Detail = ({
   category,
   updateStatus,
   setUpdateStatus,
-  dataQR,
-  setEventId,
-  setIdParticipant,
+  showPoint,
+  setshowPoint,
 }) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
@@ -51,11 +50,11 @@ const Detail = ({
   const dateValue = new Date(eventDetail.dateOfEvent);
   const [warning, setWarning] = useState(false);
   const [idParticipant, setIdParticipants] = useState("");
-  const [showPoint, setshowPoint] = useState("");
+  const [alertAttended, setAlertAttended] = useState(false);
   const [showQr, setShowQr] = useState(false);
-
   useEffect(() => {
     const user = localStorage.getItem("user");
+
     if (!user) return;
     const newUser = JSON.parse(user);
     if (eventDetail._id && idParticipant) {
@@ -124,7 +123,6 @@ const Detail = ({
             eventTypeId: nameEventype[0]?.name,
             img: y.join(""),
           });
-          setEventId(data._id);
         }
       })
       .catch((err) => console.log(err));
@@ -135,7 +133,6 @@ const Detail = ({
       apigetRegisteredOfEvent.getRegisteredOfEvent(id, idAcc).then((data) => {
         if (data && data.length > 0) {
           setIdParticipants(data[0]?._id);
-          setIdParticipant(data[0]?._id);
         } else {
           setIdParticipants("");
         }
@@ -143,7 +140,6 @@ const Detail = ({
       ApiCheckRegisterOrAttend.CheckRegisterOrAttend(id, idAcc)
         .then((data) => {
           if (data) {
-            console.log(data);
             setCheck(data);
           }
         })
@@ -154,7 +150,7 @@ const Detail = ({
       abortController.abort();
       document.title = "DEVENT";
     };
-  }, [category, id, isRegister, setEventId, setIdParticipant]);
+  }, [category, id, isRegister]);
   const handleRegister = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData && eventDetail) {
@@ -325,17 +321,27 @@ const Detail = ({
                         <AiOutlineQrcode
                           onClick={() => setShowQr(true)}
                           className="icon-qrcode"
-                          style={{fontSize: "20px", cursor: "pointer"}}
+                          style={{
+                            fontSize: "20px",
+                            cursor: "pointer",
+                          }}
                         />
                       </div>
                     ) : check === "attended" ? (
                       <div className="button-attend-gruop">
-                        <Button buttonStyle="btn-attendV2-fail">
+                        <Button
+                          onClick={() => setAlertAttended(true)}
+                          buttonStyle="btn-attendV2-fail"
+                        >
                           <AiFillStar /> Attended
                         </Button>
 
                         <AiOutlineQrcode
-                          onClick={() => setShowQr(true)}
+                          onClick={
+                            check === "attended"
+                              ? () => setAlertAttended(true)
+                              : () => setShowQr(true)
+                          }
                           className="icon-qrcode"
                           style={{fontSize: "20px", cursor: "pointer"}}
                         />
@@ -443,6 +449,13 @@ const Detail = ({
           </div>
         </div>
       </div>
+      {alertAttended && (
+        <AlertCustom
+          handleClose={setAlertAttended}
+          title="warning"
+          diffId="you already took attendance :v"
+        />
+      )}
       {warning && (
         <AlertCustom
           handleClose={setWarning}

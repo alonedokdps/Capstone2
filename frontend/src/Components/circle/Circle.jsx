@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.scss";
 const style = ["red", "orange", "green", "grey"];
-const Circle = ({styleColor, status}) => {
+const Circle = ({styleColor, status, number, allow}) => {
   const checkStyle = style.includes(styleColor) ? styleColor : style[0];
   return (
     <div
@@ -13,8 +13,10 @@ const Circle = ({styleColor, status}) => {
           : !status
           ? ""
           : "isRejected"
-      }`}
-    ></div>
+      } ${allow && `active`}`}
+    >
+      {number}
+    </div>
   );
 };
 

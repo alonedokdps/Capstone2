@@ -118,7 +118,7 @@
             z-index: 1000;
           }
           label.edit {
-            background-color: $grey-text;
+            background-color: black;
           }
           input {
             display: block;
@@ -133,6 +133,7 @@
           input.edit {
             cursor: text;
             pointer-events: all;
+            color: black;
           }
         }
       }

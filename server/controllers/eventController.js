@@ -1,6 +1,7 @@
 const {json} = require("express/lib/response");
 const Event = require("../model/event");
 const EventDetail = require("../model/eventDetail");
+const Participant = require("../model/participant");
 const eventDetailController = require("./eventDetailController");
 
 const eventController = {

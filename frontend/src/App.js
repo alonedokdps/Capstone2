@@ -41,6 +41,7 @@ import ApigetAllAccQuery from "./api/getAllAccQuery.api";
 import ApiUpdateRole from "./api/updateRole.api";
 import ApideleteAccount from "./api/deleteAccount.api";
 import XulyQr from "./Pages/QrafterScancode/XulyQr";
+import {set} from "react-hook-form";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -55,7 +56,7 @@ function App() {
   const [active, setActive] = useState(1);
   const [numberParticipants, setParticipants] = useState([]);
   const [idEvent, setIdEvent] = useState("");
-
+  const [showPoint, setshowPoint] = useState(false);
   const [role, setRole] = useState("");
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
@@ -73,6 +74,7 @@ function App() {
   useEffect(() => {
     let controller = new AbortController();
     const userData = JSON.parse(localStorage.getItem("user"));
+
     if (!userData) {
       return toast("🦄 Hi! For better, please login!", {
         position: "top-center",
@@ -84,6 +86,7 @@ function App() {
         progress: undefined,
       });
     }
+    setRole(userData.role);
     ApiGetAllAccount.getAllAccount().then((data) => {
       if (data) {
         ApiCourses.getCourses().then((course) => {
@@ -116,7 +119,20 @@ function App() {
               queryListstudent.department
             ).then((data) => {
               if (data) {
-                setListStudent(data);
+                ApiDepartment.getDepartments().then((department) => {
+                  if (department) {
+                    const newData = data.map((list) => {
+                      department.map((dep) => {
+                        if (list.departmentId === dep._id) {
+                          list.departmentId = dep.name;
+                        }
+                      });
+                      return list;
+                    });
+                    setListStudent(newData);
+                  }
+                });
+                // setListStudent(data);
               } else {
                 setListStudent([]);
               }
@@ -418,6 +434,8 @@ function App() {
               path="detail/:id"
               element={
                 <Detail
+                  showPoint={showPoint}
+                  setshowPoint={setshowPoint}
                   setUpdateStatus={setUpdateStatus}
                   updateStatus={updateStatus}
                   category={category}
@@ -426,12 +444,7 @@ function App() {
             />
             <Route
               path="/Qrprocess"
-              element={
-                <XulyQr
-                  updateStatus={updateStatus}
-                  setUpdateStatus={setUpdateStatus}
-                />
-              }
+              element={<XulyQr setshowPoint={setshowPoint} />}
             />
             <Route path="/register" element={<Login getForm="register" />} />
             <Route
@@ -445,6 +458,7 @@ function App() {
                   <AccountManagement
                     handleChangeQueryListStudent={handleChangeQueryListStudent}
                     ChangeId={UpdateRole}
+                    role={role}
                     ListStudent={ListStudent}
                     nameTable={queryListstudent.department}
                     department={department}

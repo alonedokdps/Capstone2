@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Button from "../button/Button";
 import "./Style.scss";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {HiOutlineSwitchHorizontal} from "react-icons/hi";
 import ApiUser from "../../api/User.api";
 import Eye from "../eye/Eye";
@@ -85,6 +85,9 @@ const SignIn = ({change}) => {
         {formik.touched.password && formik.errors.password ? (
           <ErrorMsg> {formik.errors.password}</ErrorMsg>
         ) : null}
+      </div>
+      <div className="text-create-account">
+        <Link to="/">Create account ? </Link>
       </div>
 
       <div className="text-field">

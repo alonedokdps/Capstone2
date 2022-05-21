@@ -12,6 +12,7 @@ const ListEventAdmin = ({
   id,
   selectEvent,
   idEvent,
+  allow,
 }) => {
   return (
     <div
@@ -41,7 +42,7 @@ const ListEventAdmin = ({
       <div className="list-event-admin-date">
         <span>{date}</span>
       </div>
-      <Circle status={status} />
+      <Circle allow={allow} status={status} />
     </div>
   );
 };

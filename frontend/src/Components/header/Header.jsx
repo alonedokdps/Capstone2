@@ -142,19 +142,20 @@ const Header = ({data, role, setRole}) => {
               }}
             />
           )}
-          {role && role === "Admin" && (
-            <Link to="/add-event" className="icon-add">
-              <BsPatchPlus
-                data-aos="fade-right"
-                style={{
-                  fontSize: "25px",
-                  margin: "0 20px",
-                  color: "black",
-                  cursor: "pointer",
-                }}
-              />
-            </Link>
-          )}
+          {(role && role === "Admin") ||
+            (role === "DepartmentManager" && (
+              <Link to="/add-event" className="icon-add">
+                <BsPatchPlus
+                  data-aos="fade-right"
+                  style={{
+                    fontSize: "25px",
+                    margin: "0 20px",
+                    color: "black",
+                    cursor: "pointer",
+                  }}
+                />
+              </Link>
+            ))}
           {!cookies.token && (
             <Link data-aos="fade-right" to="/login" className="sign-in">
               Sign in | Sign up

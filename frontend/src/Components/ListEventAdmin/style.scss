@@ -34,8 +34,26 @@
     width: 100px;
     height: 70px;
     object-fit: cover;
+    border-radius: 8px;
     max-height: 70px;
+    transition: all 0.2s ease-in-out;
   }
+  img.active {
+    border-radius: 8px;
+    // animation: pulse 2s ease-out infinite;
+    // @keyframes pulse {
+    //   0% {
+    //     box-shadow: 0 0 0 0px #00ff00, 0 0 0 0px #00ff00;
+    //   }
+    //   50% {
+    //   }
+    //   100% {
+    //     box-shadow: 0 0 0 15px rgba(0, 210, 255, 0),
+    //       0 0 0 30px rgba(0, 210, 255, 0);
+    //   }
+    // }
+  }
+
   &-name {
     min-width: 300px;
     max-width: 300px;
@@ -60,10 +78,12 @@
   &.active {
     background-color: orange;
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
   &:hover {
     background-color: orange;
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
 }
 .list-event-admin.isAccept {
@@ -74,15 +94,18 @@
   &:hover {
     background-color: #00ff00;
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
 }
 .list-event-admin.isRejected {
   &.active {
     background-color: red;
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
   &:hover {
     background-color: crimson;
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
 }

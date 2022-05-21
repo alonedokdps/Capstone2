@@ -128,7 +128,7 @@ const participantController = {
           });
         } else {
           res.json({
-            success: true,
+            success: false,
             message: "You already attended this event",
           });
         }

@@ -3,6 +3,7 @@ const auth = require("../controllers/auth");
 
 const router = require("express").Router();
 const upload = require("../middlewares/Upload.js");
+const {route} = require("express/lib/application");
 //ADD EVENT
 router.post("/addEvent", upload.single("img"), eventController.addEvent);
 

@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Cardmini from "../../Components/cardSmall/Cardmini";
+import CardGrid from "../../Components/gridCard/CardGrid";
 
 const Home = ({eventAccepted}) => {
   const [num, setNum] = useState(5);
@@ -44,25 +45,7 @@ const Home = ({eventAccepted}) => {
     <div className="section home  ">
       <Slide data={eventAccepted} />
       <Title title="New Event" />
-      <div className="cardbox-row" data-aos="fade-up">
-        <Swiper
-          // install Swiper modules
-          modules={[Navigation, Pagination, Scrollbar, A11y, EffectFade]}
-          effect="Flip"
-          spaceBetween={30}
-          slidesPerView={num}
-          navigation
-          // pagination={{clickable: true}}
-          // // scrollbar={{draggable: true}}
-          // onSwiper={(swiper) => console.log(swiper)}
-          // onSlideChange={() => console.log("slide change")}
-          className="cardbox-row-slide"
-        >
-          <SwiperSlide>
-            <Card />
-          </SwiperSlide>
-        </Swiper>
-      </div>
+      <CardGrid />
       <Title
         title="Featured Events
 "

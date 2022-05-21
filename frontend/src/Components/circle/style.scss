@@ -4,6 +4,23 @@
   outline: none;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+.circle.active {
+  animation: pulse 1s ease-out infinite;
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0px #00ff00, 0 0 0 0px #00ff00;
+      border-radius: 100%;
+    }
+    50% {
+      border-radius: 100%;
+    }
+    100% {
+      box-shadow: 0 0 0 15px rgba(0, 210, 255, 0),
+        0 0 0 30px rgba(0, 210, 255, 0);
+      border-radius: 100%;
+    }
+  }
+}
 .circle.red {
   width: 10px;
   height: 10px;

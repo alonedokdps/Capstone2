@@ -1,9 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import APIventByEventType from "../../api/EventByEventType.api";
-import CardEventType from "../../Components/cardEventByType/CardEventType";
+import {AiOutlineDropbox} from "react-icons/ai";
+import {FaReact} from "react-icons/fa";
+import {CgToday} from "react-icons/cg";
+import {
+  BsCalendar2Week,
+  BsCalendar2Month,
+  BsWifi,
+  BsWifiOff,
+} from "react-icons/bs";
+
 import CustomDrop from "../../Components/customDropwdownInput/CustomDrop";
 import "./style.scss";
+import Cardmini from "../../Components/cardSmall/Cardmini";
 const EventType = ({category, department}) => {
   const {pathname} = useLocation();
   const [IdEventType, setIdEventType] = useState("");
@@ -56,43 +66,46 @@ const EventType = ({category, department}) => {
           </span>
         </div>
         <div className="title-and-filter-f" data-aos="fade-left">
-          <div className="item-filter" onClick={() => setQuery("")}>
-            All
+          <div
+            className={`item-filter ${query === "" && "active"} `}
+            onClick={() => setQuery("")}
+          >
+            <FaReact /> All
           </div>
           <div
-            className="item-filter"
+            className={`item-filter ${query === "get-day" && "active"} `}
             onClick={handleQuery}
             data-value="get-day"
           >
-            Today
+            <CgToday /> Today
           </div>
           <div
-            className="item-filter"
+            className={`item-filter ${query === "get-week" && "active"} `}
             onClick={handleQuery}
             data-value="get-week"
           >
-            Week
+            <BsCalendar2Week /> Week
           </div>
           <div
-            className="item-filter"
+            className={`item-filter ${query === "get-month" && "active"} `}
             onClick={handleQuery}
             data-value="get-month"
           >
-            Month
+            <BsCalendar2Month /> Month
           </div>
           <div
-            className="item-filter"
+            className={`item-filter ${query === "get-online" && "active"} `}
             onClick={handleQuery}
             data-value="get-online"
           >
-            Online
+            <BsWifi /> Online
           </div>
           <div
-            className="item-filter"
+            className={`item-filter ${query === "get-offline" && "active"} `}
             onClick={handleQuery}
             data-value="get-offline"
           >
-            Offline
+            <BsWifiOff /> Offline
           </div>
 
           <CustomDrop
@@ -105,10 +118,12 @@ const EventType = ({category, department}) => {
       <div className="grid-event-by-type">
         {getEventbyType && getEventbyType.length > 0 ? (
           getEventbyType.map((item) => {
-            return <CardEventType data={item} />;
+            return <Cardmini data={item} />;
           })
         ) : (
-          <div>No Event</div>
+          <div data-aos="zoom-in-down" className="grid-event-by-type-empty">
+            <AiOutlineDropbox /> No Event
+          </div>
         )}
       </div>
     </div>

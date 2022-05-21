@@ -12,9 +12,10 @@ const AccountManagement = ({
   handleChangeQueryListStudent,
   deleteAccount,
   nameTable,
+  role,
 }) => {
   const [nameDepartment, setnameDepartment] = useState("");
-  console.log(nameTable);
+  console.log("check role", role);
   useEffect(() => {
     if (nameTable === "") return setnameDepartment("All student");
     if (department) {
@@ -74,7 +75,7 @@ const AccountManagement = ({
               <th scope="col">Fullname</th>
               <th scope="col">Username</th>
               <th scope="col">Department</th>
-              <th scope="col">Course</th>
+              {!role === "Admin" && <th scope="col">Course</th>}
               <th scope="col">Class</th>
               <th scope="col">Tool</th>
             </tr>
@@ -88,7 +89,8 @@ const AccountManagement = ({
                     <td>{item.fullname}</td>
                     <td>{item.username}</td>
                     <td>{item.departmentId}</td>
-                    <td>{item.courseId}</td>
+                    {!role === "Admin" && <td>{item.courseId}</td>}
+
                     <td>{item.class}</td>
                     <td>
                       <div className="select-change-role">

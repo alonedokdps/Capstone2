@@ -8,6 +8,7 @@ import {AiOutlineDropbox} from "react-icons/ai";
 import "./EventUser.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 const EventUser = ({
   totalEvent,
   user,
@@ -40,11 +41,27 @@ const EventUser = ({
           <Status
             styleStatus="style-1"
             name="Total Event"
+            icon="total"
             number={count.length}
           />
-          <Status styleStatus="style-2" name="Approved" number={accept} />
-          <Status styleStatus="style-3" name="Pending" number={pending} />
-          <Status styleStatus="style-4" name="Rejected" number={reject} />
+          <Status
+            styleStatus="style-2"
+            icon="accept"
+            name="Approved"
+            number={accept}
+          />
+          <Status
+            styleStatus="style-3"
+            icon="pending"
+            name="Pending"
+            number={pending}
+          />
+          <Status
+            styleStatus="style-4"
+            icon="rejected"
+            name="Rejected"
+            number={reject}
+          />
         </div>
         <div className="event-management">
           <div className="event-management-box">
@@ -102,6 +119,7 @@ const EventUser = ({
                           key={item._id}
                           idEvent={idEvent}
                           id={item._id}
+                          allow={item.allow}
                           img={item.img}
                           name={item.name}
                           eventType={item.eventTypeId}

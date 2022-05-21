@@ -5,14 +5,15 @@
   padding: 10px;
   border-radius: 8px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
+  align-items: center;
   position: relative;
-  .circle {
-    position: absolute;
-
-    right: -2px;
-    top: -3px;
+  justify-content: space-between;
+  .row-status-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   h4 {
     color: white;
