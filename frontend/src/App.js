@@ -41,7 +41,7 @@ import ApigetAllAccQuery from "./api/getAllAccQuery.api";
 import ApiUpdateRole from "./api/updateRole.api";
 import ApideleteAccount from "./api/deleteAccount.api";
 import XulyQr from "./Pages/QrafterScancode/XulyQr";
-import {set} from "react-hook-form";
+
 import ApigetEventByDepartment from "./api/getEventByDepartment.api";
 
 function App() {
@@ -62,7 +62,7 @@ function App() {
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
   const [userById, setUserById] = useState({});
-
+  const [idDep, setIdDep] = useState("");
   const [checked, setChecked] = useState(false);
   const [department, setDepartment] = useState([]);
   const [eventAccepted, setEventAccepted] = useState([]);
@@ -71,8 +71,11 @@ function App() {
   const [queryListstudent, setQueryListStudent] = useState({
     search: "",
     department: "",
+    roles: "",
+    courses: "",
+    classess: "",
   });
-  console.log("TotalForDM", TotalForDM);
+
   useEffect(() => {
     let controller = new AbortController();
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -88,8 +91,8 @@ function App() {
         progress: undefined,
       });
     }
-    setRole(userData.role);
-
+    setRole(userData?.role);
+    setIdDep(userData?.departmentId);
     ApiGetAllAccount.getAllAccount().then((data) => {
       if (data) {
         ApiCourses.getCourses().then((course) => {
@@ -119,19 +122,29 @@ function App() {
             });
             ApigetAllAccQuery.getAllAccQuery(
               queryListstudent.search,
-              queryListstudent.department
+              queryListstudent.department,
+              role,
+              queryListstudent.courses,
+              queryListstudent.classess,
+              idDep
             ).then((data) => {
               if (data) {
-                ApiDepartment.getDepartments().then((department) => {
+                ApiDepartment.getDepartments().then(async (department) => {
                   if (department) {
-                    const newData = data.map((list) => {
+                    const newData = await data.map((list) => {
                       department.map((dep) => {
                         if (list.departmentId === dep._id) {
                           list.departmentId = dep.name;
                         }
                       });
+                      course.map((cou) => {
+                        if (list.courseId === cou._id) {
+                          list.courseId = cou.name;
+                        }
+                      });
                       return list;
                     });
+
                     setListStudent(newData);
                   }
                 });
@@ -494,7 +507,15 @@ function App() {
               path="/add-event"
               element={<AddEvent department={department} />}
             />
-            <Route path="/user" element={<UserPage />}>
+            <Route
+              path="/user"
+              element={
+                <UserPage
+                  updateStatus={updateStatus}
+                  setUpdateStatus={setUpdateStatus}
+                />
+              }
+            >
               <Route
                 path="management-account"
                 element={

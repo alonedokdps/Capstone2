@@ -86,9 +86,6 @@ const SignIn = ({change}) => {
           <ErrorMsg> {formik.errors.password}</ErrorMsg>
         ) : null}
       </div>
-      <div className="text-create-account">
-        <Link to="/">Create account ? </Link>
-      </div>
 
       <div className="text-field">
         <Button type="submit" buttonStyle="btn-login">

@@ -15,7 +15,14 @@ const DropdownUser = ({setRole, userById}) => {
     <div className="dropdown-user" data-aos="zoom-in-down">
       <div className="dropdown-user-infomini">
         <div className="dropdown-user-infomini-avatar">
-          <img src={`http://localhost:8000/${userById.avatar}`} alt="" />
+          <img
+            src={
+              userById.avatar
+                ? `http://localhost:8000/${userById.avatar}`
+                : "https://scontent.fdad3-6.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-5&_nc_sid=7206a8&_nc_ohc=JnDLo_5PpjYAX9zaReD&_nc_oc=AQnI0cWER_r6mjFCD6e6GL2WziUZtgXLqF3QTO3AAExpM-2CCq21fvwvF-D3qJ_Di8HQH_JFUTp9f9IG4jpJp2p7&_nc_ht=scontent.fdad3-6.fna&oh=00_AT-xlXhgljBhE8R1-KDEK-qWrN11O6wZ5rw25R2j4eIkSw&oe=62970D78"
+            }
+            alt=""
+          />
         </div>
         <div className="dropdown-user-infomini-text">
           <h4>{userById.fullname}</h4>

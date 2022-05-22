@@ -78,6 +78,7 @@ const SidebarUser = ({data, handleSubmit}) => {
             <div className="user-role" data-aos="fade-left">
               <h4>{data.fullname}</h4>
               <span>{data.role}</span>
+              <span>{data.departmentId}</span>
             </div>
           </div>
         </form>

@@ -40,14 +40,17 @@
         flex: 1;
         gap: 20px;
         .user-role {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
           h4 {
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 700;
           }
           span {
-            font-size: 12px;
+            font-size: 11px;
             color: $grey-text;
-            font-weight: 700;
+            font-weight: 400;
           }
         }
         .avatar-user {

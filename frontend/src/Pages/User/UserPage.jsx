@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Outlet} from "react-router-dom";
 import {toast} from "react-toastify";
+import ApiDepartment from "../../api/Department.api";
 import ApiGetUserById from "../../api/GetUserById.api";
 import ApiUpdateAvatar from "../../api/UpdateAvatar.api";
 import SidebarUser from "./SidebarUser";
 
-const UserPage = () => {
+const UserPage = ({updateStatus, setUpdateStatus}) => {
   const [user, setUser] = useState([]);
   const [fileName, setFileName] = useState("");
 
@@ -14,7 +15,12 @@ const UserPage = () => {
     if (userData) {
       ApiGetUserById.GetUserById(userData.id).then((data) => {
         if (data) {
-          setUser(data);
+          ApiDepartment.getDepartments().then((res) => {
+            const department = res.find((dep) => dep._id === data.departmentId);
+            if (department) {
+              setUser({...data, departmentId: department.name});
+            }
+          });
         } else {
           setUser([]);
         }
@@ -30,6 +36,7 @@ const UserPage = () => {
       if (data.success) {
         toast.success(data.message);
         setFileName(data?.img);
+        setUpdateStatus((prev) => updateStatus + 1);
       } else {
         toast.error(data.message);
       }

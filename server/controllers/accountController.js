@@ -188,46 +188,146 @@ const accountController = {
   getAllAccQuery: async (req, res) => {
     const search = req.query.search;
     const department = req.query.department;
+    const roleGet = req.query.roleGet;
+    const course = req.query.course;
+    const classes = req.query.classes;
+    const byDepart = req.query.byDep;
     try {
-      if (department && search) {
-        const event = await Account.find({
-          departmentId: department,
-          fullname: search,
-          role: {$nin: ["Admin", "User"]},
-        });
-        if (event) {
-          res.json(event);
+      if (roleGet === "Admin") {
+        if (department && search) {
+          const event = await Account.find({
+            departmentId: department,
+            fullname: search,
+            role: {$nin: ["Admin", "User"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (search) {
+          const event = await Account.find({
+            fullname: search,
+            role: {$nin: ["Admin", "User"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (department) {
+          const event = await Account.find({
+            departmentId: department,
+            role: {$nin: ["Admin", "User"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
         } else {
-          res.json([]);
+          const event = await Account.find({
+            role: {$nin: ["Admin", "User"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
         }
-      } else if (search) {
-        const event = await Account.find({
-          fullname: search,
-          role: {$nin: ["Admin", "User"]},
-        });
-        if (event) {
-          res.json(event);
+      } else if (roleGet === "DepartmentManager") {
+        if (course && search && classes) {
+          const event = await Account.find({
+            courseId: course,
+            departmentId: byDepart,
+            fullname: search,
+            class: classes,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (search) {
+          const event = await Account.find({
+            fullname: search,
+            departmentId: byDepart,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (classes) {
+          const event = await Account.find({
+            class: classes,
+            departmentId: byDepart,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (course) {
+          const event = await Account.find({
+            courseId: course,
+            departmentId: byDepart,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (search && classes) {
+          const event = await Account.find({
+            fullname: search,
+            class: classes,
+            departmentId: byDepart,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (course && search) {
+          const event = await Account.find({
+            courseId: course,
+            departmentId: byDepart,
+            fullname: search,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
+        } else if (classes && course) {
+          const event = await Account.find({
+            courseId: course,
+            class: classes,
+            departmentId: byDepart,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
         } else {
-          res.json([]);
-        }
-      } else if (department) {
-        const event = await Account.find({
-          departmentId: department,
-          role: {$nin: ["Admin", "User"]},
-        });
-        if (event) {
-          res.json(event);
-        } else {
-          res.json([]);
-        }
-      } else {
-        const event = await Account.find({
-          role: {$nin: ["Admin", "User"]},
-        });
-        if (event) {
-          res.json(event);
-        } else {
-          res.json([]);
+          const event = await Account.find({
+            departmentId: byDepart,
+            role: {$nin: ["Admin", "DepartmentManager"]},
+          });
+          if (event) {
+            res.json(event);
+          } else {
+            res.json([]);
+          }
         }
       }
     } catch (err) {}
