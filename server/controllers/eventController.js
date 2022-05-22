@@ -447,6 +447,26 @@ const eventController = {
       }
     }
   },
+  getEventByDepartment: async (req, res) => {
+    const id = req.query.id;
+    const queryStt = req.query.stt;
+    if (!id) return res.json({success: false, message: "404 Not found"});
+    if (queryStt) {
+      const data = await Event.find({departmentOfevent: id, status: queryStt});
+      if (data.length > 0) {
+        res.json({success: true, data});
+      } else {
+        res.json({success: false, message: []});
+      }
+    } else {
+      const data = await Event.find({departmentOfevent: id});
+      if (data.length > 0) {
+        res.json({success: true, data});
+      } else {
+        res.json({success: false, message: []});
+      }
+    }
+  },
 };
 
 module.exports = eventController;

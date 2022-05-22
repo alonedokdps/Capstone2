@@ -168,6 +168,23 @@
       display: relative;
       display: flex;
       align-items: center;
+      .user-avatar-circle {
+        width: 28px;
+        height: 28px;
+        margin: 0 20px;
+        border-radius: 100%;
+        cursor: pointer;
+
+        img {
+          width: inherit;
+          height: inherit;
+          border-radius: 100%;
+          outline: none;
+          cursor: pointer;
+          border: none;
+          object-fit: cover;
+        }
+      }
     }
 
     button {

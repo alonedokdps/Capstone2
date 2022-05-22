@@ -19,6 +19,7 @@ const Analyze = ({
   updateStatus,
   checked,
   setChecked,
+  role,
 }) => {
   const [getStatus, setStatus] = useState("");
   const [name, setName] = useState("");
@@ -89,12 +90,14 @@ const Analyze = ({
                 </>
               )
             )}
-            <select value={getStatus} onChange={UpdateStatusEvent}>
-              <option value="">none</option>
-              <option value="Accept">Approved</option>
-              <option value="Pending">Pending</option>
-              <option value="Reject">Rejected</option>
-            </select>
+            {role === "Admin" && (
+              <select value={getStatus} onChange={UpdateStatusEvent}>
+                <option value="">none</option>
+                <option value="Accept">Approved</option>
+                <option value="Pending">Pending</option>
+                <option value="Reject">Rejected</option>
+              </select>
+            )}
           </form>
           <div
             className="analyze-event-status-remove"
@@ -168,8 +171,8 @@ const Analyze = ({
             </div>
           </div>
         </div>
-        {idEvent && (
-          <div className="analyze-event-allow">
+        {idEvent && getStatus === "Accept" && (
+          <div className="analyze-event-allow" data-aos="zoom-out">
             <input
               type="checkbox"
               id="switch"

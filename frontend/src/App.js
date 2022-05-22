@@ -42,6 +42,7 @@ import ApiUpdateRole from "./api/updateRole.api";
 import ApideleteAccount from "./api/deleteAccount.api";
 import XulyQr from "./Pages/QrafterScancode/XulyQr";
 import {set} from "react-hook-form";
+import ApigetEventByDepartment from "./api/getEventByDepartment.api";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -61,16 +62,17 @@ function App() {
   const [deleteEvent, setDelete] = useState(0);
   const [updateStatus, setUpdateStatus] = useState(0);
   const [userById, setUserById] = useState({});
+
   const [checked, setChecked] = useState(false);
   const [department, setDepartment] = useState([]);
   const [eventAccepted, setEventAccepted] = useState([]);
   const [ListStudent, setListStudent] = useState([]);
-
+  const [TotalForDM, setTotalForDM] = useState({});
   const [queryListstudent, setQueryListStudent] = useState({
     search: "",
     department: "",
   });
-
+  console.log("TotalForDM", TotalForDM);
   useEffect(() => {
     let controller = new AbortController();
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -87,6 +89,7 @@ function App() {
       });
     }
     setRole(userData.role);
+
     ApiGetAllAccount.getAllAccount().then((data) => {
       if (data) {
         ApiCourses.getCourses().then((course) => {
@@ -132,7 +135,6 @@ function App() {
                     setListStudent(newData);
                   }
                 });
-                // setListStudent(data);
               } else {
                 setListStudent([]);
               }
@@ -172,6 +174,10 @@ function App() {
     queryListstudent.department,
     queryListstudent.search,
     queryListstudent,
+    updateStatus,
+    role,
+    idEvent,
+    deleteEvent,
     updateStatus,
   ]);
   // -------------------------------------------------------
@@ -232,34 +238,6 @@ function App() {
       .getAllEvent()
       .then((data) => setCount(data))
       .catch((err) => console.log(err));
-
-    APigetEventByStatus.getEventByStatus(valueFilter)
-      .then((data) => {
-        if (data.event) {
-          ApiEventType.getEventType().then((type) => {
-            if (type) {
-              const cloneData = [...data.event];
-              const newData = cloneData.map((item) => {
-                item.dateOfEvent = moment(item.dateOfEvent).format(
-                  "DD/MM/YYYY"
-                );
-                type.map((item2) => {
-                  if (item.eventTypeId === item2._id) {
-                    item.eventTypeId = item2.name;
-                  }
-                });
-                return item;
-              });
-
-              setTotalData(newData);
-            }
-          });
-        } else {
-          setTotalData([]);
-        }
-      })
-      .catch((err) => console.log(err));
-
     allParticipants
       .getAllParticipants(idEvent)
       .then((data) => {
@@ -268,10 +246,75 @@ function App() {
         }
       })
       .catch((err) => console.log(err));
+
     return () => {
       abortController.abort();
     };
   }, [valueFilter, idEvent, deleteEvent, updateStatus]);
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+
+    if (role === "Admin") {
+      APigetEventByStatus.getEventByStatus(valueFilter)
+        .then((data) => {
+          if (data.event) {
+            ApiEventType.getEventType().then((type) => {
+              if (type) {
+                const cloneData = [...data.event];
+                const newData = cloneData.map((item) => {
+                  item.dateOfEvent = moment(item.dateOfEvent).format(
+                    "DD/MM/YYYY"
+                  );
+                  type.map((item2) => {
+                    if (item.eventTypeId === item2._id) {
+                      item.eventTypeId = item2.name;
+                    }
+                  });
+                  return item;
+                });
+
+                setTotalData(newData);
+              }
+            });
+          } else {
+            setTotalData([]);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else if (role === "DepartmentManager") {
+      ApigetEventByDepartment.getEventByDepartment(
+        userData?.departmentId,
+        valueFilter
+      )
+        .then((res) => {
+          if (res.data) {
+            ApiEventType.getEventType().then((type) => {
+              if (type) {
+                const cloneData = [...res.data];
+
+                const newData = cloneData.map((item) => {
+                  item.dateOfEvent = moment(item.dateOfEvent).format(
+                    "DD/MM/YYYY"
+                  );
+                  type.map((item2) => {
+                    if (item.eventTypeId === item2._id) {
+                      item.eventTypeId = item2.name;
+                    }
+                  });
+                  return item;
+                });
+                setTotalData(newData);
+              }
+            });
+          } else {
+            setTotalData([]);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      return [];
+    }
+  }, [valueFilter, role, idEvent, deleteEvent, updateStatus]);
   useEffect(() => {
     const abortController = new AbortController();
     APigetEventByStatus.getEventByStatus("Accept")
@@ -411,10 +454,10 @@ function App() {
               path="/"
               element={
                 <Layout
+                  userById={userById}
                   role={role}
                   category={category}
                   setRole={setRole}
-                  data={totalData}
                 />
               }
             >
@@ -478,6 +521,7 @@ function App() {
                 path="event"
                 element={
                   <EventUser
+                    role={role}
                     checked={checked}
                     updateAllow={updateAllow}
                     handleChangeFilter={handleChangeFilter}

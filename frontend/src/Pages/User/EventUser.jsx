@@ -27,11 +27,12 @@ const EventUser = ({
   updateAllow,
   checked,
   setChecked,
+  role,
 }) => {
   useEffect(() => {
     AOS.init();
   });
-
+  console.log("check role", role);
   return (
     <div className="event-user">
       <h1 data-aos="fade-right">Events</h1>
@@ -144,6 +145,7 @@ const EventUser = ({
             </div>
             <div className="event-management-box-row2" data-aos="fade-left">
               <Analyze
+                role={role}
                 user={user}
                 setChecked={setChecked}
                 numberParticipants={numberParticipants}

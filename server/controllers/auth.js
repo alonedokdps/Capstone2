@@ -61,6 +61,7 @@ async function login(req, res) {
           role: account.role,
           name: account.username,
           departmentId: account.departmentId,
+          avatar: account.avatar,
         });
       });
     }

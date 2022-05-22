@@ -9,10 +9,20 @@ import {FaToolbox} from "react-icons/fa";
 import {useCookies} from "react-cookie";
 import {toast} from "react-toastify";
 
-const DropdownUser = ({setRole}) => {
+const DropdownUser = ({setRole, userById}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   return (
     <div className="dropdown-user" data-aos="zoom-in-down">
+      <div className="dropdown-user-infomini">
+        <div className="dropdown-user-infomini-avatar">
+          <img src={`http://localhost:8000/${userById.avatar}`} alt="" />
+        </div>
+        <div className="dropdown-user-infomini-text">
+          <h4>{userById.fullname}</h4>
+          <span>{userById.role}</span>
+          <span>{userById.departmentId}</span>
+        </div>
+      </div>
       <Link to="/user/profile">
         <div className="dropdown-user-item">
           <AiFillSetting />

@@ -17,7 +17,7 @@ import useClickOutSide from "../../hooks/useClickOutSide";
 import ApiSearch from "../../api/SearchEvent.api.js";
 import AOS from "aos";
 import "aos/dist/aos.css";
-const Header = ({data, role, setRole}) => {
+const Header = ({role, setRole, userById}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [click, setClick] = useState(false);
   const [active, setActive] = useState(false);
@@ -142,8 +142,8 @@ const Header = ({data, role, setRole}) => {
               }}
             />
           )}
-          {(role && role === "Admin") ||
-            (role === "DepartmentManager" && (
+          {role === "DepartmentManager" ||
+            (role === "Admin" && (
               <Link to="/add-event" className="icon-add">
                 <BsPatchPlus
                   data-aos="fade-right"
@@ -167,7 +167,7 @@ const Header = ({data, role, setRole}) => {
               ref={nodeRef}
               onClick={() => setShow(!show)}
             >
-              <RiUser3Line
+              {/* <RiUser3Line
                 data-aos="fade-right"
                 style={{
                   fontSize: "25px",
@@ -175,8 +175,18 @@ const Header = ({data, role, setRole}) => {
                   color: "black",
                   cursor: "pointer",
                 }}
-              />
-              {show && <DropdownUser setRole={setRole} />}
+              /> */}
+              <div className="user-avatar-circle" data-aos="fade-right">
+                <img
+                  src={
+                    !userById.avatar
+                      ? "https://scontent.fdad3-6.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-5&_nc_sid=7206a8&_nc_ohc=JnDLo_5PpjYAX9zaReD&_nc_oc=AQnI0cWER_r6mjFCD6e6GL2WziUZtgXLqF3QTO3AAExpM-2CCq21fvwvF-D3qJ_Di8HQH_JFUTp9f9IG4jpJp2p7&_nc_ht=scontent.fdad3-6.fna&oh=00_AT-xlXhgljBhE8R1-KDEK-qWrN11O6wZ5rw25R2j4eIkSw&oe=62970D78"
+                      : `http://localhost:8000/${userById.avatar}`
+                  }
+                  alt=""
+                />
+              </div>
+              {show && <DropdownUser userById={userById} setRole={setRole} />}
             </div>
           )}
         </div>
