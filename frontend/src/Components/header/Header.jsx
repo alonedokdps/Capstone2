@@ -186,7 +186,13 @@ const Header = ({role, setRole, userById}) => {
                   alt=""
                 />
               </div>
-              {show && <DropdownUser userById={userById} setRole={setRole} />}
+              {show && (
+                <DropdownUser
+                  role={role}
+                  userById={userById}
+                  setRole={setRole}
+                />
+              )}
             </div>
           )}
         </div>

@@ -6,7 +6,7 @@ import ApiGetUserById from "../../api/GetUserById.api";
 import ApiUpdateAvatar from "../../api/UpdateAvatar.api";
 import SidebarUser from "./SidebarUser";
 
-const UserPage = ({updateStatus, setUpdateStatus}) => {
+const UserPage = ({updateStatus, setUpdateStatus, role}) => {
   const [user, setUser] = useState([]);
   const [fileName, setFileName] = useState("");
 
@@ -44,7 +44,7 @@ const UserPage = ({updateStatus, setUpdateStatus}) => {
   };
   return (
     <div style={{padding: "20px 20px 20px 370px"}}>
-      <SidebarUser data={user} handleSubmit={handleSubmit} />
+      <SidebarUser data={user} role={role} handleSubmit={handleSubmit} />
       <Outlet />
     </div>
   );

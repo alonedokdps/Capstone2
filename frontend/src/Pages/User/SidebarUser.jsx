@@ -8,6 +8,20 @@ import {FaToolbox} from "react-icons/fa";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+const sidebarNavItemsUser = [
+  {
+    name: "Profile",
+    icon: <BiUserCircle />,
+    to: "profile",
+    section: "account",
+  },
+  {
+    name: "My Event",
+    icon: <MdEvent />,
+    to: "MyEvent",
+    section: "event",
+  },
+];
 const sidebarNavItems = [
   {
     name: "Profile",
@@ -28,7 +42,7 @@ const sidebarNavItems = [
     section: "management-account",
   },
 ];
-const SidebarUser = ({data, handleSubmit}) => {
+const SidebarUser = ({data, handleSubmit, role}) => {
   const [avatar, setAvatar] = useState("");
   const location = useLocation();
 
@@ -86,19 +100,47 @@ const SidebarUser = ({data, handleSubmit}) => {
       </div>
       <div className="sidebaruser__menu">
         <div className="sidebaruser__menu__indicator">
-          {sidebarNavItems.map((item, index) => (
-            <Link to={item.to} key={index}>
-              <div
-                data-aos="zoom-in-up"
-                className={`sidebaruser__menu__item ${
-                  checkActive(item.to) ? "active" : ""
-                }`}
-              >
-                <div className="sidebaruser__menu__item__icon">{item.icon}</div>
-                <div className="sidebaruser__menu__item__text">{item.name}</div>
-              </div>
-            </Link>
-          ))}
+          {role === "Admin" || role === "DepartmentManager" ? (
+            <>
+              {sidebarNavItems.map((item, index) => (
+                <Link to={item.to} key={index}>
+                  <div
+                    data-aos="zoom-in-up"
+                    className={`sidebaruser__menu__item ${
+                      checkActive(item.to) ? "active" : ""
+                    }`}
+                  >
+                    <div className="sidebaruser__menu__item__icon">
+                      {item.icon}
+                    </div>
+                    <div className="sidebaruser__menu__item__text">
+                      {item.name}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </>
+          ) : (
+            <>
+              {sidebarNavItemsUser.map((item, index) => (
+                <Link to={item.to} key={index}>
+                  <div
+                    data-aos="zoom-in-up"
+                    className={`sidebaruser__menu__item ${
+                      checkActive(item.to) ? "active" : ""
+                    }`}
+                  >
+                    <div className="sidebaruser__menu__item__icon">
+                      {item.icon}
+                    </div>
+                    <div className="sidebaruser__menu__item__text">
+                      {item.name}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import {ImLocation} from "react-icons/im";
 import {BiTimeFive} from "react-icons/bi";
 
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
+import {FaRegBuilding} from "react-icons/fa";
 
 import {
   AiOutlineCheckCircle,
@@ -14,6 +15,7 @@ import {
   AiOutlineStar,
   AiFillStar,
   AiFillCheckCircle,
+  AiOutlineWifi,
 } from "react-icons/ai";
 import {MdOutlineDoNotDisturb} from "react-icons/md";
 
@@ -236,6 +238,25 @@ const Detail = ({
                       <ImLocation />
                       {eventDetail.address}
                     </span>
+
+                    {eventDetail.checkDepartment === true && (
+                      <span>
+                        <FaRegBuilding />
+                        {eventDetail.departmentOfevent}
+                      </span>
+                    )}
+                    {eventDetail.online === true && (
+                      <span>
+                        <AiOutlineWifi />
+                        <a
+                          style={{textDecoration: "underline", color: "blue"}}
+                          href="https://www.w3schools.com"
+                          target="_blank"
+                        >
+                          {eventDetail.linkOnline && eventDetail.linkOnline}
+                        </a>
+                      </span>
+                    )}
 
                     {eventDetail.description && (
                       <p>

@@ -9,7 +9,7 @@ import {FaToolbox} from "react-icons/fa";
 import {useCookies} from "react-cookie";
 import {toast} from "react-toastify";
 
-const DropdownUser = ({setRole, userById}) => {
+const DropdownUser = ({setRole, role, userById}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   return (
     <div className="dropdown-user" data-aos="zoom-in-down">
@@ -36,16 +36,26 @@ const DropdownUser = ({setRole, userById}) => {
           Profile
         </div>
       </Link>
-      <Link to="/user/event">
-        <div className="dropdown-user-item">
-          <MdEvent /> Event
-        </div>
-      </Link>
-      <Link to="/user/management-account">
-        <div className="dropdown-user-item">
-          <FaToolbox /> Account management
-        </div>
-      </Link>
+      {role === "Admin" || role === "DepartmentManager" ? (
+        <>
+          <Link to="/user/event">
+            <div className="dropdown-user-item">
+              <MdEvent /> Event
+            </div>
+          </Link>
+          <Link to="/user/management-account">
+            <div className="dropdown-user-item">
+              <FaToolbox /> Account management
+            </div>
+          </Link>
+        </>
+      ) : (
+        <Link to="/user/MyEvent">
+          <div className="dropdown-user-item">
+            <MdEvent /> My Event
+          </div>
+        </Link>
+      )}
 
       <div
         onClick={() => {

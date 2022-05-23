@@ -43,6 +43,8 @@ import ApideleteAccount from "./api/deleteAccount.api";
 import XulyQr from "./Pages/QrafterScancode/XulyQr";
 
 import ApigetEventByDepartment from "./api/getEventByDepartment.api";
+import MyEvent from "./Pages/User/MyEvent";
+import ApigetEventByAccountRegisters from "./api/getEventByAccountRegisters.api";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -67,7 +69,7 @@ function App() {
   const [department, setDepartment] = useState([]);
   const [eventAccepted, setEventAccepted] = useState([]);
   const [ListStudent, setListStudent] = useState([]);
-  const [TotalForDM, setTotalForDM] = useState({});
+  const [switchdata, setSwitchData] = useState("registered");
   const [queryListstudent, setQueryListStudent] = useState({
     search: "",
     department: "",
@@ -191,7 +193,7 @@ function App() {
     role,
     idEvent,
     deleteEvent,
-    updateStatus,
+    idDep,
   ]);
   // -------------------------------------------------------
 
@@ -324,10 +326,36 @@ function App() {
           }
         })
         .catch((err) => console.log(err));
-    } else {
-      return [];
+    } else if (role === "User") {
+      ApigetEventByAccountRegisters.getEventByAccountRegisters(
+        userData?.id,
+        switchdata
+      ).then((event) => {
+        if (event) {
+          ApiEventType.getEventType().then((type) => {
+            if (type) {
+              const cloneData = [...event];
+
+              const newData = cloneData.map((item) => {
+                item.dateOfEvent = moment(item.dateOfEvent).format(
+                  "DD/MM/YYYY"
+                );
+                type.map((item2) => {
+                  if (item.eventTypeId === item2._id) {
+                    item.eventTypeId = item2.name;
+                  }
+                });
+                return item;
+              });
+              setTotalData(newData);
+            }
+          });
+        } else {
+          setTotalData([]);
+        }
+      });
     }
-  }, [valueFilter, role, idEvent, deleteEvent, updateStatus]);
+  }, [valueFilter, role, idEvent, deleteEvent, updateStatus, switchdata]);
   useEffect(() => {
     const abortController = new AbortController();
     APigetEventByStatus.getEventByStatus("Accept")
@@ -454,6 +482,9 @@ function App() {
       }
     });
   };
+  const handleSwitch = (e) => {
+    setSwitchData(e.target.dataset.value);
+  };
   const handleChangeQueryListStudent = (e) => {
     setQueryListStudent({...queryListstudent, [e.target.name]: e.target.value});
   };
@@ -511,11 +542,22 @@ function App() {
               path="/user"
               element={
                 <UserPage
+                  role={role}
                   updateStatus={updateStatus}
                   setUpdateStatus={setUpdateStatus}
                 />
               }
             >
+              <Route
+                path="MyEvent"
+                element={
+                  <MyEvent
+                    handleSwitch={handleSwitch}
+                    switchData={switchdata}
+                    totalData={totalData}
+                  />
+                }
+              />
               <Route
                 path="management-account"
                 element={
@@ -537,7 +579,7 @@ function App() {
                   <Account user={user} userById={userById} course={course} />
                 }
               />
-              {/* <Route path="edit" element={<h1>a</h1>} /> */}
+
               <Route
                 path="event"
                 element={

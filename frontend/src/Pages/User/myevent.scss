@@ -1,0 +1,37 @@
+@use "../../scss/" as *;
+.my-event-user {
+  &-pick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    h1 {
+      cursor: pointer;
+      transition: all 0.2s linear;
+      color: $grey-text;
+      &.active {
+        color: black;
+      }
+    }
+  }
+  &-container {
+    margin-top: 20px;
+    .registered {
+      &-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 20px;
+        .empty-event {
+          margin: 0 auto;
+          h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}

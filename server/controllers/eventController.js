@@ -467,6 +467,50 @@ const eventController = {
       }
     }
   },
+  getEventByAccountRegisters: async (req, res) => {
+    const idAcc = req.params.id;
+    const switchdata = req.query.switch;
+    if (switchdata === "registered") {
+      const parti = await Participant.find({
+        accountId: idAcc,
+        isAttended: false,
+      });
+
+      if (parti) {
+        const arr = [];
+        for (let x = 0; x < parti.length; x++) {
+          const event = await Event.find({_id: parti[x].eventId});
+          if (event) {
+            for (let y = 0; y < event.length; y++) {
+              arr.push(event[y]);
+            }
+          }
+        }
+        res.json(arr);
+      } else {
+        res.json([]);
+      }
+    } else {
+      const parti = await Participant.find({
+        accountId: idAcc,
+        isAttended: true,
+      });
+      if (parti) {
+        const arr = [];
+        for (let x = 0; x < parti.length; x++) {
+          const event = await Event.find({_id: parti[x].eventId});
+          if (event) {
+            for (let y = 0; y < event.length; y++) {
+              arr.push(event[y]);
+            }
+          }
+        }
+        res.json(arr);
+      } else {
+        res.json([]);
+      }
+    }
+  },
 };
 
 module.exports = eventController;

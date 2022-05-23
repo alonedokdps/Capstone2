@@ -48,5 +48,9 @@ router.get("/getDate/", eventController.getDate);
 router.get("/getEventByStatus", eventController.getEventByStatus);
 router.get("/getEventByEventype/", eventController.getEventByEventype);
 router.get("/getEventByDepartment/", eventController.getEventByDepartment);
+router.get(
+  "/getEventByAccountRegisters/:id",
+  eventController.getEventByAccountRegisters
+);
 
 module.exports = router;
