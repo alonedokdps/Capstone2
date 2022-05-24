@@ -447,6 +447,7 @@ const eventController = {
       }
     }
   },
+
   getEventByDepartment: async (req, res) => {
     const id = req.query.id;
     const queryStt = req.query.stt;
@@ -509,6 +510,27 @@ const eventController = {
       } else {
         res.json([]);
       }
+    }
+  },
+  getEventAtenancing: async (req, res) => {
+    const idAcc = req.params.id;
+    const parti = await Participant.find({accountId: idAcc});
+    if (parti) {
+      const arr = [];
+      for (let x = 0; x < parti.length; x++) {
+        const event = await Event.find({
+          _id: parti[x].eventId,
+          allow: true,
+        });
+        if (event) {
+          for (let y = 0; y < event.length; y++) {
+            arr.push(event[y]);
+          }
+        }
+      }
+      res.json(arr);
+    } else {
+      res.json([]);
     }
   },
 };

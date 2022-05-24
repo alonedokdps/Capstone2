@@ -126,7 +126,21 @@ const AccountManagement = ({
                     <td>{item.departmentId}</td>
                     {role === "DepartmentManager" && <td>{item.courseId}</td>}
                     {role === "DepartmentManager" && <td>{item.class}</td>}
-                    {role === "DepartmentManager" && <td>{item.score}</td>}
+                    {role === "DepartmentManager" && (
+                      <td>
+                        <span
+                          className={`color-score ${
+                            item.score >= 70
+                              ? "high"
+                              : item.score < 70 && item.score >= 55
+                              ? "medium"
+                              : "low"
+                          }`}
+                        >
+                          {item.score}
+                        </span>
+                      </td>
+                    )}
 
                     <td>
                       {role === "Admin" && (

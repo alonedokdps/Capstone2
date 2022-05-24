@@ -4,13 +4,24 @@ import {BsFillPencilFill} from "react-icons/bs";
 import {AiOutlineClose} from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ApiupdatePassword from "../../api/updatePassword.api";
+import {toast} from "react-toastify";
 const Account = ({userById}) => {
+  console.log(userById);
   const [show, setShow] = useState(false);
   const [values, setValues] = useState({});
   const handleChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value});
   };
+  const updatePass = (e) => {
+    e.preventDefault();
 
+    ApiupdatePassword.updatePassword(userById._id, values).then((data) => {
+      if (data) {
+        toast.success(data.message);
+      }
+    });
+  };
   useEffect(() => {
     AOS.init();
   });
@@ -21,6 +32,7 @@ const Account = ({userById}) => {
       </h1>
       <div className="user-account-container">
         <form
+          onSubmit={updatePass}
           autocomplete="off"
           className="user-account-container-form"
           data-aos="fade-right"
@@ -45,7 +57,7 @@ const Account = ({userById}) => {
           </div>
           <div className="account-input-fields">
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="fullname">
+              <label className={show} htmlFor="fullname">
                 Fullname
               </label>
               <input
@@ -53,20 +65,20 @@ const Account = ({userById}) => {
                 type="text"
                 value={userById.fullname}
                 onChange={handleChange}
-                className={show && "edit"}
+                className={show}
                 id="fullname"
                 name="fullname"
                 placeholder="Enter your fullname"
               />
             </div>
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="username">
+              <label className={show} htmlFor="username">
                 Username
               </label>
               <input
                 autocomplete="off"
                 type="text"
-                className={show && "edit"}
+                className={show}
                 id="username"
                 defaultValue={userById.username}
                 name="username"
@@ -75,13 +87,13 @@ const Account = ({userById}) => {
               />
             </div>
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="email">
+              <label className={show} htmlFor="email">
                 Email
               </label>
               <input
                 autocomplete="off"
                 type="text"
-                className={show && "edit"}
+                className={show}
                 id="email"
                 name="email"
                 defaultValue={userById.email}
@@ -92,14 +104,14 @@ const Account = ({userById}) => {
           </div>
           <div className="account-input-fields">
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="phone">
+              <label className={show} htmlFor="phone">
                 Phone
               </label>
               <input
                 autocomplete="off"
                 defaultValue={userById.phone}
                 type="text"
-                className={show && "edit"}
+                className={show}
                 onChange={handleChange}
                 id="number"
                 name="phone"
@@ -107,13 +119,13 @@ const Account = ({userById}) => {
               />
             </div>
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="birthday">
+              <label className={show} htmlFor="birthday">
                 Birthday
               </label>
               <input
                 autocomplete="off"
                 type="date"
-                className={show && "edit"}
+                className={show}
                 defaultValue={userById.birthday}
                 onChange={handleChange}
                 id="birthday"
@@ -139,13 +151,13 @@ const Account = ({userById}) => {
           </div>
           <div className="account-input-fields">
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="class">
+              <label className={show} htmlFor="class">
                 Class
               </label>
               <input
                 autocomplete="off"
                 type="text"
-                className={show && "edit"}
+                className={show}
                 id="class"
                 onChange={handleChange}
                 defaultValue={userById.class}
@@ -154,14 +166,14 @@ const Account = ({userById}) => {
               />
             </div>
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="department">
+              <label className={show} htmlFor="department">
                 Department
               </label>
               <input
                 autocomplete="off"
                 type="text"
                 id="department"
-                className={show && "edit"}
+                className={show}
                 onChange={handleChange}
                 name="department"
                 defaultValue={userById.departmentId}
@@ -169,13 +181,13 @@ const Account = ({userById}) => {
               />
             </div>
             <div className={show ? "text-field edit" : "text-field"}>
-              <label className={show && "edit"} htmlFor="coures">
+              <label className={show} htmlFor="coures">
                 Course
               </label>
               <input
                 autocomplete="off"
                 type="text"
-                className={show && "edit"}
+                className={show}
                 id="coures"
                 onChange={handleChange}
                 name="coures"
@@ -187,6 +199,7 @@ const Account = ({userById}) => {
           {show && (
             <div className="account-input-fields" data-aos="zoom-in">
               <button
+                type="submit"
                 className={
                   show ? "btn-update-account edit" : "btn-update-account"
                 }

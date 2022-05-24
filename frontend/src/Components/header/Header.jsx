@@ -10,20 +10,22 @@ import {BsBell} from "react-icons/bs";
 
 import logo from "../../images/imgicon/logo.svg";
 import {CgMenuLeftAlt} from "react-icons/cg";
-import {BsPatchPlus} from "react-icons/bs";
+import {BsPatchPlus, BsBellFill} from "react-icons/bs";
 import {Link} from "react-router-dom";
 import DropdownUser from "../Dropdown/DropdownUser";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import ApiSearch from "../../api/SearchEvent.api.js";
 import AOS from "aos";
 import "aos/dist/aos.css";
-const Header = ({role, setRole, userById}) => {
+import Thongbao from "../Thongbao/Thongbao";
+import Circle from "../circle/Circle";
+const Header = ({role, setRole, userById, thongbaouser}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [click, setClick] = useState(false);
   const [active, setActive] = useState(false);
   const [fillterData, setFillterData] = useState([]);
   const [keyword, setKeyword] = useState("");
-
+  const [shownotifications, setShownotifications] = useState(false);
   const {show, setShow, nodeRef} = useClickOutSide();
 
   useEffect(() => {
@@ -122,16 +124,36 @@ const Header = ({role, setRole, userById}) => {
           </div>
         </div>
         <div className="user-icon">
-          <BsBell
-            data-aos="fade-right"
-            style={{
-              fontSize: "25px",
-              margin: "0 20px",
-              color: "black",
-              cursor: "pointer",
-            }}
-          />
-          {cookies.token && (
+          <div className="user-icon-thongbao">
+            {shownotifications ? (
+              <BsBellFill
+                onClick={() => setShownotifications(!shownotifications)}
+                style={{
+                  fontSize: "25px",
+                  margin: "0 20px",
+                  color: "black",
+                  cursor: "pointer",
+                }}
+              />
+            ) : (
+              <BsBell
+                onClick={() => setShownotifications(!shownotifications)}
+                data-aos="fade-right"
+                style={{
+                  fontSize: "25px",
+                  margin: "0 20px",
+                  color: "black",
+                  cursor: "pointer",
+                }}
+              />
+            )}
+
+            {shownotifications && <Thongbao thongbaouser={thongbaouser} />}
+            {thongbaouser && thongbaouser.length > 0 && (
+              <Circle styleColor="red" />
+            )}
+          </div>
+          {/* {cookies.token && (
             <BsCalendar2Event
               data-aos="fade-right"
               style={{
@@ -141,21 +163,21 @@ const Header = ({role, setRole, userById}) => {
                 cursor: "pointer",
               }}
             />
+          )} */}
+          {(role === "Admin" || role === "DepartmentManager") && (
+            <Link to="/add-event" className="icon-add">
+              <BsPatchPlus
+                data-aos="fade-right"
+                style={{
+                  fontSize: "25px",
+                  margin: "0 20px",
+                  color: "black",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
           )}
-          {role === "DepartmentManager" ||
-            (role === "Admin" && (
-              <Link to="/add-event" className="icon-add">
-                <BsPatchPlus
-                  data-aos="fade-right"
-                  style={{
-                    fontSize: "25px",
-                    margin: "0 20px",
-                    color: "black",
-                    cursor: "pointer",
-                  }}
-                />
-              </Link>
-            ))}
+
           {!cookies.token && (
             <Link data-aos="fade-right" to="/login" className="sign-in">
               Sign in | Sign up

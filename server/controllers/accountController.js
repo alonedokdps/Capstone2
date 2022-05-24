@@ -198,7 +198,7 @@ const accountController = {
           const event = await Account.find({
             departmentId: department,
             fullname: search,
-            role: {$nin: ["Admin", "User"]},
+            role: {$nin: ["Admin"]},
           });
           if (event) {
             res.json(event);
@@ -208,7 +208,7 @@ const accountController = {
         } else if (search) {
           const event = await Account.find({
             fullname: search,
-            role: {$nin: ["Admin", "User"]},
+            role: {$nin: ["Admin"]},
           });
           if (event) {
             res.json(event);
@@ -218,7 +218,7 @@ const accountController = {
         } else if (department) {
           const event = await Account.find({
             departmentId: department,
-            role: {$nin: ["Admin", "User"]},
+            role: {$nin: ["Admin"]},
           });
           if (event) {
             res.json(event);
@@ -227,7 +227,7 @@ const accountController = {
           }
         } else {
           const event = await Account.find({
-            role: {$nin: ["Admin", "User"]},
+            role: {$nin: ["Admin"]},
           });
           if (event) {
             res.json(event);
@@ -340,6 +340,20 @@ const accountController = {
       }
     } catch (err) {
       console.log(err);
+    }
+  },
+  updatePassword: async (req, res) => {
+    const id = req.params.id;
+    const password = req.body.password;
+    try {
+      const account = await Account.findByIdAndUpdate(req.params.id, {
+        password: password,
+      });
+      if (account) {
+        res.json({success: true, message: "Account updated successfully"});
+      }
+    } catch (err) {
+      res.json(err);
     }
   },
 };

@@ -171,3 +171,15 @@
     outline: none;
   }
 }
+.color-score.high {
+  color: #07bc0c;
+  font-weight: 800;
+}
+.color-score.medium {
+  color: orange;
+  font-weight: 800;
+}
+.color-score.low {
+  color: red;
+  font-weight: 800;
+}

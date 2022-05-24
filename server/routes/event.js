@@ -52,5 +52,5 @@ router.get(
   "/getEventByAccountRegisters/:id",
   eventController.getEventByAccountRegisters
 );
-
+router.get("/getEventAtenancing/:id", eventController.getEventAtenancing);
 module.exports = router;

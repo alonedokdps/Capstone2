@@ -156,7 +156,16 @@
   .user-icon {
     width: 70%;
     display: flex;
-
+    &-thongbao {
+      display: flex;
+      align-items: center;
+      position: relative;
+      .circle {
+        position: absolute !important;
+        top: 28px !important;
+        left: 27px !important;
+      }
+    }
     align-items: center;
     justify-content: flex-end;
     .icon-add {

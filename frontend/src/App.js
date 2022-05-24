@@ -45,6 +45,8 @@ import XulyQr from "./Pages/QrafterScancode/XulyQr";
 import ApigetEventByDepartment from "./api/getEventByDepartment.api";
 import MyEvent from "./Pages/User/MyEvent";
 import ApigetEventByAccountRegisters from "./api/getEventByAccountRegisters.api";
+import ApigetEventAtenancing from "./api/pigetEventAtenancing.api";
+import ApiupdatePassword from "./api/updatePassword.api";
 
 function App() {
   const [totalData, setTotalData] = useState([]);
@@ -70,6 +72,8 @@ function App() {
   const [eventAccepted, setEventAccepted] = useState([]);
   const [ListStudent, setListStudent] = useState([]);
   const [switchdata, setSwitchData] = useState("registered");
+  const [thongbaouser, setThongbaouser] = useState([]);
+
   const [queryListstudent, setQueryListStudent] = useState({
     search: "",
     department: "",
@@ -358,6 +362,7 @@ function App() {
   }, [valueFilter, role, idEvent, deleteEvent, updateStatus, switchdata]);
   useEffect(() => {
     const abortController = new AbortController();
+    const userData = JSON.parse(localStorage.getItem("user"));
     APigetEventByStatus.getEventByStatus("Accept")
       .then((data) => {
         if (data) {
@@ -398,6 +403,16 @@ function App() {
         }
       })
       .catch((err) => console.log(err));
+    if (userData) {
+      ApigetEventAtenancing.getEventAtenancing(userData.id).then((data) => {
+        if (data) {
+          setThongbaouser(data);
+        } else {
+          setThongbaouser([]);
+        }
+      });
+    }
+
     return () => {
       abortController.abort();
     };
@@ -485,6 +500,7 @@ function App() {
   const handleSwitch = (e) => {
     setSwitchData(e.target.dataset.value);
   };
+
   const handleChangeQueryListStudent = (e) => {
     setQueryListStudent({...queryListstudent, [e.target.name]: e.target.value});
   };
@@ -498,6 +514,7 @@ function App() {
               path="/"
               element={
                 <Layout
+                  thongbaouser={thongbaouser}
                   userById={userById}
                   role={role}
                   category={category}
@@ -521,6 +538,7 @@ function App() {
               path="detail/:id"
               element={
                 <Detail
+                  idDep={idDep}
                   showPoint={showPoint}
                   setshowPoint={setshowPoint}
                   setUpdateStatus={setUpdateStatus}

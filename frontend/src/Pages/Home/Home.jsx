@@ -45,7 +45,7 @@ const Home = ({eventAccepted}) => {
     <div className="section home  ">
       <Slide data={eventAccepted} />
       <Title title="New Event" />
-      <CardGrid />
+      <CardGrid eventAccepted={eventAccepted} />
       <Title
         title="Featured Events
 "

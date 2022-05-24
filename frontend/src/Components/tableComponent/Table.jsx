@@ -91,6 +91,7 @@ const Table = ({
 
               <th>Course</th>
               <th>Class</th>
+              <th>Score</th>
               <th>Status</th>
               <th>
                 <BsTools />
@@ -109,6 +110,7 @@ const Table = ({
                     <td>{item.departmentId}</td>
                     <td>{item.courseId}</td>
                     <td>{item.class}</td>
+                    <th>{item.score}</th>
                     <td>
                       {item.status ? (
                         <>
@@ -122,6 +124,7 @@ const Table = ({
                         </>
                       )}
                     </td>
+
                     <td>
                       <button onClick={() => getUserId(item._id)}>
                         <GrFormView style={{color: "white"}} />

@@ -35,12 +35,14 @@ import apigetRegisteredOfEvent from "../../api/getRegisteredOfEvent.api";
 import ApiAttend from "../../api/AttendEvent.api";
 import ApiUpdateScore from "../../api/UpdateScore.api";
 import Qrcode from "./../../Components/qr-code/Qrcode";
+import ApiDepartment from "./../../api/Department.api";
 const Detail = ({
   category,
   updateStatus,
   setUpdateStatus,
   showPoint,
   setshowPoint,
+  idDep,
 }) => {
   const {id} = useParams();
   const [eventDetail, setEventDetail] = useState([]);
@@ -54,6 +56,8 @@ const Detail = ({
   const [idParticipant, setIdParticipants] = useState("");
   const [alertAttended, setAlertAttended] = useState(false);
   const [showQr, setShowQr] = useState(false);
+  const [showNo, setShowNo] = useState(false);
+  const [mockId, setMockId] = useState("");
   useEffect(() => {
     const user = localStorage.getItem("user");
 
@@ -119,12 +123,31 @@ const Detail = ({
           const nameEventype = category.filter(
             (item) => item._id === data.eventTypeId
           );
-          document.title = data.name;
-          setEventDetail({
-            ...data,
-            eventTypeId: nameEventype[0]?.name,
-            img: y.join(""),
-          });
+
+          if (data?.checkDepartment && data?.departmentOfevent) {
+            setMockId(data?.departmentOfevent);
+            ApiDepartment.getDepartments().then((department) => {
+              if (department) {
+                const departmentName = department.filter(
+                  (item) => item._id === data.departmentOfevent
+                );
+                document.title = data.name;
+                setEventDetail({
+                  ...data,
+                  eventTypeId: nameEventype[0]?.name,
+                  img: y.join(""),
+                  departmentOfevent: departmentName[0]?.name,
+                });
+              }
+            });
+          } else {
+            document.title = data.name;
+            setEventDetail({
+              ...data,
+              eventTypeId: nameEventype[0]?.name,
+              img: y.join(""),
+            });
+          }
         }
       })
       .catch((err) => console.log(err));
@@ -153,8 +176,17 @@ const Detail = ({
       document.title = "DEVENT";
     };
   }, [category, id, isRegister]);
+  console.log("mockId", mockId);
+  console.log("eventDetail.departmentOfevent", eventDetail.departmentOfevent);
   const handleRegister = () => {
     const userData = JSON.parse(localStorage.getItem("user"));
+    if (
+      eventDetail?.checkDepartment === true &&
+      mockId !== userData?.departmentId
+    ) {
+      setShowNo(true);
+      return;
+    }
     if (userData && eventDetail) {
       const data = {
         Username: userData.name,
@@ -163,7 +195,6 @@ const Detail = ({
       };
       ApiRegistrationEvent.RegistrationEvent(data).then((data) => {
         if (data.Data_QR) {
-          // console.log("data.Data_QR", data.Data_QR);
           toast(data.Data_QR.message);
           setUpdateStatus(updateStatus + 1);
           setIsRegister(isRegister + 1);
@@ -482,6 +513,13 @@ const Detail = ({
           handleClose={setWarning}
           title="warning"
           diffId="Sorry, the event is in attendance status, you cannot register for this event :("
+        />
+      )}
+      {showNo && (
+        <AlertCustom
+          handleClose={setShowNo}
+          title="warning"
+          diffId={`you do not belong to the faculty of ${eventDetail?.departmentOfevent}`}
         />
       )}
       {showPoint && (
