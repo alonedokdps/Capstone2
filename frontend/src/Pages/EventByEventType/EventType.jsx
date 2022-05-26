@@ -50,14 +50,6 @@ const EventType = ({category, department}) => {
   };
   return (
     <div className="section-event-type">
-      <div className="filter-absolute">
-        <div className="item-filter" data-value="get-month">
-          get month
-        </div>
-        <div className="item-filter">get month</div>
-        <CustomDrop />
-        <CustomDrop />
-      </div>
       <div className="title-and-filter">
         <div data-aos="fade-right" className="title-and-filter-t">
           <h4>{pathname.split("/")[1]}</h4>

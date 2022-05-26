@@ -92,7 +92,9 @@ const Table = ({
               <th>Course</th>
               <th>Class</th>
               <th>Score</th>
+
               <th>Status</th>
+
               <th>
                 <BsTools />
               </th>
@@ -111,6 +113,7 @@ const Table = ({
                     <td>{item.courseId}</td>
                     <td>{item.class}</td>
                     <th>{item.score}</th>
+                    {item?.timeAttended && <th>{item?.timeAttended}</th>}
                     <td>
                       {item.status ? (
                         <>

@@ -44,7 +44,7 @@ const Home = ({eventAccepted}) => {
   return (
     <div className="section home  ">
       <Slide data={eventAccepted} />
-      <Title title="New Event" />
+      <Title title="Random Event" />
       <CardGrid eventAccepted={eventAccepted} />
       <Title
         title="Featured Events
